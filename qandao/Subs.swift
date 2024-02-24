@@ -96,7 +96,7 @@ enum DifficultyLevels: Int {
     }
   }
 }
-enum GameDataSource : Int {
+public enum GameDataSource : Int {
 //
 //  case localFull // keep first for easiest testing
   case gameDataSource1
