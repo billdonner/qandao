@@ -67,6 +67,7 @@
 		889CEAFC2B8780CC00D88E38 /* VortexScreenOverlays.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VortexScreenOverlays.swift; sourceTree = "<group>"; };
 		889CEAFD2B8780CC00D88E38 /* WebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		889CEB272B8A76C700D88E38 /* qandao.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = qandao.entitlements; sourceTree = "<group>"; };
+		889CEB282B8A7A4800D88E38 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +87,7 @@
 		889CEAB62B87809C00D88E38 = {
 			isa = PBXGroup;
 			children = (
+				889CEB282B8A7A4800D88E38 /* README.md */,
 				889CEAC12B87809C00D88E38 /* qandao */,
 				889CEAC02B87809C00D88E38 /* Products */,
 			);
