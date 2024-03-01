@@ -1,5 +1,7 @@
 #  QANDAO - revised test app for Q20K
 
+version 0.7.17 ready for new topics from editorial 
+
 version 0.7.16 new executable, uses composable architecture from hereon
 
 version 0.7.15 removed explanation from main challenge view

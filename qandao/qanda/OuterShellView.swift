@@ -8,8 +8,17 @@
 import SwiftUI
 import q20kshare
 import ComposableArchitecture
-
-
+fileprivate struct  AlienSplashView: View {
+  //Note: - specifying aspectRatio breaks child views
+  let showMainView:Bool
+    var body: some View {
+        Image("Picture") // Use the custom launch image asset name here
+            .resizable()
+           // .aspectRatio(contentMode: .fill)
+            .ignoresSafeArea()
+            .opacity(showMainView ? 0 : 1)
+    }
+}
 
 struct OuterShellView : View {
   @EnvironmentObject var logManager: LogEntryManager
@@ -29,18 +38,38 @@ struct OuterShellView : View {
   @State var showAlert = false
   @State var reset = false
   
+  
+  
+  @State private var showMainView = false
+  
   var body: some View {
-    ZStack {
-      ProgressView("loading...")
-        .opacity(isDownloading ? 1.0 : 0.0)
-      TopicsScreen(store:store, appState:appState,loginID:loginID,gd:$gd,reset:$reset )
-        .opacity(isDownloading ? 0.0 : 1.0)
+    ZStack{
+      VStack{
+        AlienSplashView(showMainView: showMainView) // Replace this with your own custom logo if desired
+        
+          .rotation3DEffect(.degrees(showMainView ? 180 : 0), axis: (x: 0, y: 1, z: 0))
+          .opacity(showMainView ? 0 : 1)
+      }
+      VStack{
+        ZStack {
+          ProgressView("loading...")
+            .opacity(isDownloading ? 1 : 0)
+          TopicsScreen(store:store, appState:appState,loginID:loginID,gd:$gd,reset:$reset )
+            .opacity(isDownloading ? 0 : 1)
+        }.opacity(showMainView ? 1 : 0)
+      }
+      
+
     }
     .alert ("error - \(terror)",isPresented: $showAlert){
       Button("OK", role: .cancel) { }
     }
     .task { //instead of OnAppear
+      withAnimation(Animation.easeInOut(duration: 1.5)) { // .delay(0.5)
+        showMainView = true // Start the transition
+      }
       do {
+  
         // send a log message indicating we are getting started
         sendLoginMessage(logManager, loginID: loginID, source: source)
         // go fetch everything we need to get started from the indicated source

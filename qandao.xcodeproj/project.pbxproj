@@ -20,7 +20,6 @@
 		889CEB032B8780CC00D88E38 /* ChallengesToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889CEAE22B8780CC00D88E38 /* ChallengesToolbarView.swift */; };
 		889CEB062B8780CC00D88E38 /* DetailedChallengeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889CEAE52B8780CC00D88E38 /* DetailedChallengeView.swift */; };
 		889CEB082B8780CC00D88E38 /* EssentialChallengeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889CEAE72B8780CC00D88E38 /* EssentialChallengeView.swift */; };
-		889CEB0A2B8780CC00D88E38 /* HintBottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889CEAE92B8780CC00D88E38 /* HintBottomSheetView.swift */; };
 		889CEB0C2B8780CC00D88E38 /* InterstitialScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889CEAEB2B8780CC00D88E38 /* InterstitialScreen.swift */; };
 		889CEB0E2B8780CC00D88E38 /* OuterShellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889CEAED2B8780CC00D88E38 /* OuterShellView.swift */; };
 		889CEB102B8780CC00D88E38 /* qandaoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889CEAF02B8780CC00D88E38 /* qandaoApp.swift */; };
@@ -52,7 +51,6 @@
 		889CEAE22B8780CC00D88E38 /* ChallengesToolbarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChallengesToolbarView.swift; sourceTree = "<group>"; };
 		889CEAE52B8780CC00D88E38 /* DetailedChallengeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailedChallengeView.swift; sourceTree = "<group>"; };
 		889CEAE72B8780CC00D88E38 /* EssentialChallengeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EssentialChallengeView.swift; sourceTree = "<group>"; };
-		889CEAE92B8780CC00D88E38 /* HintBottomSheetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HintBottomSheetView.swift; sourceTree = "<group>"; };
 		889CEAEA2B8780CC00D88E38 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		889CEAEB2B8780CC00D88E38 /* InterstitialScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterstitialScreen.swift; sourceTree = "<group>"; };
 		889CEAED2B8780CC00D88E38 /* OuterShellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OuterShellView.swift; sourceTree = "<group>"; };
@@ -137,7 +135,6 @@
 				889CEAE22B8780CC00D88E38 /* ChallengesToolbarView.swift */,
 				889CEAE52B8780CC00D88E38 /* DetailedChallengeView.swift */,
 				889CEAE72B8780CC00D88E38 /* EssentialChallengeView.swift */,
-				889CEAE92B8780CC00D88E38 /* HintBottomSheetView.swift */,
 				889CEAEB2B8780CC00D88E38 /* InterstitialScreen.swift */,
 				889CEAED2B8780CC00D88E38 /* OuterShellView.swift */,
 				889CEAF32B8780CC00D88E38 /* SettingsScreen.swift */,
@@ -245,7 +242,6 @@
 				889CEB012B8780CC00D88E38 /* ChallengesNavbarView.swift in Sources */,
 				889CEADB2B8780BB00D88E38 /* AppState.swift in Sources */,
 				889CEAD92B8780BB00D88E38 /* Subs.swift in Sources */,
-				889CEB0A2B8780CC00D88E38 /* HintBottomSheetView.swift in Sources */,
 				889CEB022B8780CC00D88E38 /* ChallengesScreen.swift in Sources */,
 				889CEB082B8780CC00D88E38 /* EssentialChallengeView.swift in Sources */,
 				889CEB102B8780CC00D88E38 /* qandaoApp.swift in Sources */,
@@ -388,7 +384,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = qandao/qandao.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 16;
+				CURRENT_PROJECT_VERSION = 17;
 				DEVELOPMENT_ASSET_PATHS = "\"qandao/Preview Content\"";
 				DEVELOPMENT_TEAM = NEAY582ME4;
 				ENABLE_PREVIEWS = YES;
@@ -420,7 +416,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = qandao/qandao.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 16;
+				CURRENT_PROJECT_VERSION = 17;
 				DEVELOPMENT_ASSET_PATHS = "\"qandao/Preview Content\"";
 				DEVELOPMENT_TEAM = NEAY582ME4;
 				ENABLE_PREVIEWS = YES;

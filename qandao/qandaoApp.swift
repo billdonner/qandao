@@ -29,7 +29,7 @@ let formatter = DateComponentsFormatter()
 @main
 struct qandaoApp: App {
   @AppStorage("DifficultyLevel") var difficultyLevel: DifficultyLevels = DifficultyLevels.easy
-  @AppStorage("GameDataSource") var gameDataSource: GameDataSource = GameDataSource.gameDataSource2
+  @AppStorage("GameDataSource") var gameDataSource: GameDataSource = GameDataSource.gameDataSource1
   @AppStorage("InitialUUID") var initialUUID:String = UUID().uuidString
   var logManager:LogEntryManager
   init () {

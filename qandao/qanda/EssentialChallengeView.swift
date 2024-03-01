@@ -9,6 +9,26 @@ import SwiftUI
 import q20kshare
 import ComposableArchitecture
 
+
+struct HintBottomSheetView : View {
+  let hint:String
+  var body: some View {
+    VStack {
+      Image(systemName:"line.3.horizontal.decrease")
+      Spacer()
+      HStack{
+        Text(hint).font(.headline)
+      }
+      Spacer()
+    }
+ .frame(maxWidth:.infinity)
+    .background(.blue).opacity(0.4)
+    .foregroundColor(.white)
+   // .ignoresSafeArea()
+  }
+}
+
+
 struct EssentialChallengeView: View {
   @Bindable var store: StoreOf<ChallengesFeature>
   let appState: AppState
@@ -56,7 +76,7 @@ struct EssentialChallengeView: View {
       } // place to hang
       .sheet(isPresented:$hintpressed) {
         HintBottomSheetView(hint: tc.hint)
-          .padding()
+          //.padding()
           .presentationDetents([.fraction(0.33)])
       }
     }//end of scrollview
@@ -110,14 +130,14 @@ struct EssentialChallengeView: View {
 
 
 
-
+#Preview {  EssentialChallengeView(store: Store(initialState:ChallengesFeature.State()){ChallengesFeature()},
+                                   appState: SampleData.mock)
+.environmentObject(  LogEntryManager.mock)
+}
 #Preview {
   EssentialChallengeView(store: Store(initialState:ChallengesFeature.State()){ChallengesFeature()},
                                       appState: SampleData.mock)
     .environmentObject(  LogEntryManager.mock)
  .preferredColorScheme(.dark)
 }
-#Preview {  EssentialChallengeView(store: Store(initialState:ChallengesFeature.State()){ChallengesFeature()},
-                                   appState: SampleData.mock)
-.environmentObject(  LogEntryManager.mock)
-}
+
