@@ -34,6 +34,11 @@
 		889CEB202B8A72A900D88E38 /* q20kshare in Frameworks */ = {isa = PBXBuildFile; productRef = 889CEB1F2B8A72A900D88E38 /* q20kshare */; };
 		889CEB232B8A734100D88E38 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 889CEB222B8A734100D88E38 /* ComposableArchitecture */; };
 		889CEB262B8A739800D88E38 /* Vortex in Frameworks */ = {isa = PBXBuildFile; productRef = 889CEB252B8A739800D88E38 /* Vortex */; };
+		88CFB0A22B95008500AA9C41 /* PickerwDisable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CFB09D2B95008400AA9C41 /* PickerwDisable.swift */; };
+		88CFB0A32B95008500AA9C41 /* OnboardingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CFB09E2B95008400AA9C41 /* OnboardingScreen.swift */; };
+		88CFB0A42B95008500AA9C41 /* SimulatedMainAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CFB09F2B95008400AA9C41 /* SimulatedMainAppView.swift */; };
+		88CFB0A52B95008500AA9C41 /* AlienSplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CFB0A02B95008400AA9C41 /* AlienSplashView.swift */; };
+		88CFB0A62B95008500AA9C41 /* SampleOnboardingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CFB0A12B95008500AA9C41 /* SampleOnboardingApp.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +71,11 @@
 		889CEAFD2B8780CC00D88E38 /* WebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		889CEB272B8A76C700D88E38 /* qandao.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = qandao.entitlements; sourceTree = "<group>"; };
 		889CEB282B8A7A4800D88E38 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		88CFB09D2B95008400AA9C41 /* PickerwDisable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerwDisable.swift; sourceTree = "<group>"; };
+		88CFB09E2B95008400AA9C41 /* OnboardingScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingScreen.swift; sourceTree = "<group>"; };
+		88CFB09F2B95008400AA9C41 /* SimulatedMainAppView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimulatedMainAppView.swift; sourceTree = "<group>"; };
+		88CFB0A02B95008400AA9C41 /* AlienSplashView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlienSplashView.swift; sourceTree = "<group>"; };
+		88CFB0A12B95008500AA9C41 /* SampleOnboardingApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleOnboardingApp.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +114,7 @@
 			children = (
 				889CEB272B8A76C700D88E38 /* qandao.entitlements */,
 				889CEAF02B8780CC00D88E38 /* qandaoApp.swift */,
+				88CFB09C2B95003B00AA9C41 /* Onboarding */,
 				889CEAD42B8780BB00D88E38 /* AppState.swift */,
 				889CEAD62B8780BB00D88E38 /* LogManager.swift */,
 				889CEAD02B8780BB00D88E38 /* PersistentData.swift */,
@@ -147,6 +158,18 @@
 				889CEAFD2B8780CC00D88E38 /* WebView.swift */,
 			);
 			path = qanda;
+			sourceTree = "<group>";
+		};
+		88CFB09C2B95003B00AA9C41 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				88CFB09E2B95008400AA9C41 /* OnboardingScreen.swift */,
+				88CFB0A02B95008400AA9C41 /* AlienSplashView.swift */,
+				88CFB09D2B95008400AA9C41 /* PickerwDisable.swift */,
+				88CFB0A12B95008500AA9C41 /* SampleOnboardingApp.swift */,
+				88CFB09F2B95008400AA9C41 /* SimulatedMainAppView.swift */,
+			);
+			path = Onboarding;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -231,7 +254,10 @@
 			files = (
 				889CEB062B8780CC00D88E38 /* DetailedChallengeView.swift in Sources */,
 				889CEB032B8780CC00D88E38 /* ChallengesToolbarView.swift in Sources */,
+				88CFB0A62B95008500AA9C41 /* SampleOnboardingApp.swift in Sources */,
 				889CEADD2B8780BB00D88E38 /* LogManager.swift in Sources */,
+				88CFB0A52B95008500AA9C41 /* AlienSplashView.swift in Sources */,
+				88CFB0A42B95008500AA9C41 /* SimulatedMainAppView.swift in Sources */,
 				889CEADA2B8780BB00D88E38 /* RecoveryManager.swift in Sources */,
 				889CEB1B2B8780CC00D88E38 /* TopicsScreen.swift in Sources */,
 				889CEB132B8780CC00D88E38 /* SettingsScreen.swift in Sources */,
@@ -240,7 +266,9 @@
 				889CEB0C2B8780CC00D88E38 /* InterstitialScreen.swift in Sources */,
 				889CEB1A2B8780CC00D88E38 /* TopicRowView.swift in Sources */,
 				889CEB012B8780CC00D88E38 /* ChallengesNavbarView.swift in Sources */,
+				88CFB0A22B95008500AA9C41 /* PickerwDisable.swift in Sources */,
 				889CEADB2B8780BB00D88E38 /* AppState.swift in Sources */,
+				88CFB0A32B95008500AA9C41 /* OnboardingScreen.swift in Sources */,
 				889CEAD92B8780BB00D88E38 /* Subs.swift in Sources */,
 				889CEB022B8780CC00D88E38 /* ChallengesScreen.swift in Sources */,
 				889CEB082B8780CC00D88E38 /* EssentialChallengeView.swift in Sources */,
@@ -384,7 +412,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = qandao/qandao.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_ASSET_PATHS = "\"qandao/Preview Content\"";
 				DEVELOPMENT_TEAM = NEAY582ME4;
 				ENABLE_PREVIEWS = YES;
@@ -416,7 +444,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = qandao/qandao.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_ASSET_PATHS = "\"qandao/Preview Content\"";
 				DEVELOPMENT_TEAM = NEAY582ME4;
 				ENABLE_PREVIEWS = YES;

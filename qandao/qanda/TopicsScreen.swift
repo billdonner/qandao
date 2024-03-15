@@ -79,13 +79,16 @@ struct AppFeature  {
 
 struct TopicsScreen: View {
   
-  @Bindable var store:StoreOf<AppFeature>
+ // @Bindable var store:StoreOf<AppFeature>
   let appState: AppState
   let loginID:String
+  
   @Binding var gd:[GameData]
   @Binding var reset:Bool
   @EnvironmentObject var logManager: LogEntryManager
   @State  private var sheetchoice: TopicSheetChoices? = nil
+  
+  
   
   var body: some View {
 // let _ = print("TopicsView \(gd.count) topics")
@@ -150,8 +153,7 @@ struct TopicsScreen: View {
 }
 
 #Preview {
-  TopicsScreen(store:  Store(initialState: AppFeature.State())
-             { AppFeature() },
+  TopicsScreen(
               appState: SampleData.mock,
                loginID:"MY_LOGIN_UUID",
                gd:.constant(SampleData.gd),

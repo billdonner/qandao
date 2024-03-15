@@ -8,17 +8,7 @@
 import SwiftUI
 import q20kshare
 import ComposableArchitecture
-fileprivate struct  AlienSplashView: View {
-  //Note: - specifying aspectRatio breaks child views
-  let showMainView:Bool
-    var body: some View {
-        Image("Picture") // Use the custom launch image asset name here
-            .resizable()
-           // .aspectRatio(contentMode: .fill)
-            .ignoresSafeArea()
-            .opacity(showMainView ? 0 : 1)
-    }
-}
+
 
 struct OuterShellView : View {
   @EnvironmentObject var logManager: LogEntryManager
@@ -27,10 +17,10 @@ struct OuterShellView : View {
   let source: GameDataSource
   var appState = AppState.reloadOrInit()
   
-  let store=Store(initialState:AppFeature.State()) {
-    AppFeature()
-      ._printChanges()
-  }
+////  let store=Store(initialState:AppFeature.State()) {
+//    AppFeature()
+//      ._printChanges()
+//  }
   
   @State var gd:[GameData] = []
   @State var isDownloading = true //!!
@@ -45,16 +35,17 @@ struct OuterShellView : View {
   var body: some View {
     ZStack{
       VStack{
-        AlienSplashView(showMainView: showMainView) // Replace this with your own custom logo if desired
-        
-          .rotation3DEffect(.degrees(showMainView ? 180 : 0), axis: (x: 0, y: 1, z: 0))
+       //Color.red
+      AlienSplashView() // Replace this with your own custom logo if desired
+         .rotation3DEffect(.degrees(showMainView ? 180 : 0), axis: (x: 0, y: 1, z: 0))
           .opacity(showMainView ? 0 : 1)
       }
       VStack{
         ZStack {
           ProgressView("loading...")
             .opacity(isDownloading ? 1 : 0)
-          TopicsScreen(store:store, appState:appState,loginID:loginID,gd:$gd,reset:$reset )
+          //TODO: Go directly to challenges screen
+          TopicsScreen( appState:appState,loginID:loginID,gd:$gd,reset:$reset )
             .opacity(isDownloading ? 0 : 1)
         }.opacity(showMainView ? 1 : 0)
       }
