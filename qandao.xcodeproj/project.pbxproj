@@ -15,7 +15,7 @@
 		889CEADC2B8780BB00D88E38 /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889CEAD52B8780BB00D88E38 /* SampleData.swift */; };
 		889CEADD2B8780BB00D88E38 /* LogManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889CEAD62B8780BB00D88E38 /* LogManager.swift */; };
 		889CEB002B8780CC00D88E38 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 889CEADF2B8780CC00D88E38 /* Assets.xcassets */; };
-		889CEB012B8780CC00D88E38 /* ChallengesNavbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889CEAE02B8780CC00D88E38 /* ChallengesNavbarView.swift */; };
+		889CEB012B8780CC00D88E38 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889CEAE02B8780CC00D88E38 /* MenuView.swift */; };
 		889CEB022B8780CC00D88E38 /* ChallengesScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889CEAE12B8780CC00D88E38 /* ChallengesScreen.swift */; };
 		889CEB032B8780CC00D88E38 /* ChallengesToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889CEAE22B8780CC00D88E38 /* ChallengesToolbarView.swift */; };
 		889CEB062B8780CC00D88E38 /* DetailedChallengeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889CEAE52B8780CC00D88E38 /* DetailedChallengeView.swift */; };
@@ -51,7 +51,7 @@
 		889CEAD52B8780BB00D88E38 /* SampleData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
 		889CEAD62B8780BB00D88E38 /* LogManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogManager.swift; sourceTree = "<group>"; };
 		889CEADF2B8780CC00D88E38 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		889CEAE02B8780CC00D88E38 /* ChallengesNavbarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChallengesNavbarView.swift; sourceTree = "<group>"; };
+		889CEAE02B8780CC00D88E38 /* MenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		889CEAE12B8780CC00D88E38 /* ChallengesScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChallengesScreen.swift; sourceTree = "<group>"; };
 		889CEAE22B8780CC00D88E38 /* ChallengesToolbarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChallengesToolbarView.swift; sourceTree = "<group>"; };
 		889CEAE52B8780CC00D88E38 /* DetailedChallengeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailedChallengeView.swift; sourceTree = "<group>"; };
@@ -142,11 +142,11 @@
 				889CEAEA2B8780CC00D88E38 /* Info.plist */,
 				889CEADF2B8780CC00D88E38 /* Assets.xcassets */,
 				889CEAE12B8780CC00D88E38 /* ChallengesScreen.swift */,
-				889CEAE02B8780CC00D88E38 /* ChallengesNavbarView.swift */,
 				889CEAE22B8780CC00D88E38 /* ChallengesToolbarView.swift */,
 				889CEAE52B8780CC00D88E38 /* DetailedChallengeView.swift */,
 				889CEAE72B8780CC00D88E38 /* EssentialChallengeView.swift */,
 				889CEAEB2B8780CC00D88E38 /* InterstitialScreen.swift */,
+				889CEAE02B8780CC00D88E38 /* MenuView.swift */,
 				889CEAED2B8780CC00D88E38 /* OuterShellView.swift */,
 				889CEAF32B8780CC00D88E38 /* SettingsScreen.swift */,
 				889CEAF72B8780CC00D88E38 /* SupportViews.swift */,
@@ -265,7 +265,7 @@
 				889CEB1D2B8780CC00D88E38 /* WebView.swift in Sources */,
 				889CEB0C2B8780CC00D88E38 /* InterstitialScreen.swift in Sources */,
 				889CEB1A2B8780CC00D88E38 /* TopicRowView.swift in Sources */,
-				889CEB012B8780CC00D88E38 /* ChallengesNavbarView.swift in Sources */,
+				889CEB012B8780CC00D88E38 /* MenuView.swift in Sources */,
 				88CFB0A22B95008500AA9C41 /* PickerwDisable.swift in Sources */,
 				889CEADB2B8780BB00D88E38 /* AppState.swift in Sources */,
 				88CFB0A32B95008500AA9C41 /* OnboardingScreen.swift in Sources */,
