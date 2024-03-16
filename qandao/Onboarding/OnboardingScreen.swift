@@ -35,7 +35,9 @@ enum DifficultyLevel : String,CaseIterable,Identifiable {
 struct OnboardingView: View {
     var completion: () -> Void
     @State private var slideIndex = 0
-    @AppStorage("level")  var selectedLevel: DifficultyLevel = .medium
+  @State var chosenTopic : PickerItem? = nil
+  
+  @AppStorage("level")  var selectedLevel: DifficultyLevel = .medium
     @AppStorage("topic")  var selectedTopic : SampleTopics = .Movies
   func nextSlide() {
     if slideIndex == onboardingSlides.count - 1 {
@@ -82,7 +84,7 @@ struct OnboardingView: View {
 
               let items = SampleTopics.allCases.map { PickerItem(  name:$0.rawValue, isEnabled:$0.rawValue.count<7)} // TODO: fix this
 
-                PickerwDisable(prompt: "Select first topic:", items:items)
+                PickerwDisable(prompt: "Select first topic:", items:items,selectedItem: $chosenTopic)
                 
                 Button("Next") {
                   nextSlide()
@@ -102,18 +104,22 @@ struct OnboardingView: View {
     
     @ViewBuilder
     func singleSlideView(slide: OnboardingSlide) -> some View {
-        VStack {
+      let framesize = CGSize(width:300,height:300)
+       VStack {
           if slide.image == slide.image.lowercased() {
             Image(systemName: slide.image)
               .resizable()
               .scaledToFit()
-              .frame(width: 100, height: 100)
+             // .frame(width:.infinity,height:.infinity)
+              .frame(width: framesize.width,height:framesize.height)
               .padding()
           } else {
             Image(slide.image)
               .resizable()
               .scaledToFit()
-              .frame(width: 100, height: 100)
+            
+            .frame(width:.infinity,height:.infinity)
+              //.frame(width: framesize.width,height:framesize.height)
               .padding()
           }
             Text(slide.title)
@@ -161,15 +167,3 @@ struct DemoFullScreen: View {
 #Preview {
   DemoFullScreen()
 }
-//var items = [
-//     PickerItem(name: "Item 1", isEnabled: true),
-//     PickerItem(name: "Item 2", isEnabled: false), // This item will be visible but not selectable.
-//     PickerItem(name: "Item 3", isEnabled: true)
-// ]
-//"Picker("Select First Topic", selection: $selectedTopic) {
-//  // Loop through all topics
-//  ForEach(SampleTopics.allCases) { level in
-//    Text(level.rawValue).tag(level).font(.largeTitle)
-//  }
-//}
-//.pickerStyle(InlinePickerStyle())// You can adjust the picker style"

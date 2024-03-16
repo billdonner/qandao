@@ -9,11 +9,13 @@ import SwiftUI
 import q20kshare
 
 
-struct ChallengesNavbarView : View {
+struct MenuView : View {
   @EnvironmentObject var logManager: LogEntryManager
   let  appState:AppState
+  @Binding var gd: [GameData]
   @Environment(\.dismiss) var dismiss
   @State private var sheetchoice: ChallengeSheetChoices? = nil
+  @State private var reset:Bool = false
   
   var body: some View {
     VStack {
@@ -27,6 +29,10 @@ struct ChallengesNavbarView : View {
             ThumbsDownView(challenge: tc )
           case  .infoTapped :
             DetailedChallengeView(challenge: tc)
+          case .topicInfoTapped:
+            SimpleTopicsScreen(appState:appState,gd:$gd)
+          case .settingsTapped:
+            SettingsScreen(appState: appState, reset: $reset)
           }
         }
         .navigationBarItems(leading:  Button {
@@ -61,6 +67,20 @@ struct ChallengesNavbarView : View {
               } label: {
                 Label( "Thumbs Up"   ,systemImage:   "hand.thumbsup")
               }.disabled(appState.showing == .hint || appState.showing == .qanda)
+              Button{
+                withAnimation{
+                  sheetchoice = ChallengeSheetChoices(choice: .topicInfoTapped)
+                }
+              }  label: {
+                Label( "Topics Info"   ,systemImage:  "list.dash.header.rectangle")
+              }
+              Button{
+                withAnimation{
+                  sheetchoice = ChallengeSheetChoices(choice: .settingsTapped)
+                }
+              }  label: {
+                Label( "Settings Info"   ,systemImage:  "gear")
+              }
             }
           label: {
             Label ("...",systemImage: "ellipsis.circle")
@@ -72,6 +92,6 @@ struct ChallengesNavbarView : View {
 }
 struct ChallengesNavbarView_Previews: PreviewProvider {
   static var previews: some View {
-    ChallengesNavbarView(appState: SampleData.mock).environmentObject(  LogEntryManager.mock)
+    MenuView(appState: SampleData.mock, gd:.constant(SampleData.gd)).environmentObject(  LogEntryManager.mock)
   }
 }

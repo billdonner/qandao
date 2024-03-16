@@ -14,9 +14,9 @@ struct PickerItem: Identifiable, Hashable {
 }
 
 struct PickerwDisable: View {
-  let prompt:String
+let prompt:String
  var items:[PickerItem]
-  @State  var   selectedItem: PickerItem?
+  @Binding  var   selectedItem: PickerItem?
 
     var body: some View {
             Picker(prompt, selection: $selectedItem) {
@@ -43,5 +43,5 @@ struct PickerwDisable: View {
   PickerwDisable(prompt: "Foobar? ", items: [PickerItem(name: "Theatre",isEnabled:false),
                                              PickerItem(name: "Music",isEnabled:true),
                                              PickerItem(name: "Cinema",isEnabled:false),
-                                             PickerItem(name: "Sport",isEnabled:true)])
+                                             PickerItem(name: "Sport",isEnabled:true)], selectedItem: .constant(nil))
 }

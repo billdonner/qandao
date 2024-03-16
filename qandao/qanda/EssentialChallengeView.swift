@@ -7,7 +7,7 @@
 
 import SwiftUI
 import q20kshare
-import ComposableArchitecture
+//import ComposableArchitecture
 
 
 struct HintBottomSheetView : View {
@@ -22,7 +22,7 @@ struct HintBottomSheetView : View {
       Spacer()
     }
  .frame(maxWidth:.infinity)
-    .background(.blue).opacity(0.4)
+    .background(.blue)//.opacity(0.4)
     .foregroundColor(.white)
    // .ignoresSafeArea()
   }
@@ -30,7 +30,7 @@ struct HintBottomSheetView : View {
 
 
 struct EssentialChallengeView: View {
-  @Bindable var store: StoreOf<ChallengesFeature>
+ // @Bindable var store: StoreOf<ChallengesFeature>
   let appState: AppState
   @State private var hintpressed = false
   var body: some View {
@@ -130,12 +130,13 @@ struct EssentialChallengeView: View {
 
 
 
-#Preview {  EssentialChallengeView(store: Store(initialState:ChallengesFeature.State()){ChallengesFeature()},
+#Preview {  
+  EssentialChallengeView(//store: Store(initialState:ChallengesFeature.State()){ChallengesFeature()},
                                    appState: SampleData.mock)
 .environmentObject(  LogEntryManager.mock)
 }
 #Preview {
-  EssentialChallengeView(store: Store(initialState:ChallengesFeature.State()){ChallengesFeature()},
+  EssentialChallengeView(//store: Store(initialState:ChallengesFeature.State()){ChallengesFeature()},
                                       appState: SampleData.mock)
     .environmentObject(  LogEntryManager.mock)
  .preferredColorScheme(.dark)

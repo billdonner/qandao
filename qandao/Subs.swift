@@ -130,6 +130,8 @@ enum ChallengeSheetActions {
   case thumbsDownTapped
   case thumbsUpTapped
   case infoTapped
+  case topicInfoTapped
+  case settingsTapped
  // case hintTapped
 }
 struct ChallengeSheetChoices:Identifiable {
@@ -163,7 +165,19 @@ extension UIApplication {
     return  Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String
   }
 }
+struct  TintModifier: ViewModifier {
+    @State private var shouldApplyTint = Bool.random()
+    func body(content: Content) -> some View {
+      content //.background(shouldApplyTint ? Color.clear : Color.gray)
+          .opacity(shouldApplyTint ? 1.0:0.5)
+    }
+}
 
+extension View {
+    func applyTintWithProbability() -> some View {
+        self.modifier(TintModifier())
+    }
+}
 
 // Print JSON to Console
 func printJSon(_ g:GameData) {

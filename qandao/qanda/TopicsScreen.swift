@@ -7,11 +7,13 @@
 
 import SwiftUI
 import q20kshare
-import ComposableArchitecture
+//import ComposableArchitecture
 
 // MARK :- Build Topics Page
 
 /* at this point all game an topic data is set up and we can behave as in tca */
+
+/*
 @Reducer
 struct AppFeature  {
   @ObservableState
@@ -76,6 +78,36 @@ struct AppFeature  {
     }
   }
 }
+ */
+struct SimpleTopicsScreen: View {
+  let appState: AppState
+  @Binding var gd:[GameData]
+  @EnvironmentObject var logManager: LogEntryManager
+  var body: some View {
+    NavigationStack {
+      ScrollView {
+        ForEach(gd, id: \.self) {   gameData  in
+          if let index = appState.indexForTopic(gameData.topic),
+             let sbt = appState.scoresByTopic[gameData.topic] {
+            TopicRowView(appState:appState,sbt:sbt,gameData:gameData,logManager:logManager )
+              .tag(index)
+              .disabled( gameData.challenges.count <= sbt.highWaterMark )
+              .opacity(gameData.challenges.count > sbt.highWaterMark ? 1.0 : 0.4)
+              }
+          }
+        }
+        Spacer()
+      .navigationBarTitle("Q20K Score \(appState.grandScore)")
+    }
+      Spacer()
+    }
+}
+#Preview("Simple Topics Screen") {
+  SimpleTopicsScreen(
+              appState: SampleData.mock,
+               gd:.constant(SampleData.gd)  )
+      .environmentObject(LogEntryManager.mock)
+}
 
 struct TopicsScreen: View {
   
@@ -103,10 +135,6 @@ struct TopicsScreen: View {
       }.padding(.horizontal)
       ScrollView {
         ForEach(gd, id: \.self) {   gameData  in
-        // let _ = print("*** \(gameData.topic) ***")
-        //  let _ = print("* index \(String(describing:
-          // let _ = print("* sbt \(String(describing: appState.scoresByTopic[gameData.topic]))")
-          
           if let index = appState.indexForTopic(gameData.topic),
              let sbt = appState.scoresByTopic[gameData.topic] {
             TopicRowView(appState:appState,sbt:sbt,gameData:gameData,logManager:logManager )
@@ -146,7 +174,9 @@ struct TopicsScreen: View {
       case .longPressTapped( _) :
         TopicInfoView(gameDatum:gd, appState: appState)
       case .rowDetailsTapped:
-          ChallengesScreen(appState: appState, backgroundPic:"pencil", loginID: loginID).environmentObject( logManager)
+          ChallengesScreen(appState: appState,
+                           gd: .constant(SampleData.gd),
+                           backgroundPic:"pencil", loginID: loginID).environmentObject( logManager)
       }
     }
   } 
@@ -159,20 +189,4 @@ struct TopicsScreen: View {
                gd:.constant(SampleData.gd),
                reset:.constant(false)  )
       .environmentObject(LogEntryManager.mock)
-}
-
-
-
-struct  TintModifier: ViewModifier {
-    @State private var shouldApplyTint = Bool.random()
-    func body(content: Content) -> some View {
-      content //.background(shouldApplyTint ? Color.clear : Color.gray)
-          .opacity(shouldApplyTint ? 1.0:0.5)
-    }
-}
-
-extension View {
-    func applyTintWithProbability() -> some View {
-        self.modifier(TintModifier())
-    }
 }

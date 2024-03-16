@@ -7,7 +7,7 @@
 
 import SwiftUI
 import q20kshare
-import ComposableArchitecture
+//import ComposableArchitecture
 
 
 struct OuterShellView : View {

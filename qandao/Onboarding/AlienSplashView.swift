@@ -11,16 +11,7 @@ struct FullMainView:View {
     Color.red.ignoresSafeArea()
   }
 }
-struct  AlienSplashView: View {
- // let showMainView:Bool
-    var body: some View {
-        Image("Picture") // Use the custom launch image asset
-        .resizable()
-          //  .aspectRatio(contentMode: .fill)
-          .ignoresSafeArea()
-           // .opacity(showMainView ? 0 : 1)
-    }
-}
+
  
 struct DemoSplashScreen: View {
     @State private var showMainView = false
@@ -41,7 +32,16 @@ struct DemoSplashScreen: View {
     }
 }
 
-
+struct  AlienSplashView: View {
+ // let showMainView:Bool
+    var body: some View {
+        Image("Picture") // Use the custom launch image asset
+        .resizable()
+          //  .aspectRatio(contentMode: .fill)
+          .ignoresSafeArea()
+           // .opacity(showMainView ? 0 : 1)
+    }
+}
  
 
 #Preview {

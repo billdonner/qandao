@@ -25,12 +25,7 @@ struct SimulatedMainAppView: View {
       }
     }
     
-//    @State var items = [
-//        PickerItem(name: "Item 1", isEnabled: true),
-//        PickerItem(name: "Item 2", isEnabled: false), // This item will be visible but not selectable.
-//        PickerItem(name: "Item 3", isEnabled: true)
-//    ]
-//    PickerwDisable(prompt: "Pick first topic", items:$items)
+
   }
 }
 

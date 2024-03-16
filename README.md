@@ -1,4 +1,6 @@
 #  QANDAO - revised test app for Q20K
+version 0.7.19 back to testflight
+
 version 0.7.18 fixed opening flip transition
 
 version 0.7.17 ready for new topics from editorial 

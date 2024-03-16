@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8824EF0B2BA6854800B8522E /* q20kshare in Frameworks */ = {isa = PBXBuildFile; productRef = 8824EF0A2BA6854800B8522E /* q20kshare */; };
+		8824EF0D2BA6856600B8522E /* Vortex in Frameworks */ = {isa = PBXBuildFile; productRef = 8824EF0C2BA6856600B8522E /* Vortex */; };
 		889CEACA2B87809C00D88E38 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 889CEAC92B87809C00D88E38 /* Preview Assets.xcassets */; };
 		889CEAD72B8780BB00D88E38 /* PersistentData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889CEAD02B8780BB00D88E38 /* PersistentData.swift */; };
 		889CEAD92B8780BB00D88E38 /* Subs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889CEAD22B8780BB00D88E38 /* Subs.swift */; };
@@ -15,7 +17,7 @@
 		889CEADC2B8780BB00D88E38 /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889CEAD52B8780BB00D88E38 /* SampleData.swift */; };
 		889CEADD2B8780BB00D88E38 /* LogManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889CEAD62B8780BB00D88E38 /* LogManager.swift */; };
 		889CEB002B8780CC00D88E38 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 889CEADF2B8780CC00D88E38 /* Assets.xcassets */; };
-		889CEB012B8780CC00D88E38 /* ChallengesNavbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889CEAE02B8780CC00D88E38 /* ChallengesNavbarView.swift */; };
+		889CEB012B8780CC00D88E38 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889CEAE02B8780CC00D88E38 /* MenuView.swift */; };
 		889CEB022B8780CC00D88E38 /* ChallengesScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889CEAE12B8780CC00D88E38 /* ChallengesScreen.swift */; };
 		889CEB032B8780CC00D88E38 /* ChallengesToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889CEAE22B8780CC00D88E38 /* ChallengesToolbarView.swift */; };
 		889CEB062B8780CC00D88E38 /* DetailedChallengeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889CEAE52B8780CC00D88E38 /* DetailedChallengeView.swift */; };
@@ -31,9 +33,6 @@
 		889CEB1B2B8780CC00D88E38 /* TopicsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889CEAFB2B8780CC00D88E38 /* TopicsScreen.swift */; };
 		889CEB1C2B8780CC00D88E38 /* VortexScreenOverlays.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889CEAFC2B8780CC00D88E38 /* VortexScreenOverlays.swift */; };
 		889CEB1D2B8780CC00D88E38 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889CEAFD2B8780CC00D88E38 /* WebView.swift */; };
-		889CEB202B8A72A900D88E38 /* q20kshare in Frameworks */ = {isa = PBXBuildFile; productRef = 889CEB1F2B8A72A900D88E38 /* q20kshare */; };
-		889CEB232B8A734100D88E38 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 889CEB222B8A734100D88E38 /* ComposableArchitecture */; };
-		889CEB262B8A739800D88E38 /* Vortex in Frameworks */ = {isa = PBXBuildFile; productRef = 889CEB252B8A739800D88E38 /* Vortex */; };
 		88CFB0A22B95008500AA9C41 /* PickerwDisable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CFB09D2B95008400AA9C41 /* PickerwDisable.swift */; };
 		88CFB0A32B95008500AA9C41 /* OnboardingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CFB09E2B95008400AA9C41 /* OnboardingScreen.swift */; };
 		88CFB0A42B95008500AA9C41 /* SimulatedMainAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CFB09F2B95008400AA9C41 /* SimulatedMainAppView.swift */; };
@@ -51,7 +50,7 @@
 		889CEAD52B8780BB00D88E38 /* SampleData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
 		889CEAD62B8780BB00D88E38 /* LogManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogManager.swift; sourceTree = "<group>"; };
 		889CEADF2B8780CC00D88E38 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		889CEAE02B8780CC00D88E38 /* ChallengesNavbarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChallengesNavbarView.swift; sourceTree = "<group>"; };
+		889CEAE02B8780CC00D88E38 /* MenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		889CEAE12B8780CC00D88E38 /* ChallengesScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChallengesScreen.swift; sourceTree = "<group>"; };
 		889CEAE22B8780CC00D88E38 /* ChallengesToolbarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChallengesToolbarView.swift; sourceTree = "<group>"; };
 		889CEAE52B8780CC00D88E38 /* DetailedChallengeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailedChallengeView.swift; sourceTree = "<group>"; };
@@ -83,9 +82,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				889CEB232B8A734100D88E38 /* ComposableArchitecture in Frameworks */,
-				889CEB202B8A72A900D88E38 /* q20kshare in Frameworks */,
-				889CEB262B8A739800D88E38 /* Vortex in Frameworks */,
+				8824EF0D2BA6856600B8522E /* Vortex in Frameworks */,
+				8824EF0B2BA6854800B8522E /* q20kshare in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -142,11 +140,11 @@
 				889CEAEA2B8780CC00D88E38 /* Info.plist */,
 				889CEADF2B8780CC00D88E38 /* Assets.xcassets */,
 				889CEAE12B8780CC00D88E38 /* ChallengesScreen.swift */,
-				889CEAE02B8780CC00D88E38 /* ChallengesNavbarView.swift */,
 				889CEAE22B8780CC00D88E38 /* ChallengesToolbarView.swift */,
 				889CEAE52B8780CC00D88E38 /* DetailedChallengeView.swift */,
 				889CEAE72B8780CC00D88E38 /* EssentialChallengeView.swift */,
 				889CEAEB2B8780CC00D88E38 /* InterstitialScreen.swift */,
+				889CEAE02B8780CC00D88E38 /* MenuView.swift */,
 				889CEAED2B8780CC00D88E38 /* OuterShellView.swift */,
 				889CEAF32B8780CC00D88E38 /* SettingsScreen.swift */,
 				889CEAF72B8780CC00D88E38 /* SupportViews.swift */,
@@ -189,9 +187,8 @@
 			);
 			name = qandao;
 			packageProductDependencies = (
-				889CEB1F2B8A72A900D88E38 /* q20kshare */,
-				889CEB222B8A734100D88E38 /* ComposableArchitecture */,
-				889CEB252B8A739800D88E38 /* Vortex */,
+				8824EF0A2BA6854800B8522E /* q20kshare */,
+				8824EF0C2BA6856600B8522E /* Vortex */,
 			);
 			productName = qandao;
 			productReference = 889CEABF2B87809C00D88E38 /* qandao.app */;
@@ -265,7 +262,7 @@
 				889CEB1D2B8780CC00D88E38 /* WebView.swift in Sources */,
 				889CEB0C2B8780CC00D88E38 /* InterstitialScreen.swift in Sources */,
 				889CEB1A2B8780CC00D88E38 /* TopicRowView.swift in Sources */,
-				889CEB012B8780CC00D88E38 /* ChallengesNavbarView.swift in Sources */,
+				889CEB012B8780CC00D88E38 /* MenuView.swift in Sources */,
 				88CFB0A22B95008500AA9C41 /* PickerwDisable.swift in Sources */,
 				889CEADB2B8780BB00D88E38 /* AppState.swift in Sources */,
 				88CFB0A32B95008500AA9C41 /* OnboardingScreen.swift in Sources */,
@@ -412,7 +409,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = qandao/qandao.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 19;
 				DEVELOPMENT_ASSET_PATHS = "\"qandao/Preview Content\"";
 				DEVELOPMENT_TEAM = NEAY582ME4;
 				ENABLE_PREVIEWS = YES;
@@ -444,7 +441,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = qandao/qandao.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 19;
 				DEVELOPMENT_ASSET_PATHS = "\"qandao/Preview Content\"";
 				DEVELOPMENT_TEAM = NEAY582ME4;
 				ENABLE_PREVIEWS = YES;
@@ -519,17 +516,12 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		889CEB1F2B8A72A900D88E38 /* q20kshare */ = {
+		8824EF0A2BA6854800B8522E /* q20kshare */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 889CEB1E2B8A72A900D88E38 /* XCRemoteSwiftPackageReference "q20kshare" */;
 			productName = q20kshare;
 		};
-		889CEB222B8A734100D88E38 /* ComposableArchitecture */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 889CEB212B8A734100D88E38 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
-			productName = ComposableArchitecture;
-		};
-		889CEB252B8A739800D88E38 /* Vortex */ = {
+		8824EF0C2BA6856600B8522E /* Vortex */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 889CEB242B8A739800D88E38 /* XCRemoteSwiftPackageReference "Vortex" */;
 			productName = Vortex;

@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import ComposableArchitecture
+//import ComposableArchitecture
 import q20kshare
 
 
@@ -112,7 +112,7 @@ struct InterstitialScreen4: View {
 
 
 struct TopicsChooserView: View {
-  @Bindable var store:StoreOf<AppFeature>
+ // @Bindable var store:StoreOf<AppFeature>
   let appState: AppState
   let loginID:String
   @Binding var gd:[GameData]
@@ -163,7 +163,7 @@ Pick any 3 Topics and hit "GO" when ready to play.
 
 
 struct TopicsChooser2View: View {
-  @Bindable var store:StoreOf<AppFeature>
+ // @Bindable var store:StoreOf<AppFeature>
   let appState: AppState
   let loginID:String
   @Binding var gd:[GameData]
@@ -222,8 +222,8 @@ struct SplashView : View {
 }
 
 #Preview {
-  TopicsChooserView(store:  Store(initialState: AppFeature.State())
-             { AppFeature() },
+ TopicsChooserView(//store:  Store(initialState: AppFeature.State())
+//             { AppFeature() },
                appState: SampleData.mock,
                loginID:"MY_LOGIN_UUID",
                gd:.constant(SampleData.gd),
@@ -232,8 +232,8 @@ struct SplashView : View {
 }
 
 #Preview {
-  TopicsChooser2View(store:  Store(initialState: AppFeature.State())
-             { AppFeature() },
+  TopicsChooser2View(//store:  Store(initialState: AppFeature.State())
+            // { AppFeature() },
                appState: SampleData.mock,
                loginID:"MY_LOGIN_UUID",
                gd:.constant(SampleData.gd),
