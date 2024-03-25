@@ -13,7 +13,6 @@ import SwiftUI
 enum SampleTopics : String,CaseIterable,Identifiable {
  var id: String {self.rawValue}
  case Movies,Music,Television,History,Politics,Space,Underwater,Stocks,Trump
-
 }
 
 // Define a simple base of slides for usage within onboarding presentation

@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8824EF0B2BA6854800B8522E /* q20kshare in Frameworks */ = {isa = PBXBuildFile; productRef = 8824EF0A2BA6854800B8522E /* q20kshare */; };
-		8824EF0D2BA6856600B8522E /* Vortex in Frameworks */ = {isa = PBXBuildFile; productRef = 8824EF0C2BA6856600B8522E /* Vortex */; };
+		8812BD3A2BB23C2B001E8D42 /* q20kshare in Frameworks */ = {isa = PBXBuildFile; productRef = 8812BD392BB23C2B001E8D42 /* q20kshare */; };
+		8812BD3C2BB23C3B001E8D42 /* Vortex in Frameworks */ = {isa = PBXBuildFile; productRef = 8812BD3B2BB23C3B001E8D42 /* Vortex */; };
 		889CEACA2B87809C00D88E38 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 889CEAC92B87809C00D88E38 /* Preview Assets.xcassets */; };
 		889CEAD72B8780BB00D88E38 /* PersistentData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889CEAD02B8780BB00D88E38 /* PersistentData.swift */; };
 		889CEAD92B8780BB00D88E38 /* Subs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889CEAD22B8780BB00D88E38 /* Subs.swift */; };
@@ -82,8 +82,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8824EF0D2BA6856600B8522E /* Vortex in Frameworks */,
-				8824EF0B2BA6854800B8522E /* q20kshare in Frameworks */,
+				8812BD3C2BB23C3B001E8D42 /* Vortex in Frameworks */,
+				8812BD3A2BB23C2B001E8D42 /* q20kshare in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -187,8 +187,8 @@
 			);
 			name = qandao;
 			packageProductDependencies = (
-				8824EF0A2BA6854800B8522E /* q20kshare */,
-				8824EF0C2BA6856600B8522E /* Vortex */,
+				8812BD392BB23C2B001E8D42 /* q20kshare */,
+				8812BD3B2BB23C3B001E8D42 /* Vortex */,
 			);
 			productName = qandao;
 			productReference = 889CEABF2B87809C00D88E38 /* qandao.app */;
@@ -516,12 +516,12 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		8824EF0A2BA6854800B8522E /* q20kshare */ = {
+		8812BD392BB23C2B001E8D42 /* q20kshare */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 889CEB1E2B8A72A900D88E38 /* XCRemoteSwiftPackageReference "q20kshare" */;
 			productName = q20kshare;
 		};
-		8824EF0C2BA6856600B8522E /* Vortex */ = {
+		8812BD3B2BB23C3B001E8D42 /* Vortex */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 889CEB242B8A739800D88E38 /* XCRemoteSwiftPackageReference "Vortex" */;
 			productName = Vortex;

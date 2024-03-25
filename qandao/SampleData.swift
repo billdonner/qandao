@@ -108,6 +108,10 @@ struct SampleData {
                    GameData(topic: topicName4, challenges: challenges4),
                    GameData(topic: topicName5, challenges: challenges5),]
   
+  static let topics = [topic1,topic2,topic3,topic4,topic5]
+  
+  static let td = TopicGroup(description: "mockdata", version: "0.0.1", author:"wld", date: "999", topics: topics)
+  
   static let mock = AppState(
     currentTopic:topicName1,
     isLoading: true,
@@ -115,8 +119,8 @@ struct SampleData {
     showing:.qanda,
     isTimerRunning: false,
     timerCount: 0,
-    gameDatum:gd )
-  
+    playData :PlayData(topicData: td, gameDatum: gd, playDataId: "xyz123", blendDate: Date.now)
+    )
   
   static func makeMock()  -> AppState? {
     
@@ -145,7 +149,7 @@ struct SampleData {
                           showing:.qanda,
                           isTimerRunning: false,
                           timerCount: 0,
-                          gameDatum:playData.gameDatum)
+                         playData: playData)
     }   else {
       let _ = print("Mock Could not restore playData")
     }

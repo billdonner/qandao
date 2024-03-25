@@ -24,13 +24,11 @@ struct OuterShellView : View {
 //      ._printChanges()
 //  }
   
-  @State var gd:[GameData] = []
+  @State var playData:PlayData = PlayData.zero
   @State var isDownloading = true //!!
   @State var terror:String = ""
   @State var showAlert = false
   @State var reset = false
-  
-  
   
   @State private var showMainView = false
   
@@ -48,15 +46,13 @@ struct OuterShellView : View {
             .opacity(isDownloading ? 1 : 0)
           //TODO: MAYBE Go directly to challenges screen
               if onboardingCompleted {
-                TopicsScreen( appState:appState,loginID:loginID,gd:$gd,reset:$reset )
+                TopicsScreen( appState:appState,loginID:loginID,pd:playData,reset:$reset )
                   .opacity(isDownloading ? 0 : 1).environmentObject(logManager)
             } else {
                OnboardingView { onboardingCompleted = true }
             }
         }.opacity(showMainView ? 1 : 0)
       }
-      
-
     }
     .alert ("error - \(terror)",isPresented: $showAlert){
       Button("OK", role: .cancel) { }
@@ -66,14 +62,12 @@ struct OuterShellView : View {
         showMainView = true // Start the transition
       }
       do {
-  
         // send a log message indicating we are getting started
         sendLoginMessage(logManager, loginID: loginID, source: source)
         // go fetch everything we need to get started from the indicated source
         let (appstuff,gamestuff) =  try await RecoveryManager.restoreAll(source:source )
-        gd = gamestuff
         //fixup appstate and lets get started with tca
-        appState.reloadStuff (appstuff,gd:gamestuff)
+        appState.reloadStuff (appstuff,pd:gamestuff)
         isDownloading = false
       } catch {
         isDownloading = false

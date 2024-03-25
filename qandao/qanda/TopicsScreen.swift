@@ -115,7 +115,7 @@ struct TopicsScreen: View {
   let appState: AppState
   let loginID:String
   
-  @Binding var gd:[GameData]
+  let pd:PlayData
   @Binding var reset:Bool
   @EnvironmentObject var logManager: LogEntryManager
   @State  private var sheetchoice: TopicSheetChoices? = nil
@@ -123,7 +123,7 @@ struct TopicsScreen: View {
   
   
   var body: some View {
-// let _ = print("TopicsView \(gd.count) topics")
+    let _ = print("TopicsView \(pd.gameDatum.count) topics")
     NavigationStack {
       HStack {
         Text("Elapsed \(String(format:"%4.f",appState.grandTime))").font(.headline)
@@ -134,7 +134,7 @@ struct TopicsScreen: View {
         }
       }.padding(.horizontal)
       ScrollView {
-        ForEach(gd, id: \.self) {   gameData  in
+        ForEach(pd.gameDatum, id: \.self) {   gameData  in
           if let index = appState.indexForTopic(gameData.topic),
              let sbt = appState.scoresByTopic[gameData.topic] {
             TopicRowView(appState:appState,sbt:sbt,gameData:gameData,logManager:logManager )
@@ -172,7 +172,7 @@ struct TopicsScreen: View {
       case .settingsTapped :
         SettingsScreen (appState:appState, reset: $reset)//????
       case .longPressTapped( _) :
-        TopicInfoView(gameDatum:gd, appState: appState)
+        TopicInfoView(gameDatum:pd.gameDatum, appState: appState)
       case .rowDetailsTapped:
           ChallengesScreen(appState: appState,
                            gd: .constant(SampleData.gd),
@@ -186,7 +186,7 @@ struct TopicsScreen: View {
   TopicsScreen(
               appState: SampleData.mock,
                loginID:"MY_LOGIN_UUID",
-               gd:.constant(SampleData.gd),
+              pd:SampleData.mock.playData,
                reset:.constant(false)  )
       .environmentObject(LogEntryManager.mock)
 }

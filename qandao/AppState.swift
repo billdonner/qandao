@@ -8,10 +8,19 @@
 import Foundation
 import q20kshare
 
-
+extension TopicGroup {
+  static var zero:TopicGroup {
+    TopicGroup(description: "zero", version: "0.0.0", author: "any", date: "9999", topics: [])
+  }
+}
+extension PlayData {
+  static var zero: PlayData {
+    PlayData(topicData:TopicGroup(description: "", version: "0.0.0", author: "", date: "999", topics: []),gameDatum: [],playDataId: "asdf",blendDate: .now)
+  }
+}
 @Observable final class AppState : ObservableObject  {
- required init( gameDatum: [GameData]) {
-    self.gameDatum = gameDatum
+  required init(playData:PlayData) {
+    self.playData = playData
   }
   var remoteContentID = ""
   var scoresByTopic:[String:TopicGroupData] = [:]
@@ -20,11 +29,11 @@ import q20kshare
   
   // gameDatum is never persisted
   @ObservationIgnored
-  var gameDatum:[GameData]=[]
-
+  var playData:PlayData = PlayData(topicData:TopicGroup.zero,gameDatum: [],playDataId: "xdlkvj",blendDate:.now)
+ 
   
-  func reloadStuff (_ t:AppState,gd:[GameData]) {
-    self.gameDatum =  gd
+  func reloadStuff (_ t:AppState,pd:PlayData) {
+    self.playData = pd
     self.showing = t.showing
     self.scoresByTopic = t.scoresByTopic
     self.remoteContentID = t.remoteContentID
@@ -41,14 +50,14 @@ import q20kshare
         showing: ShowingState = .qanda,
         isTimerRunning: Bool = false,
         timerCount: Int = 0 ,
-        gameDatum:[GameData])
+        playData:PlayData)
   
   {
     self.scoresByTopic = scoresByTopic
     self.remoteContentID = remoteContentID
     self.showing = showing
     self.currentTopicIndex = indexForTopic(currentTopic) ?? 0// fix this
-    self.gameDatum = gameDatum
+    self.playData = playData
     self.clearAllScores()
   }
   // this is the main restoral point from the outside app
@@ -61,7 +70,7 @@ static func reloadOrInit() -> AppState {
       return x
     }
   // if that fails just init the world from scratch
-    return AppState.init(gameDatum:[])
+  return AppState.init(playData: PlayData.zero)
   }
   
   
@@ -69,8 +78,8 @@ static func reloadOrInit() -> AppState {
   
   var currentTopic : String {
     //gameDatum might not yet have data so return ""
-    if gameDatum.count > 0 {
-      return gameDatum[currentTopicIndex].topic
+    if playData.gameDatum.count > 0 {
+      return playData.gameDatum[currentTopicIndex].topic
     }
     return "NOTYET"
   }
@@ -97,8 +106,8 @@ static func reloadOrInit() -> AppState {
     scoresByTopic[currentTopic]?.questionMax ?? 0//-1
   }
   var thisChallenge: Challenge {
-    if gameDatum.count > 0 {
-      return gameDatum[currentTopicIndex].challenges[questionNumber]
+    if playData.gameDatum.count > 0 {
+      return playData.gameDatum[currentTopicIndex].challenges[questionNumber]
     } else {
       return Challenge.mock
     }
@@ -115,7 +124,7 @@ static func reloadOrInit() -> AppState {
       return g.challenges.count <= sbt.highWaterMark
     }
     
-    for g in gameDatum {
+    for g in playData.gameDatum {
       if !isAnswered(g) {
         allans = false
         break
@@ -136,9 +145,9 @@ static func reloadOrInit() -> AppState {
       self.currentTopicIndex = idx
     //  self.timerCount = 0
   //    self.isTimerRunning = false
-      let td:TopicGroupData? = self.scoresByTopic[gameDatum[idx].topic]
+      let td:TopicGroupData? = self.scoresByTopic[playData.gameDatum[idx].topic]
       if let td = td {
-        self.scoresByTopic[gameDatum[idx].topic] = TopicGroupData(topic: td.topic, outcomes: td.outcomes, time:td.time, questionNumber: td.questionNumber)
+        self.scoresByTopic[playData.gameDatum[idx].topic] = TopicGroupData(topic: td.topic, outcomes: td.outcomes, time:td.time, questionNumber: td.questionNumber)
       }
       return .none
       
@@ -155,7 +164,7 @@ static func reloadOrInit() -> AppState {
     case .cancelButtonTapped:
       return .none  
     case .nextButtonTapped:
-      if self.questionNumber < gameDatum[self.currentTopicIndex].challenges.count - 1 {
+      if self.questionNumber < playData.gameDatum[self.currentTopicIndex].challenges.count - 1 {
         self.setQuestionNumber(self.questionNumber + 1 )
       //  self.timerCount = 0
         self.showing = .qanda
@@ -211,10 +220,10 @@ static func reloadOrInit() -> AppState {
   }
   
  private  func answerButtonTapped( _ idx:Int) {
-    let thisChallenge = gameDatum[self.currentTopicIndex].challenges[self.questionNumber]
+   let thisChallenge = playData.gameDatum[self.currentTopicIndex].challenges[self.questionNumber]
     let t =  thisChallenge.correct == thisChallenge.answers[idx]
-    var outcomes = self.scoresByTopic[self.currentTopic]?.outcomes ?? Array(repeating:.unplayed,count:gameDatum[self.currentTopicIndex].challenges.count)
-    let times = self.scoresByTopic[self.currentTopic]?.time ?? Array(repeating:0.0,count:gameDatum[self.currentTopicIndex].challenges.count)
+   var outcomes = self.scoresByTopic[self.currentTopic]?.outcomes ?? Array(repeating:.unplayed,count:playData.gameDatum[self.currentTopicIndex].challenges.count)
+   let times = self.scoresByTopic[self.currentTopic]?.time ?? Array(repeating:0.0,count:playData.gameDatum[self.currentTopicIndex].challenges.count)
     let oc =  t ? ChallengeOutcomes.playedCorrectly : .playedIncorrectly
     // if unplayed
     if outcomes [self.questionNumber] == ChallengeOutcomes.unplayed {
@@ -237,7 +246,7 @@ static func reloadOrInit() -> AppState {
   func indexForTopic(_ topic:String)  -> Int? {
     var idx = 0
   // print("*** **** \(gameDatum.count) ***")
-    for g in gameDatum {
+    for g in playData.gameDatum {
       if g.topic == topic { return idx}
       else { idx += 1 }
     }
@@ -283,7 +292,7 @@ static func reloadOrInit() -> AppState {
 
   private func clearAllScores() {
     self.scoresByTopic = [:]
-    for gd in  gameDatum {
+    for gd in  playData.gameDatum {
       self.scoresByTopic[gd.topic]=TopicGroupData(topic:gd.topic,
                                              outcomes:Array(repeating: ChallengeOutcomes.unplayed,
                                                             count: gd.challenges.count),

@@ -11,10 +11,10 @@ import q20kshare
 
 class RecoveryManager {
   
-  static func restoreAll(source: GameDataSource) async throws -> (AppState,[GameData]) {
+  static func restoreAll(source: GameDataSource) async throws -> (AppState,PlayData) {
     if let playData = try await restorePlayData(source: source){
       let appstate =  try await restoreEverything(pd: playData)
-      return (appstate,playData.gameDatum)
+      return (appstate,playData)
     }
     throw PumpingErrors.badInputURL
   }
@@ -36,9 +36,11 @@ class RecoveryManager {
       do {
         let pd = try JSONDecoder().decode(PlayData.self,from:tada)
         let elapsed = Date().timeIntervalSince(start_time)
+        print("************")
         print("Downloaded \(pd.playDataId) in \(elapsed) secs from \(url)")
         let challengeCount = pd.gameDatum.reduce(0,{$0 + $1.challenges.count})
         print("Loaded"," \(pd.gameDatum.count) topics, \(challengeCount) challenges in \(elapsed) secs")
+        print("************")
         return pd
       }
       catch {
@@ -95,8 +97,8 @@ class RecoveryManager {
     }
   }
   
-  private static func initializeAppState(id:String,gd:[GameData]) {
-    let newAppState = AppState(gameDatum: gd)
+  private static func initializeAppState(id:String,pd:PlayData) {
+    let newAppState = AppState(playData:pd)
     newAppState.remoteContentID = id
     do {
       try saveAppState(newAppState)
@@ -122,14 +124,14 @@ class RecoveryManager {
         print("New download - must initialize app state id \(pd.playDataId) remote \(appstate.remoteContentID)")
         // the download has a different id, so reset all state
         RecoveryManager.initializePlayData(id: pd.playDataId,data:pd.gameDatum,topicData:pd.topicData)
-        RecoveryManager.initializeAppState(id: pd.playDataId,gd:pd.gameDatum )
+        RecoveryManager.initializeAppState(id: pd.playDataId,pd:pd )
         return try RecoveryManager.restoreAppState()
       }
     }
     else {
       print("Could not restore app state gamedata id: \(pd.playDataId)")
       // the download has a different id, so reset all state
-      RecoveryManager.initializeAppState(id: pd.playDataId,gd:pd.gameDatum )
+      RecoveryManager.initializeAppState(id: pd.playDataId,pd:pd)
       return try RecoveryManager.restoreAppState()
     }
   }
