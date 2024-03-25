@@ -32,7 +32,7 @@ let formatter = DateComponentsFormatter()
 
 @main
 struct qandaoApp: App {
-  @AppStorage("onboardingCompleted") private var onboardingCompleted = false
+ @AppStorage("onboardingCompleted") private var onboardingCompleted = false
   
   @AppStorage("DifficultyLevel") var difficultyLevel: DifficultyLevels = DifficultyLevels.easy
   @AppStorage("GameDataSource") var gameDataSource: GameDataSource = GameDataSource.gameDataSource1
@@ -40,16 +40,15 @@ struct qandaoApp: App {
   var logManager:LogEntryManager
   init () {
      let _ = print(">>> \(AppNameProvider.appName()) \(AppVersionProvider.appVersion()) \n")
-   ////let _ =  SampleData.makeMock() 
      logManager = LogEntryManager(container:container,zone:zone)
   }
   var body: some Scene {
     WindowGroup {
-      if onboardingCompleted {
+//      if onboardingCompleted {
       OuterShellView(loginID:initialUUID,source:gameDataSource).environmentObject(logManager)
-      } else {
-          OnboardingView { onboardingCompleted = true }
-      }
+//      } else {
+  //    OnboardingView { onboardingCompleted = true }
+ //     }
     }
   }
 }

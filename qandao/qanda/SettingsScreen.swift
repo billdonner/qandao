@@ -11,7 +11,7 @@ struct SettingsScreen: View {
   let appState:AppState
   let difficulties : [DifficultyLevels] = [.easy,.medium,.hard]
   let dataSources : [GameDataSource] = [.gameDataSource1,.gameDataSource2,.gameDataSource3]
-  
+  @AppStorage("onboardingCompleted") private var onboardingCompleted = false
   @AppStorage("DifficultyLevel") var difficultyLevel: DifficultyLevels = DifficultyLevels.easy
   @AppStorage("GameDataSource") var gameDataSource: GameDataSource = GameDataSource.gameDataSource1
   @Binding var reset: Bool
@@ -40,6 +40,10 @@ struct SettingsScreen: View {
                 Text(GameDataSource.string(for:ds))
               }
             }.onChange   (of: gameDataSource)  {  reset = true  }
+          }
+          Section {
+            Toggle(isOn:$onboardingCompleted,label:{Label("reset onboarding",systemImage:"arrow.uturn.forward.circle")})
+             let _ =  print("onboardingCompleted: \(onboardingCompleted)")
           }
           Section {
             Text("Be sure to Restart the app for changes to take effect")

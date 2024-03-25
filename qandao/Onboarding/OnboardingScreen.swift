@@ -47,6 +47,7 @@ struct OnboardingView: View {
     }
   }
     var body: some View {
+      let _ = print("******** Onboarding \(slideIndex) *********")
         VStack {
           if slideIndex < onboardingSlides.count {
             singleSlideView(slide: onboardingSlides[slideIndex])
@@ -118,7 +119,7 @@ struct OnboardingView: View {
               .resizable()
               .scaledToFit()
             
-            .frame(width:.infinity,height:.infinity)
+            //.frame(width:.infinity,height:.infinity)
               //.frame(width: framesize.width,height:framesize.height)
               .padding()
           }

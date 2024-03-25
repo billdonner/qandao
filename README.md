@@ -1,6 +1,6 @@
 #  QANDAO - revised test app for Q20K
 
-version 0.7.20 move inboarding to after network load
+version 0.7.20 move onboarding to after network load
 
 version 0.7.19 back to testflight for carol only
 

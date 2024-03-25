@@ -11,6 +11,8 @@ import q20kshare
 
 
 struct OuterShellView : View {
+  
+  @AppStorage("onboardingCompleted") private var onboardingCompleted = false
   @EnvironmentObject var logManager: LogEntryManager
   
   let loginID:String
@@ -44,9 +46,13 @@ struct OuterShellView : View {
         ZStack {
           ProgressView("loading...")
             .opacity(isDownloading ? 1 : 0)
-          //TODO: Go directly to challenges screen
-          TopicsScreen( appState:appState,loginID:loginID,gd:$gd,reset:$reset )
-            .opacity(isDownloading ? 0 : 1)
+          //TODO: MAYBE Go directly to challenges screen
+              if onboardingCompleted {
+                TopicsScreen( appState:appState,loginID:loginID,gd:$gd,reset:$reset )
+                  .opacity(isDownloading ? 0 : 1).environmentObject(logManager)
+            } else {
+               OnboardingView { onboardingCompleted = true }
+            }
         }.opacity(showMainView ? 1 : 0)
       }
       
