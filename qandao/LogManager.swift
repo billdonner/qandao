@@ -49,7 +49,7 @@ public func sendLogJSON(kind:CloudLogEntryKind,item:String,lem:LogEntryManager) 
   let ler = CloudLogRec (timestamp: Date(), id: UUID().uuidString, kind:kind, item: item)
   lem.writeLogEntry (logEntry: ler) {error in
     if let error = error {
-      print("Log Manager -- \(error)")
+      print(">>> Log Manager -- \(error)")
       print(">>> You can safely ignore this iCloud error")
     }
   }

@@ -116,7 +116,7 @@ static func reloadOrInit() -> AppState {
     scoresByTopic[currentTopic]?.outcomes[questionNumber] ?? .unplayed
   }
   
-  func allAnswered () -> Bool {
+  var allAnswered : Bool {
     var allans = true
     
     func isAnswered(_ g:GameData) -> Bool {

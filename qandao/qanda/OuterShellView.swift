@@ -8,6 +8,134 @@
 import SwiftUI
 import q20kshare
 //import ComposableArchitecture
+ 
+func restoreEverything(pd: PlayData ) throws -> AppState  {
+    
+    //2. try to restore both structures, otherwise initilize them
+    // let (structure1, appstate) = try RecoveryManager.restoreOrInitializeStructures(id: id)
+    let appstate =  PersistentData.restoreAS()
+    if let appstate = appstate{
+      if appstate.remoteContentID == pd.playDataId {
+        // all good
+        print ("Restored app state \(pd.playDataId)")
+        return appstate
+      }
+      else {
+        // must be new download
+        print("New download - must initialize app state id \(pd.playDataId) remote \(appstate.remoteContentID)")
+        // the download has a different id, so reset all state
+      initializePlayData(id: pd.playDataId,data:pd.gameDatum,topicData:pd.topicData)
+    initializeAppState(id: pd.playDataId,pd:pd )
+        return try  restoreAppState()
+      }
+    }
+    else {
+      print("Could not restore app state id: \(pd.playDataId)")
+      // the download has a different id, so reset all state
+    initializeAppState(id: pd.playDataId,pd:pd)
+      return try restoreAppState()
+    }
+  }
+
+  
+
+
+  func restoreAppState() throws -> AppState {
+  guard let appstate = PersistentData.restoreAS()
+  else  {
+    throw CustomError.couldNotRestore
+  }
+  return appstate
+}
+
+ func initializeAppState(id:String,pd:PlayData) {
+  let newAppState = AppState(playData:pd)
+  newAppState.remoteContentID = id
+  do {
+    try saveAppState(newAppState)
+  } catch {
+    print("***Can not initializeAppState")
+  }
+}
+
+
+  func savePlayData(_ pd: PlayData) throws {
+  let encodedData = try JSONEncoder().encode(pd)
+  try encodedData.write(to: playdataFileURL)
+}
+
+
+ func saveAppState(_ appstate: AppState) throws {
+  appstate.save()
+}
+
+ func restorePlayData() throws -> PlayData {
+  let decodedData = try Data(contentsOf: playdataFileURL)
+  return try JSONDecoder().decode(PlayData.self, from: decodedData)
+}
+
+
+
+  func initializePlayData(id:String,data:[GameData],topicData:TopicGroup) {
+  let newPlayData = PlayData(topicData: topicData, gameDatum: data, playDataId: id, blendDate: Date())
+  do {
+    try savePlayData(newPlayData)
+  }
+  catch {
+    print("***Can not initializePlayData")
+  }
+}
+
+
+
+
+
+@MainActor
+func restorePlayData(source: GameDataSource) async throws -> PlayData? {
+  switch source {
+  case .gameDataSource1:
+    return try await restorePlayDataURL(URL(string: PRIMARY_REMOTE)!)
+  case .gameDataSource2:
+    return try await restorePlayDataURL(URL(string: SECONDARY_REMOTE)!)
+  case .gameDataSource3:
+    return try await restorePlayDataURL(URL(string: TERTIARY_REMOTE)!)
+  }
+}
+
+
+  func downloadFile(from url: URL ) async throws -> Data {
+  let (data, _) = try await URLSession.shared.data(from: url)
+  return data
+}
+
+   func restorePlayDataURL(_ url:URL) async  throws -> PlayData? {
+  do {
+    let start_time = Date()
+    let tada = try await  downloadFile(from:url)
+    let str = String(data:tada,encoding:.utf8) ?? ""
+    do {
+      let pd = try JSONDecoder().decode(PlayData.self,from:tada)
+      let elapsed = Date().timeIntervalSince(start_time)
+      print("************")
+      print("Downloaded \(pd.playDataId) in \(elapsed) secs from \(url)")
+      let challengeCount = pd.gameDatum.reduce(0,{$0 + $1.challenges.count})
+      print("Loaded"," \(pd.gameDatum.count) topics, \(challengeCount) challenges in \(elapsed) secs")
+      print("************")
+      return pd
+    }
+    catch {
+      print(">>> could not decode playdata from \(url) \n>>> original str:\n\(str)")
+    }
+  }
+  catch {
+    throw error
+  }
+  return nil
+}
+
+
+
+
 
 
 struct OuterShellView : View {
@@ -25,12 +153,13 @@ struct OuterShellView : View {
 //  }
   
   @State var playData:PlayData = PlayData.zero
-  @State var isDownloading = true //!!
+  @State var isDownloading = true
   @State var terror:String = ""
   @State var showAlert = false
   @State var reset = false
-  
   @State private var showMainView = false
+  
+
   
   var body: some View {
     ZStack{
@@ -64,11 +193,19 @@ struct OuterShellView : View {
       do {
         // send a log message indicating we are getting started
         sendLoginMessage(logManager, loginID: loginID, source: source)
-        // go fetch everything we need to get started from the indicated source
-        let (appstuff,gamestuff) =  try await RecoveryManager.restoreAll(source:source )
-        //fixup appstate and lets get started with tca
-        appState.reloadStuff (appstuff,pd:gamestuff)
+        
+        
+       // try await rebuild(source: source)
+        
         isDownloading = false
+        if let playData = try await restorePlayData(source: source){
+          let appstatex =  try restoreEverything(pd: playData)
+          appState.reloadStuff (appstatex,pd:playData) //manuever this in, crudely
+          return
+        }
+        throw PumpingErrors.badInputURL
+        
+        
       } catch {
         isDownloading = false
         print("problem downloading - error: ",error.localizedDescription.debugDescription)

@@ -46,7 +46,7 @@ struct PersistentData : Codable {
     }
   }
   private static func toAppState (_ innn:PersistentData ) -> AppState {
-    let ap = AppState(gameDatum:[])
+    let ap = AppState(playData: PlayData.zero)
     ap.scoresByTopic = innn.scoresByTopic
     ap.currentTopicIndex = innn.currentTopicIndex
     ap.showing = innn.showing

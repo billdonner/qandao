@@ -20,7 +20,11 @@ let incorrectColor:Color = .red.opacity(0.1)
 let unplayedColor:Color = .blue.opacity(0.1)
 
 
+  let playdataFileURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("structure1.json")
+ let appstateFileURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("appstate.json")
 let formatter = DateComponentsFormatter()
+
+
 
 
 /////// Temporary Onboarding Scaffolding //////

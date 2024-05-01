@@ -7,129 +7,25 @@
 
 import SwiftUI
 import q20kshare
-//import ComposableArchitecture
 
-// MARK :- Build Topics Page
-
-/* at this point all game an topic data is set up and we can behave as in tca */
-
-/*
-@Reducer
-struct AppFeature  {
-  @ObservableState
-  struct State:Equatable {
-    static func == (lhs: AppFeature.State, rhs: AppFeature.State) -> Bool {
-      lhs.gameDatum == rhs.gameDatum
-    }
-    var isLoading = false
-    var gameDatum : [GameData] = []
-    var scoreDatum: [String:TopicGroupData] = [:]
-  }
-  enum Action {
-    case reloadButtonTapped
-    case reloadButtonResponse([GameData])
-  }
-  @Dependency(\.continuousClock) var clock
-  @Dependency(\.date.now) var now
-  // @Dependency(\.dataManager.save) var saveData
-  @Dependency(\.uuid) var uuid
-  
-  private enum CancelID {
-    case saveDebounce
-  } 
-  
-  func  scoresFromGameDatum(_ gameDatum:[GameData]) ->  [String:TopicGroupData] {
-    var sd :  [String:TopicGroupData] = [:]
-    for gd in gameDatum {
-      let topic = gd.topic
-      let tgd = TopicGroupData(topic: topic, outcomes:[ ], time: [], questionNumber: 1)
-      sd [ gd.topic] = tgd
-    }
-    return sd
-  }
-  
-  
-  var body: some ReducerOf<Self> {
-    
-    Reduce { state,action in
-      switch action {
-        
-      case let .reloadButtonResponse(gameData):
-        state.gameDatum = gameData
-        state.isLoading = false
-        //TODO: must reinstate this
-        state.scoreDatum = scoresFromGameDatum(gameData)
-        return .none
-        
-      case .reloadButtonTapped: if !state.isLoading {
-        state.gameDatum = []
-        state.isLoading = true
-        return .run { //[count = state.count]
-          send in
-          let count = 1
-          let (data, _) = try await URLSession.shared
-            .data(from: URL(string: "https://billdonner.com/fs/gs/readyforios\(count)")!)
-          let gd = try JSONDecoder().decode([GameData].self,from:data)
-          await send(.reloadButtonResponse(gd))
-        }
-      }
-      }
-      return .none
-    }
-  }
-}
- */
-struct SimpleTopicsScreen: View {
-  let appState: AppState
-  @Binding var gd:[GameData]
-  @EnvironmentObject var logManager: LogEntryManager
-  var body: some View {
-    NavigationStack {
-      ScrollView {
-        ForEach(gd, id: \.self) {   gameData  in
-          if let index = appState.indexForTopic(gameData.topic),
-             let sbt = appState.scoresByTopic[gameData.topic] {
-            TopicRowView(appState:appState,sbt:sbt,gameData:gameData,logManager:logManager )
-              .tag(index)
-              .disabled( gameData.challenges.count <= sbt.highWaterMark )
-              .opacity(gameData.challenges.count > sbt.highWaterMark ? 1.0 : 0.4)
-              }
-          }
-        }
-        Spacer()
-      .navigationBarTitle("Q20K Score \(appState.grandScore)")
-    }
-      Spacer()
-    }
-}
-#Preview("Simple Topics Screen") {
-  SimpleTopicsScreen(
-              appState: SampleData.mock,
-               gd:.constant(SampleData.gd)  )
-      .environmentObject(LogEntryManager.mock)
-}
 
 struct TopicsScreen: View {
   
- // @Bindable var store:StoreOf<AppFeature>
   let appState: AppState
   let loginID:String
-  
   let pd:PlayData
   @Binding var reset:Bool
   @EnvironmentObject var logManager: LogEntryManager
   @State  private var sheetchoice: TopicSheetChoices? = nil
   
-  
-  
   var body: some View {
-    let _ = print("TopicsView \(pd.gameDatum.count) topics")
+    let _ = print("TopicsScreen \(pd.gameDatum.count) topics")
     NavigationStack {
       HStack {
         Text("Elapsed \(String(format:"%4.f",appState.grandTime))").font(.headline)
         Spacer()
         //Text(" Score \(appState.grandScore)").font(.headline)
-        if appState.allAnswered() {
+        if appState.allAnswered {
           Text("Your Game is Over because all topics are answered").font(.footnote)
         }
       }.padding(.horizontal)
@@ -190,3 +86,107 @@ struct TopicsScreen: View {
                reset:.constant(false)  )
       .environmentObject(LogEntryManager.mock)
 }
+
+
+struct SimpleTopicsScreen: View {
+  let appState: AppState
+  @Binding var gd:[GameData]
+  @EnvironmentObject var logManager: LogEntryManager
+  var body: some View {
+    NavigationStack {
+      ScrollView {
+        ForEach(gd, id: \.self) {   gameData  in
+          if let index = appState.indexForTopic(gameData.topic),
+             let sbt = appState.scoresByTopic[gameData.topic] {
+            TopicRowView(appState:appState,sbt:sbt,gameData:gameData,logManager:logManager )
+              .tag(index)
+              .disabled( gameData.challenges.count <= sbt.highWaterMark )
+              .opacity(gameData.challenges.count > sbt.highWaterMark ? 1.0 : 0.4)
+              }
+          }
+        }
+        Spacer()
+      .navigationBarTitle("Q20K Score \(appState.grandScore)")
+    }
+      Spacer()
+    }
+}
+#Preview("Simple Topics Screen") {
+  SimpleTopicsScreen(
+              appState: SampleData.mock,
+               gd:.constant(SampleData.gd)  )
+      .environmentObject(LogEntryManager.mock)
+}
+
+//import ComposableArchitecture
+
+// MARK :- Build Topics Page
+
+/* at this point all game an topic data is set up and we can behave as in tca */
+
+/*
+@Reducer
+struct AppFeature  {
+  @ObservableState
+  struct State:Equatable {
+    static func == (lhs: AppFeature.State, rhs: AppFeature.State) -> Bool {
+      lhs.gameDatum == rhs.gameDatum
+    }
+    var isLoading = false
+    var gameDatum : [GameData] = []
+    var scoreDatum: [String:TopicGroupData] = [:]
+  }
+  enum Action {
+    case reloadButtonTapped
+    case reloadButtonResponse([GameData])
+  }
+  @Dependency(\.continuousClock) var clock
+  @Dependency(\.date.now) var now
+  // @Dependency(\.dataManager.save) var saveData
+  @Dependency(\.uuid) var uuid
+  
+  private enum CancelID {
+    case saveDebounce
+  }
+  
+  func  scoresFromGameDatum(_ gameDatum:[GameData]) ->  [String:TopicGroupData] {
+    var sd :  [String:TopicGroupData] = [:]
+    for gd in gameDatum {
+      let topic = gd.topic
+      let tgd = TopicGroupData(topic: topic, outcomes:[ ], time: [], questionNumber: 1)
+      sd [ gd.topic] = tgd
+    }
+    return sd
+  }
+  
+  
+  var body: some ReducerOf<Self> {
+    
+    Reduce { state,action in
+      switch action {
+        
+      case let .reloadButtonResponse(gameData):
+        state.gameDatum = gameData
+        state.isLoading = false
+        //TODO: must reinstate this
+        state.scoreDatum = scoresFromGameDatum(gameData)
+        return .none
+        
+      case .reloadButtonTapped: if !state.isLoading {
+        state.gameDatum = []
+        state.isLoading = true
+        return .run { //[count = state.count]
+          send in
+          let count = 1
+          let (data, _) = try await URLSession.shared
+            .data(from: URL(string: "https://billdonner.com/fs/gs/readyforios\(count)")!)
+          let gd = try JSONDecoder().decode([GameData].self,from:data)
+          await send(.reloadButtonResponse(gd))
+        }
+      }
+      }
+      return .none
+    }
+  }
+}
+ */

@@ -12,7 +12,6 @@
 		889CEACA2B87809C00D88E38 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 889CEAC92B87809C00D88E38 /* Preview Assets.xcassets */; };
 		889CEAD72B8780BB00D88E38 /* PersistentData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889CEAD02B8780BB00D88E38 /* PersistentData.swift */; };
 		889CEAD92B8780BB00D88E38 /* Subs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889CEAD22B8780BB00D88E38 /* Subs.swift */; };
-		889CEADA2B8780BB00D88E38 /* RecoveryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889CEAD32B8780BB00D88E38 /* RecoveryManager.swift */; };
 		889CEADB2B8780BB00D88E38 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889CEAD42B8780BB00D88E38 /* AppState.swift */; };
 		889CEADC2B8780BB00D88E38 /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889CEAD52B8780BB00D88E38 /* SampleData.swift */; };
 		889CEADD2B8780BB00D88E38 /* LogManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889CEAD62B8780BB00D88E38 /* LogManager.swift */; };
@@ -41,11 +40,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8812BD3D2BB761C6001E8D42 /* morningDinkers.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = morningDinkers.md; sourceTree = "<group>"; };
 		889CEABF2B87809C00D88E38 /* qandao.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = qandao.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		889CEAC92B87809C00D88E38 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		889CEAD02B8780BB00D88E38 /* PersistentData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistentData.swift; sourceTree = "<group>"; };
 		889CEAD22B8780BB00D88E38 /* Subs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Subs.swift; sourceTree = "<group>"; };
-		889CEAD32B8780BB00D88E38 /* RecoveryManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecoveryManager.swift; sourceTree = "<group>"; };
 		889CEAD42B8780BB00D88E38 /* AppState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		889CEAD52B8780BB00D88E38 /* SampleData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
 		889CEAD62B8780BB00D88E38 /* LogManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogManager.swift; sourceTree = "<group>"; };
@@ -93,6 +92,7 @@
 		889CEAB62B87809C00D88E38 = {
 			isa = PBXGroup;
 			children = (
+				8812BD3D2BB761C6001E8D42 /* morningDinkers.md */,
 				889CEB282B8A7A4800D88E38 /* README.md */,
 				889CEAC12B87809C00D88E38 /* qandao */,
 				889CEAC02B87809C00D88E38 /* Products */,
@@ -116,7 +116,6 @@
 				889CEAD42B8780BB00D88E38 /* AppState.swift */,
 				889CEAD62B8780BB00D88E38 /* LogManager.swift */,
 				889CEAD02B8780BB00D88E38 /* PersistentData.swift */,
-				889CEAD32B8780BB00D88E38 /* RecoveryManager.swift */,
 				889CEAD52B8780BB00D88E38 /* SampleData.swift */,
 				889CEAD22B8780BB00D88E38 /* Subs.swift */,
 				889CEAFE2B8780CC00D88E38 /* qanda */,
@@ -255,7 +254,6 @@
 				889CEADD2B8780BB00D88E38 /* LogManager.swift in Sources */,
 				88CFB0A52B95008500AA9C41 /* AlienSplashView.swift in Sources */,
 				88CFB0A42B95008500AA9C41 /* SimulatedMainAppView.swift in Sources */,
-				889CEADA2B8780BB00D88E38 /* RecoveryManager.swift in Sources */,
 				889CEB1B2B8780CC00D88E38 /* TopicsScreen.swift in Sources */,
 				889CEB132B8780CC00D88E38 /* SettingsScreen.swift in Sources */,
 				889CEAD72B8780BB00D88E38 /* PersistentData.swift in Sources */,
