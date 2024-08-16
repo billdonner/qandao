@@ -1,35 +1,48 @@
 #  QANDAO - revised test app for Q20K
+version 0.7.22 integrate code from basic app
 
-version 0.7.20 move onboarding to after network load
+version 0.7.21 retest testflight
 
-version 0.7.19 back to testflight for carol only
+- version 0.3.20 "start in corners" option fully supported with new rules
+- version 0.3.18 general 
+- version 0.3.17 fix topics, qanda picks 3, they pick 0-7 more, game log, set requires full screen,spacing of flags
+- version 0.3.16 fix size change bug
+- version 0.3.15 fix visuals, white/black etc, leave red mark on played cells
+- version 0.3.14 fix mocks, fix gimmees all around
+- version 0.3.13 removed previews using previewable
+- version 0.3.12 trying again
+- version 0.3.11 withdrew  cloudkit for now, rendered sentiment sumbit buttons useless
+- version 0.3.10 fix cloudkit entitlements
+- version 0.3.9 fix version,integrated .trial1 as autumn for now
+- version 0.3.8 highlights winning path
+- version 0.3.7 reset movenumbber each game,show movenumber in cell of completed questions
+- version 0.3.6 track last move, allow clicking on previously answered questions after game ends
+- version 0.3.5 rudimentary logging of sentiments, needs work but its storing into cloud
+- version 0.3.4 improved topbar,increased bordersize, disabled other controls when alert onscreen
+- version 0.3.3 already played questions nicely displayed
+- version 0.3.2 silent crash fixed, topicdetails improved 
+- version 0.3.1 fixed allocation endzone accounting, can dismiss help
+- version 0.3.0 fixed restart problem, should run fine
+- version 0.2.9 tap on played cell,removed animation behind question screen,fixed crashes
+- version 0.2.8 new topicindex on bottom of main gamescreen
+- version 0.2.7 internal refactor, new readyforios1
+- version 0.2.6 randomize layout,fixed settings bug,adjust borderwidth based on boardsize,changed colors
+- version 0.2.5 move timer in scorebarview,larger boards,remove dubltap,randomize answers,question not repeated till topic used 
+- version 0.2.4 change boardsize freely,shuffled order of answers, challenge info button
+- version 0.2.3 color palette selection works
+- version 0.2.2 running but topics editing still wierd
+- version 0.2.1 can utilize gimmees , removed gimmee any
+- version 0.2.0 can utilize gimmees :)
+- version 0.1.9 can change board size, default size 6
+- version 0.1.8 put something in carol's hands
+- version 0.1.7 all integrated but many bugs
+- version 0.1.6 fewer bugs, playing correctly, needs integration with topic settings
+- version 0.1.5 tests all pass without changes, integrated new topic settings ; many bugs
+- version 0.1.4 integrates custom alerts, seems to have a scoring issue, will run tests
+- version 0.1.3 humpty dumpty
+warts and all
 
-version 0.7.18 fixed opening flip transition
 
-version 0.7.17 ready for new topics from editorial 
-
-version 0.7.16 new executable, uses composable architecture from hereon
-
-version 0.7.15 removed explanation from main challenge view
-
-version 0.7.14 added prototype views
-
-version 0.7.13 fix topics view
-
-version 0.7.12 prepare for tca
-
-version 0.7.11 moves hint button to directly below the question, fixes up topic names a bit
-
-version 0.7.10 removes all shuffling and enforces sort order compatible with csv output from xpando
-
-Freeport Software v0.7.0 renames TopicData to TopicGroup,Introduces Subtopics
-
-Freeport.Software v0.6.9 for ios17
-
-This initial test app for Q20K is driven by a remote JSON file published by XPANDO.
-
-The program reads from ....../readyforios1
-You can tweak line 13 in SettingsView to change this for /readyforios2
 
 
 
