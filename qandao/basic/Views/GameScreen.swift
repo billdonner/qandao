@@ -16,11 +16,10 @@ struct GameScreen: View {
   
   @State   var firstMove = true
   @State   var startAfresh = true
-  @State   var showSettings = false
-  @State   var showingHelp = false
   @State   var showWinAlert = false
   @State   var showLoseAlert = false
   @State   var showCantStartAlert = false
+  
   
   var bodyMsg: String {
     let t =  """
@@ -32,10 +31,10 @@ struct GameScreen: View {
   var body: some View {
     VStack {
       VStack {
-        VStack(spacing:10) {
+        VStack(spacing:5) {
           topButtonsVeew//.frame(height:40)// down below
-            .padding()
-          ScoreBarView(gs: gs)
+            .padding(.horizontal).border(.red)
+          ScoreBarView(gs: gs).border(.red)
         }
         
         if gs.boardsize > 1 {
@@ -50,13 +49,7 @@ struct GameScreen: View {
             print("//GameScreen onChangeof(Size) to \(gs.boardsize)")
             onBoardSizeChange ()
           }
-          .sheet(isPresented: $showSettings){
-            SettingsScreen(chmgr: chmgr, gs: gs)
-          }
-          .fullScreenCover(isPresented: $showingHelp ){
-            HowToPlayScreen (chmgr: chmgr, isPresented: $showingHelp)
-              .statusBar(hidden: true)
-          }
+
           .onDisappear {
             print("Yikes the GameScreen is Disappearing!")
           }
@@ -123,25 +116,7 @@ struct GameScreen: View {
             .font(.body)
         }
       }
-      //SETTINGS
-      Button(action: {  withAnimation {showSettings = true } } ) {
-        Text("Settings")
-          .padding()
-          .background(Color.blue)
-          .foregroundColor(.white)
-          .cornerRadius(8)
-          .font(.body)
-      }
-      .disabled(gs.gamestate == .playingNow)
-      .opacity(gs.gamestate != .playingNow ? 1 : 0.5)
-      //Help
-      Button(action: { showingHelp = true }) {
-        Text("Help")
-          .padding()
-          .background(Color.blue)
-          .foregroundColor(.white)
-          .cornerRadius(8)
-      }
+
     }.font(.body).lineLimit(1)
   }
   var loadingVeew: some View {

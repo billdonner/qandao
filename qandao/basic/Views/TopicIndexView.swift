@@ -12,32 +12,34 @@ struct TopicIndexView: View {
     @State var succ = false
     @State var topicDetailInfo: Tdi? = nil
 
-    private let columns = [
-        GridItem(.flexible(), alignment: .leading),
-        GridItem(.flexible(), alignment: .leading),
-        GridItem(.flexible(), alignment: .leading)
-    ]
+//    private let columns = [
+//        GridItem(.flexible(), alignment: .leading),
+//        GridItem(.flexible(), alignment: .leading),
+//        GridItem(.flexible(), alignment: .leading)
+//    ]
 
     var body: some View {
         GeometryReader { geometry in
             let isIpad = geometry.size.width > 600
             
-            VStack {
+          ScrollView(.horizontal, showsIndicators: false)  {
              // Text("      ") // push this down a bit
-                LazyVGrid(columns: columns, spacing: 8) {
+              //  LazyVGrid(columns: columns, spacing: 8) {
+             HStack  {
                     ForEach(gs.basicTopics(), id: \.name) { topic in
                         HStack {
                             RoundedRectangle(cornerSize: CGSize(width: 10.0, height: 3.0))
                                 .frame(width: isIpad ? 25 : 15, height: isIpad ? 25 : 15)
                                 .foregroundStyle(gs.colorForTopic(topic.name).0)
-                            Text(truncatedText(topic.name, count: isIpad ? 60 : 15))
+                            Text(truncatedText(topic.name, count: isIpad ? 60 : 30))
                                 .lineLimit(1)
                                 .font(isIpad ? .headline : .caption2)
                                 .foregroundColor(textColor)
-                            Spacer()
                         }
-                        .frame(width: geometry.size.width / (1.0 * //1.1
-                          CGFloat(columns.count)), height: isIpad ? 30 : 24)
+                       // .frame(width: geometry.size.width / 3 /// (1.0 * //1.1
+                          //CGFloat(columns.count))
+                              // ,
+                              // height: isIpad ? 30 : 24)
                         .padding(.horizontal, isIpad ? 8 : 4)
                         .background(Color.clear)
                         //.cornerRadius(8)

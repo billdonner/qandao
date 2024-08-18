@@ -7,7 +7,7 @@
 
 import SwiftUI
 let playDataFileName = "playdata.json"
-let starting_size = 8 // Example size, can be 3 to 8
+let starting_size = 3 // Example size, can be 3 to 8
 class OrientationLockedViewController: UIViewController {
   override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
     return .portrait
@@ -33,6 +33,7 @@ struct ChallengeGameApp: App {
     WindowGroup {
       
       ContentView(gs: gs,chmgr: chmgr)
+        .preferredColorScheme(.dark) // Enforce dark mode for this view
         .sheet(isPresented: $showOnboarding) {
           OnboardingScreen(isPresented: $showOnboarding)
         }

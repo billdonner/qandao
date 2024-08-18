@@ -66,12 +66,12 @@ struct SingleCellView: View {
       // part 1:
       // if faceup show the question else blank
       VStack(alignment:.center, spacing:0) {
-        Text(!gs.faceup ? " " : challenge.question)
+        Text(!gs.facedown ? " " : challenge.question)
           .font(.caption)
           .padding(10)
           .frame(width: cellSize, height: cellSize)
           .background(colormix.0)
-          .foregroundColor(.secondary)
+          .foregroundColor(foregroundColorFrom( backgroundColor: colormix.0 ))
         //part 2:
         //color border according to correctness
           .border(status.borderColor , width: gs.cellBorderSize()) //3=8,8=3

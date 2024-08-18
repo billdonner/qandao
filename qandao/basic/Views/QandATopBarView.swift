@@ -21,9 +21,13 @@ struct QandATopBarView: View {
   }
 
   public func stopTimer() {
-    gs.totaltime += elapsedTime
-    timer?.invalidate()
-    timer = nil
+    
+    // guard against doing this twice
+    if timer != nil {
+      gs.totaltime += elapsedTime
+      timer?.invalidate()
+      timer = nil
+    }
   }
   
   var formattedElapsedTime: String {

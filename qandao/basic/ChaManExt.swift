@@ -62,7 +62,7 @@ extension ChaMan {
         gs.lostcount = gb.lostcount
         gs.woncount = gb.woncount
         gs.replacedcount = gb.replacedcount
-        gs.faceup = gb.faceup
+        gs.facedown = gb.facedown
         gs.gimmees = gb.gimmees
         gs.currentscheme = gb.currentscheme
         gs.veryfirstgame = gb.veryfirstgame

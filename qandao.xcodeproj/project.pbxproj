@@ -76,14 +76,12 @@
 		88460E522C6F796100D5FA4A /* AnsweredInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnsweredInfo.swift; sourceTree = "<group>"; };
 		88460E532C6F796100D5FA4A /* AppColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppColors.swift; sourceTree = "<group>"; };
 		88460E542C6F796100D5FA4A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		88460E552C6F796100D5FA4A /* basic.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = basic.entitlements; sourceTree = "<group>"; };
 		88460E562C6F796100D5FA4A /* ChaMan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChaMan.swift; sourceTree = "<group>"; };
 		88460E572C6F796100D5FA4A /* ChaManExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChaManExt.swift; sourceTree = "<group>"; };
 		88460E582C6F796100D5FA4A /* CloudSentiments.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudSentiments.swift; sourceTree = "<group>"; };
 		88460E592C6F796100D5FA4A /* CustomAlerts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAlerts.swift; sourceTree = "<group>"; };
 		88460E5A2C6F796100D5FA4A /* GameState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameState.swift; sourceTree = "<group>"; };
 		88460E5B2C6F796100D5FA4A /* Guts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Guts.swift; sourceTree = "<group>"; };
-		88460E5C2C6F796100D5FA4A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		88460E5D2C6F796100D5FA4A /* mainapp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = mainapp.swift; sourceTree = "<group>"; };
 		88460E5E2C6F796100D5FA4A /* mocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = mocks.swift; sourceTree = "<group>"; };
 		88460E5F2C6F796100D5FA4A /* structs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = structs.swift; sourceTree = "<group>"; };
@@ -95,9 +93,9 @@
 		88460E8D2C6F797400D5FA4A /* playg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = playg.swift; sourceTree = "<group>"; };
 		88460E8E2C6F797400D5FA4A /* qdemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = qdemoTests.swift; sourceTree = "<group>"; };
 		88460E902C6F798E00D5FA4A /* playdata.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = playdata.json; sourceTree = "<group>"; };
+		88460E962C71567F00D5FA4A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		889CEABF2B87809C00D88E38 /* qandao.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = qandao.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		889CEAC92B87809C00D88E38 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		889CEAEA2B8780CC00D88E38 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		889CEAEF2B8780CC00D88E38 /* qanda.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = qanda.entitlements; sourceTree = "<group>"; };
 		889CEB272B8A76C700D88E38 /* qandao.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = qandao.entitlements; sourceTree = "<group>"; };
 		889CEB282B8A7A4800D88E38 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -154,19 +152,18 @@
 		88460E632C6F796100D5FA4A /* basic */ = {
 			isa = PBXGroup;
 			children = (
+				88460E962C71567F00D5FA4A /* Info.plist */,
 				88460E3A2C6F796100D5FA4A /* Preview Content */,
 				88460E512C6F796100D5FA4A /* Views */,
 				88460E522C6F796100D5FA4A /* AnsweredInfo.swift */,
 				88460E532C6F796100D5FA4A /* AppColors.swift */,
 				88460E542C6F796100D5FA4A /* Assets.xcassets */,
-				88460E552C6F796100D5FA4A /* basic.entitlements */,
 				88460E562C6F796100D5FA4A /* ChaMan.swift */,
 				88460E572C6F796100D5FA4A /* ChaManExt.swift */,
 				88460E582C6F796100D5FA4A /* CloudSentiments.swift */,
 				88460E592C6F796100D5FA4A /* CustomAlerts.swift */,
 				88460E5A2C6F796100D5FA4A /* GameState.swift */,
 				88460E5B2C6F796100D5FA4A /* Guts.swift */,
-				88460E5C2C6F796100D5FA4A /* Info.plist */,
 				88460E5D2C6F796100D5FA4A /* mainapp.swift */,
 				88460E5E2C6F796100D5FA4A /* mocks.swift */,
 				88460E5F2C6F796100D5FA4A /* structs.swift */,
@@ -230,7 +227,6 @@
 			isa = PBXGroup;
 			children = (
 				889CEAEF2B8780CC00D88E38 /* qanda.entitlements */,
-				889CEAEA2B8780CC00D88E38 /* Info.plist */,
 			);
 			path = qanda;
 			sourceTree = "<group>";
@@ -480,11 +476,12 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = qandao/qandao.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 22;
+				CURRENT_PROJECT_VERSION = 24;
 				DEVELOPMENT_ASSET_PATHS = "\"qandao/Preview Content\"";
 				DEVELOPMENT_TEAM = NEAY582ME4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				"INFOPLIST_FILE[sdk=*]" = qandao/basic/info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -512,11 +509,12 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = qandao/qandao.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 22;
+				CURRENT_PROJECT_VERSION = 24;
 				DEVELOPMENT_ASSET_PATHS = "\"qandao/Preview Content\"";
 				DEVELOPMENT_TEAM = NEAY582ME4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = qandao/basic/info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

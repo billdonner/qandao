@@ -8,7 +8,9 @@ struct ContentView: View {
   @State var current_topics: [String] = []
   @State var chal: IdentifiablePoint? = nil
   @State var isPresentingDetailView = false
-
+  
+  @State   var showSettings = false
+  @State   var showingHelp = false
   
   var body: some View {
     VStack {
@@ -44,7 +46,13 @@ struct ContentView: View {
             QandAScreen(row: cha.row, col: cha.col,
                         isPresentingDetailView: $isPresentingDetailView, chmgr: chmgr, gs: gs)
           }
-          
+          .sheet(isPresented: $showSettings){
+            SettingsScreen(chmgr: chmgr, gs: gs)
+          }
+          .fullScreenCover(isPresented: $showingHelp ){
+            HowToPlayScreen (chmgr: chmgr, isPresented: $showingHelp)
+              .statusBar(hidden: true)
+          }
           Spacer()
         }
         .frame(height: geometry.size.height * 0.85)
@@ -53,9 +61,34 @@ struct ContentView: View {
           Spacer()
           TopicIndexView(gs: gs, chmgr: chmgr)
             .frame(height: geometry.size.height * 0.13)
- 
-          
-          Text("QandA \(AppVersionProvider.appVersion()) by Freeport Software").font(.caption2).padding(.top)
+          HStack {
+            //SETTINGS
+            Button(action: {  withAnimation {showSettings = true } } ) {
+              Text("Settings")
+                .padding()
+                .background(Color.blue)
+                .foregroundColor(.white)
+                .cornerRadius(8)
+                .font(.caption2)
+            }
+            .disabled(gs.gamestate == .playingNow)
+            .opacity(gs.gamestate != .playingNow ? 1 : 0.5)
+            Spacer()
+            Text("QandA \(AppVersionProvider.appVersion()) by Freeport Software").font(.caption2)
+            Spacer()
+            //Help
+            Button(action: { showingHelp = true }) {
+              Text("Help")
+                .padding()
+                .background(Color.blue)
+                .foregroundColor(.white)
+                .cornerRadius(8) 
+              .font(.caption2)
+            }
+              
+
+      
+          }
         }
       }
     }

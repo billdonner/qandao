@@ -21,7 +21,7 @@ struct GameLogScreen: View {
     
       Text("Game #\(gs.gamenumber)").font(.title)
       Text("\(gs.gamestart)").font(.footnote)
-      Text("\(gs.totaltime) secs").font(.footnote)
+      Text("\(Int(gs.totaltime)) secs").font(.footnote)
       Text("\(joinWithCommasAnd(gs.topicsinplay))").font(.footnote)
       List {
         ForEach(movehistory, id:\.self ) { move in

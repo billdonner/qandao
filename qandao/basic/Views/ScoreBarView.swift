@@ -10,18 +10,22 @@ private struct zz:View {
   let showchars:String
   let gs: GameState
   var body: some View{
-    VStack {
+    ScrollView(.horizontal, showsIndicators: false)  {
       HStack {
-        Text(showchars).font(showchars.count<=1 ? .title:.footnote)
-        Text("games:");Text("\(gs.gamenumber)")
-        Text("won:");Text("\(gs.woncount)")
-        Text("lost:");Text("\(gs.lostcount)")
-      }
-      HStack {
+      Text(showchars).font(showchars.count<=1 ? .title:.footnote)
+        
+        Text("time:");Text(formatTimeInterval(gs.totaltime)).font(.headline)
+        Text("score:");Text("\(gs.totalScore())")
+          .font(.headline)
         Text("gimmees:");Text("\(gs.gimmees)")
-        Text("right:");Text("\(gs.rightcount)")
-        Text("wrong:");Text("\(gs.wrongcount)")
-        Text("time:");Text(formatTimeInterval(gs.totaltime))
+          .font(.headline)
+        HStack {
+          Text("games:");Text("\(gs.gamenumber)")
+          Text("won:");Text("\(gs.woncount)")
+          Text("lost:");Text("\(gs.lostcount)")
+          Text("right:");Text("\(gs.rightcount)")
+          Text("wrong:");Text("\(gs.wrongcount)")
+        }.opacity(0.8)
       }
     }.font(isIpad ?.body:.footnote)
     }
@@ -38,7 +42,7 @@ struct ScoreBarView: View {
           if !isPossibleWinningPath(in:gs.cellstate) {
             "❌"
           } else {
-            "possibles: \(numberOfPossibleMoves(in: gs.cellstate))"
+           " "// "possibles: \(numberOfPossibleMoves(in: gs.cellstate))"
           }
         }
         zz(showchars: showchars,gs:gs).font(isIpad ?.headline:.body)

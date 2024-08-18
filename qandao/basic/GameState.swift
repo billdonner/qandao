@@ -11,11 +11,16 @@ struct GameMove : Codable,Hashable {
   let col:Int
   let movenumber:Int 
 }
-
+enum DifficultyLevel: Int,Codable {
+  case easy,normal,hard
+}
 @Observable
 class GameState :  Codable {
   var board: [[Int]]  // Array of arrays to represent the game board with challenges
   var cellstate: [[ChallengeOutcomes]]  // Array of arrays to represent the state of each cell 
+  var moveindex: [[Int]] // -1 is unplayed
+  var onwinpath: [[Bool]] // only set after win detected
+  var replaced:[[[Int]]] // list of replacements in this cell
   var boardsize: Int  // Size of the game board
   var topicsinplay: [String] // a subset of allTopics (which is constant and maintained in ChaMan)
   var gamestate: StateOfPlay = .initializingApp
@@ -27,83 +32,16 @@ class GameState :  Codable {
   var rightcount: Int
   var wrongcount: Int
   var replacedcount: Int
-  var faceup:Bool
+  var facedown:Bool
   var gimmees: Int  // Number of "gimmee" actions available
   var currentscheme: ColorSchemeName
   var veryfirstgame:Bool
   var startincorners:Bool
   var doublediag:Bool
-  var difficultylevel:Int
+  var difficultylevel:DifficultyLevel
   var lastmove: GameMove?
-  var moveindex: [[Int]] // -1 is unplayed
-  var onwinpath: [[Bool]] // only set after win detected
-  var replaced:[[[Int]]] // list of replacements in this cell
   var gamestart:Date // when game started
   
-  func moveHistory() -> [GameMove] {
-    var moves:[GameMove]=[]
-    for row in 0 ..< boardsize{
-      for col in 0 ..< boardsize{
-        if  cellstate[row][col] != .unplayed {
-          moves.append(GameMove(row:row,col:col,movenumber: moveindex[row][col]))
-        }
-      }
-    }
-   return moves.sorted(by: { $0.movenumber < $1.movenumber })
-  }
-  
-  func checkVsChaMan(chmgr:ChaMan) -> Bool {
-    let a=chmgr.correctChallengesCount()
-    if a != rightcount {
-      print("*** correct challenges count \(a) is wrong \(rightcount)")
-      return false
-    }
-    let b = chmgr.incorrectChallengesCount()
-    if b != wrongcount {
-      print("*** incorrect challenges count \(b) is wrong \(wrongcount)")
-      
-      return false
-    }
-    if gamestate != .initializingApp { 
-      // check everything on the board is consistent
-      
-      for row in  0 ..< boardsize  {
-        for col in 0 ..< boardsize  {
-          
-          let j = board[row][col]
-          if j != -1 {
-            let x:ChaMan.ChallengeStatus = chmgr.stati[j]
-            switch cellstate[row][col] {
-            case .playedCorrectly:
-              if x  != ChaMan.ChallengeStatus.playedCorrectly {
-                print("*** cellstate is wrong for \(row), \(col) playedCorrectly says \(x)")
-                return false
-              }
-            case .playedIncorrectly:
-              if x  != ChaMan.ChallengeStatus.playedIncorrectly{
-                print("*** cellstate is wrong for \(row), \(col) playedIncorrectly says \(x)")
-                return false
-              }
-            case .unplayed:
-              if x != ChaMan.ChallengeStatus.allocated {
-                print("*** cellstate is wrong for \(row), \(col) unplayed says \(x)")
-                return false
-              }
-            }// switch
-            if x == ChaMan.ChallengeStatus.abandoned {
-              print("*** cellstate is wrong for \(row), \(col) abandoned says \(x)")
-              return false
-            }
-            if x == ChaMan.ChallengeStatus.inReserve {
-              print("*** cellstate is wrong for \(row), \(col) reserved says \(x)")
-              return false
-            }
-          }
-        }
-      }
-    }
-    return true
-  }
   
   enum CodingKeys: String, CodingKey {
     case _board = "board"
@@ -119,7 +57,7 @@ class GameState :  Codable {
     case _rightcount = "rightcount"
     case _wrongcount = "wrongcount"
     case _replacedcount = "replacedcount"
-    case _faceup = "faceup"
+    case _facedown = "facedown"
     case _gimmees = "gimmees"
     case _currentscheme = "currentscheme"
     case _veryfirstgame = "veryfirstgame"
@@ -131,9 +69,9 @@ class GameState :  Codable {
     case _replaced = "replaced"
     case _gamestart =   "gamestart"
   }
-  func basicTopics()->[BasicTopic] {
-    return topicsinplay.map {BasicTopic(name: $0)}
-  }
+
+  
+  
   init(size: Int, topics: [String], challenges: [Challenge]) {
     self.topicsinplay = topics //*****4
     self.boardsize = size
@@ -151,11 +89,11 @@ class GameState :  Codable {
     self.wrongcount = 0
     self.replacedcount = 0
     self.totaltime = 0.0
-    self.faceup = false
-    self.currentscheme = .winter
+    self.facedown = size < 5 
+    self.currentscheme = .summer
     self.veryfirstgame = true
     self.doublediag = false
-    self.difficultylevel = 0
+    self.difficultylevel = .easy
     self.startincorners = false
     self.gamestart = Date()
   }
@@ -180,7 +118,7 @@ class GameState :  Codable {
     switch result {
     case .success(let x):
       assert(x.count == boardsize*boardsize)
-      print("Success:\(x.count)")
+     // print("Success:\(x.count)")
       allocatedChallengeIndices = x.shuffled()
       //continue after the error path
       
@@ -243,18 +181,119 @@ class GameState :  Codable {
     saveGameState()
   }
   
-  // this returns unplayed challenges and their indices in the challengestatus array
-  func resetBoardReturningUnplayed() ->   [Int] {
-    var unplayedInts: [Int] = []
-    for row in 0..<boardsize {
-      for col in 0..<boardsize {
-        if cellstate[row][col]  == .unplayed {
-          unplayedInts.append( (row * boardsize + col))
+  
+  func totalScore() -> Int {
+    let part1 =   woncount * 10
+    - lostcount * 2
+     + rightcount * 3
+    - wrongcount * 1
+    
+    let part2 = replacedcount * -2
+    + (startincorners ? 10 : 0)
+    + (facedown ? 5 : 0)
+    
+    let part3 = switch difficultylevel {
+    case .easy:
+     0
+    case .normal:
+      5
+    case .hard:
+      10
+    }
+    
+    let total = part1 + part2 + part3
+    
+    if total < 0 { return 0}
+    
+    return total
+      
+  
+  }
+  
+  func moveHistory() -> [GameMove] {
+    var moves:[GameMove]=[]
+    for row in 0 ..< boardsize{
+      for col in 0 ..< boardsize{
+        if  cellstate[row][col] != .unplayed {
+          moves.append(GameMove(row:row,col:col,movenumber: moveindex[row][col]))
         }
       }
     }
-    return unplayedInts
+   return moves.sorted(by: { $0.movenumber < $1.movenumber })
   }
+  func isCornerCell(row:Int,col:Int ) -> Bool {
+    return row==0&&col==0  ||
+    row==0 && col == self.boardsize-1 ||
+    row==self.boardsize-1 && col==0 ||
+    row==self.boardsize-1 && col == self.boardsize - 1
+  }
+  
+  func isAlreadyPlayed(row:Int,col:Int ) -> (Bool) {
+    return ( self.cellstate[row][col] == .playedCorrectly ||
+             self.cellstate[row][col] == .playedIncorrectly)
+  }
+  
+  func cellBorderSize() -> CGFloat {
+    return CGFloat(14-self.boardsize)*(isIpad ? 2.0:1.0) // sensitive
+  }
+  
+  func checkVsChaMan(chmgr:ChaMan) -> Bool {
+    let a=chmgr.correctChallengesCount()
+    if a != rightcount {
+      print("*** correct challenges count \(a) is wrong \(rightcount)")
+      return false
+    }
+    let b = chmgr.incorrectChallengesCount()
+    if b != wrongcount {
+      print("*** incorrect challenges count \(b) is wrong \(wrongcount)")
+      
+      return false
+    }
+    if gamestate != .initializingApp {
+      // check everything on the board is consistent
+      
+      for row in  0 ..< boardsize  {
+        for col in 0 ..< boardsize  {
+          
+          let j = board[row][col]
+          if j != -1 {
+            let x:ChaMan.ChallengeStatus = chmgr.stati[j]
+            switch cellstate[row][col] {
+            case .playedCorrectly:
+              if x  != ChaMan.ChallengeStatus.playedCorrectly {
+                print("*** cellstate is wrong for \(row), \(col) playedCorrectly says \(x)")
+                return false
+              }
+            case .playedIncorrectly:
+              if x  != ChaMan.ChallengeStatus.playedIncorrectly{
+                print("*** cellstate is wrong for \(row), \(col) playedIncorrectly says \(x)")
+                return false
+              }
+            case .unplayed:
+              if x != ChaMan.ChallengeStatus.allocated {
+                print("*** cellstate is wrong for \(row), \(col) unplayed says \(x)")
+                return false
+              }
+            }// switch
+            if x == ChaMan.ChallengeStatus.abandoned {
+              print("*** cellstate is wrong for \(row), \(col) abandoned says \(x)")
+              return false
+            }
+            if x == ChaMan.ChallengeStatus.inReserve {
+              print("*** cellstate is wrong for \(row), \(col) reserved says \(x)")
+              return false
+            }
+          }
+        }
+      }
+    }
+    return true
+  }
+  
+  func basicTopics()->[BasicTopic] {
+    return topicsinplay.map {BasicTopic(name: $0)}
+  }
+
   
   func indexOfTopic(_ topic:String ) -> Int? {
     for (index,t) in self.topicsinplay.enumerated()  {
@@ -306,7 +345,18 @@ class GameState :  Codable {
 //    default: return 2
 //    }
   }
-  
+  // this returns unplayed challenges and their indices in the challengestatus array
+  func resetBoardReturningUnplayed() ->   [Int] {
+    var unplayedInts: [Int] = []
+    for row in 0..<boardsize {
+      for col in 0..<boardsize {
+        if cellstate[row][col]  == .unplayed {
+          unplayedInts.append( (row * boardsize + col))
+        }
+      }
+    }
+    return unplayedInts
+  }
   // Get the file path for storing challenge statuses
   static func getGameStateFileURL() -> URL {
     let fileManager = FileManager.default
@@ -336,19 +386,5 @@ class GameState :  Codable {
     }
   }
   
-  func isCornerCell(row:Int,col:Int ) -> Bool {
-    return row==0&&col==0  ||
-    row==0 && col == self.boardsize-1 ||
-    row==self.boardsize-1 && col==0 ||
-    row==self.boardsize-1 && col == self.boardsize - 1
-  }
-  
-  func isAlreadyPlayed(row:Int,col:Int ) -> (Bool) {
-    return ( self.cellstate[row][col] == .playedCorrectly ||
-             self.cellstate[row][col] == .playedIncorrectly)
-  }
-  
-  func cellBorderSize() -> CGFloat {
-    return CGFloat(14-self.boardsize)*(isIpad ? 2.0:1.0) // sensitive
-  }
+
 }

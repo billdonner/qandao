@@ -3,7 +3,7 @@ func removeElements<T: Equatable>(from array: [T], elementsToRemove: [T]) -> [T]
     return array.filter { !elementsToRemove.contains($0) }
 }
 fileprivate struct SettingsView: View {
-   
+  
   @Bindable var chmgr:ChaMan
   @Bindable var gs:GameState
   
@@ -16,7 +16,7 @@ fileprivate struct SettingsView: View {
     let remainingTopics = removeElements(from:chmgr.playData.allTopics,elementsToRemove:chosenTopics)
     _l_topicsinplay = State(initialValue: chosenTopics)
     _availableTopics = State(initialValue: remainingTopics)
-    l_faceUpCards = gs.faceup
+    l_facedown = gs.facedown
     l_boardsize = gs.boardsize
     l_doubleDiag = gs.doublediag
     l_currentScheme = gs.currentscheme.rawValue
@@ -26,13 +26,13 @@ fileprivate struct SettingsView: View {
   let ourTopics: [String]
   @State private var  l_boardsize: Int
   @State private var  l_startInCorners: Bool
-  @State private var  l_faceUpCards: Bool
+  @State private var  l_facedown: Bool
   @State private var  l_doubleDiag: Bool
   @State private var  l_currentScheme: Int//ColorSchemeName
-  @State private var  l_difficultyLevel: Int
+  @State private var  l_difficultyLevel: DifficultyLevel
   @State private var  l_topicsinplay: [String]
   
- // @State var selectedTopics: [String]
+  // @State var selectedTopics: [String]
   @State var availableTopics: [String]
   @State var tappedIndices: Set<Int> = []
   @State var replacedTopics: [Int: String] = [:]
@@ -60,6 +60,14 @@ fileprivate struct SettingsView: View {
   fileprivate func onParameterChange() {
     //// wrong refreshTopics()
   }
+  fileprivate func qq () -> Binding<Bool> {
+    if  l_boardsize < 5  {  return .constant(false) }  else {
+      if l_boardsize > 6 { return  .constant(true) } else {
+        return  $l_startInCorners
+      }
+    }
+  }
+  
   
   var body: some View {
     VStack {
@@ -88,8 +96,10 @@ fileprivate struct SettingsView: View {
           HStack {
             Text("Start Anywhere")
             Spacer()
-            Toggle("", isOn: $l_startInCorners)
+            Toggle("", isOn:$l_startInCorners )
               .labelsHidden()
+            
+            .disabled(l_boardsize>6)
             Spacer()
             Text("Start in Corners")
           }
@@ -97,13 +107,14 @@ fileprivate struct SettingsView: View {
           
           
           HStack {
-            Text("Face Down")
+            Text("Face Up")
             Spacer()
-            Toggle("", isOn: $l_faceUpCards)
+            Toggle("", isOn: qq())
+              .disabled(l_boardsize>4)
               .labelsHidden()
             Spacer()
-            Text("Face Up")
-          }.disabled(l_boardsize>4)
+            Text("Face Down")
+          }
             .frame(maxWidth: .infinity)
           
           
@@ -184,7 +195,7 @@ fileprivate struct SettingsView: View {
     gs.doublediag = l_doubleDiag
     gs.difficultylevel = l_difficultyLevel
     gs.startincorners = l_startInCorners 
-    gs.faceup = l_faceUpCards
+    gs.facedown = l_facedown
     gs.boardsize = l_boardsize
     gs.board = Array(repeating: Array(repeating: -1, count: l_boardsize), count: l_boardsize)
     gs.cellstate = Array(repeating: Array(repeating: .unplayed, count: l_boardsize), count: l_boardsize)
