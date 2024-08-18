@@ -34,14 +34,16 @@ struct GameScreen: View {
         VStack(spacing:5) {
           topButtonsVeew//.frame(height:40)// down below
             .padding(.horizontal).border(.red)
-          ScoreBarView(gs: gs).border(.red)
         }
         
         if gs.boardsize > 1 {
           VStack(alignment: .center){
             MainGridView(gs: gs, chmgr:chmgr,
-                         firstMove: $firstMove, onSingleTap: onSingleTap)//.border(Color.red)
+                         firstMove: $firstMove, onSingleTap: onSingleTap).border(Color.red)
           }
+          
+        ScoreBarView(gs: gs).border(.red)
+          
           .onChange(of:gs.cellstate) {
             onChangeOfCellState()
           }
@@ -73,6 +75,8 @@ struct GameScreen: View {
   
   var topButtonsVeew : some View{
     HStack {
+      Image(systemName:"skew")
+      Spacer()
       if gs.gamestate !=  StateOfPlay.playingNow {
         //Start Game
         Button(action: {
@@ -90,7 +94,7 @@ struct GameScreen: View {
             .background(Color.blue)
             .foregroundColor(.white)
             .cornerRadius(8)
-            .font(.body)
+            .font(.caption)
         }
         .alert("Can't start new Game - consider changing the topics or hit Full Reset",isPresented: $showCantStartAlert){
           Button("OK", role: .cancel) {
@@ -113,7 +117,7 @@ struct GameScreen: View {
             .background(Color.red)
             .foregroundColor(.white)
             .cornerRadius(8)
-            .font(.body)
+            .font(.caption)
         }
       }
 

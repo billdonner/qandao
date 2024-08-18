@@ -59,8 +59,9 @@ struct ContentView: View {
         
         VStack {
           Spacer()
-          TopicIndexView(gs: gs, chmgr: chmgr)
+          TopicIndexView(gs: gs, chmgr: chmgr).border(.red)
             .frame(height: geometry.size.height * 0.13)
+          
           HStack {
             //SETTINGS
             Button(action: {  withAnimation {showSettings = true } } ) {
@@ -88,7 +89,7 @@ struct ContentView: View {
               
 
       
-          }
+          }.border(.red)
         }
       }
     }
