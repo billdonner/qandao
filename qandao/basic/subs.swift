@@ -10,6 +10,8 @@ import SwiftUI
 var isIpad: Bool {
   UIDevice.current.systemName == "iPadOS"
 }
+
+
 extension String {
     /// Pads or truncates the string to the specified length.
     ///

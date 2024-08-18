@@ -38,7 +38,7 @@
 		88460E802C6F796100D5FA4A /* CloudSentiments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88460E582C6F796100D5FA4A /* CloudSentiments.swift */; };
 		88460E812C6F796100D5FA4A /* CustomAlerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88460E592C6F796100D5FA4A /* CustomAlerts.swift */; };
 		88460E822C6F796100D5FA4A /* GameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88460E5A2C6F796100D5FA4A /* GameState.swift */; };
-		88460E832C6F796100D5FA4A /* Guts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88460E5B2C6F796100D5FA4A /* Guts.swift */; };
+		88460E832C6F796100D5FA4A /* HowToGuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88460E5B2C6F796100D5FA4A /* HowToGuts.swift */; };
 		88460E852C6F796100D5FA4A /* mainapp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88460E5D2C6F796100D5FA4A /* mainapp.swift */; };
 		88460E862C6F796100D5FA4A /* mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88460E5E2C6F796100D5FA4A /* mocks.swift */; };
 		88460E872C6F796100D5FA4A /* structs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88460E5F2C6F796100D5FA4A /* structs.swift */; };
@@ -46,6 +46,7 @@
 		88460E892C6F796100D5FA4A /* TopicInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88460E612C6F796100D5FA4A /* TopicInfo.swift */; };
 		88460E8A2C6F796100D5FA4A /* WinLose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88460E622C6F796100D5FA4A /* WinLose.swift */; };
 		88460E912C6F798E00D5FA4A /* playdata.json in Resources */ = {isa = PBXBuildFile; fileRef = 88460E902C6F798E00D5FA4A /* playdata.json */; };
+		8867F1CA2C724C8800F1D2D6 /* DebugBorderViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8867F1C92C724C8800F1D2D6 /* DebugBorderViewModifier.swift */; };
 		889CEACA2B87809C00D88E38 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 889CEAC92B87809C00D88E38 /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -81,7 +82,7 @@
 		88460E582C6F796100D5FA4A /* CloudSentiments.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudSentiments.swift; sourceTree = "<group>"; };
 		88460E592C6F796100D5FA4A /* CustomAlerts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAlerts.swift; sourceTree = "<group>"; };
 		88460E5A2C6F796100D5FA4A /* GameState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameState.swift; sourceTree = "<group>"; };
-		88460E5B2C6F796100D5FA4A /* Guts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Guts.swift; sourceTree = "<group>"; };
+		88460E5B2C6F796100D5FA4A /* HowToGuts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HowToGuts.swift; sourceTree = "<group>"; };
 		88460E5D2C6F796100D5FA4A /* mainapp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = mainapp.swift; sourceTree = "<group>"; };
 		88460E5E2C6F796100D5FA4A /* mocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = mocks.swift; sourceTree = "<group>"; };
 		88460E5F2C6F796100D5FA4A /* structs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = structs.swift; sourceTree = "<group>"; };
@@ -94,6 +95,7 @@
 		88460E8E2C6F797400D5FA4A /* qdemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = qdemoTests.swift; sourceTree = "<group>"; };
 		88460E902C6F798E00D5FA4A /* playdata.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = playdata.json; sourceTree = "<group>"; };
 		88460E962C71567F00D5FA4A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8867F1C92C724C8800F1D2D6 /* DebugBorderViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugBorderViewModifier.swift; sourceTree = "<group>"; };
 		889CEABF2B87809C00D88E38 /* qandao.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = qandao.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		889CEAC92B87809C00D88E38 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		889CEAEF2B8780CC00D88E38 /* qanda.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = qanda.entitlements; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 				88460E4E2C6F796100D5FA4A /* TopicIndexView.swift */,
 				88460E4F2C6F796100D5FA4A /* TopicsChooserScreen.swift */,
 				88460E502C6F796100D5FA4A /* TopicSelectorView.swift */,
+				8867F1C92C724C8800F1D2D6 /* DebugBorderViewModifier.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -163,7 +166,7 @@
 				88460E582C6F796100D5FA4A /* CloudSentiments.swift */,
 				88460E592C6F796100D5FA4A /* CustomAlerts.swift */,
 				88460E5A2C6F796100D5FA4A /* GameState.swift */,
-				88460E5B2C6F796100D5FA4A /* Guts.swift */,
+				88460E5B2C6F796100D5FA4A /* HowToGuts.swift */,
 				88460E5D2C6F796100D5FA4A /* mainapp.swift */,
 				88460E5E2C6F796100D5FA4A /* mocks.swift */,
 				88460E5F2C6F796100D5FA4A /* structs.swift */,
@@ -329,9 +332,10 @@
 				88460E792C6F796100D5FA4A /* TopicsChooserScreen.swift in Sources */,
 				88460E7F2C6F796100D5FA4A /* ChaManExt.swift in Sources */,
 				88460E742C6F796100D5FA4A /* ScoreBarView.swift in Sources */,
-				88460E832C6F796100D5FA4A /* Guts.swift in Sources */,
+				88460E832C6F796100D5FA4A /* HowToGuts.swift in Sources */,
 				88460E6B2C6F796100D5FA4A /* GameScreen.swift in Sources */,
 				88460E752C6F796100D5FA4A /* SettingsScreen.swift in Sources */,
+				8867F1CA2C724C8800F1D2D6 /* DebugBorderViewModifier.swift in Sources */,
 				88460E652C6F796100D5FA4A /* AllocatorView.swift in Sources */,
 				88460E802C6F796100D5FA4A /* CloudSentiments.swift in Sources */,
 				88460E7A2C6F796100D5FA4A /* TopicSelectorView.swift in Sources */,

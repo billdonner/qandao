@@ -48,6 +48,7 @@ extension GameState {
     let x = GameState(size:3,topics:mockTopics,  challenges:Challenge.mockChallenges)
     x.movenumber = 1
     x.moveindex[0][0] = 1
+    x.replaced[0][0] = [2]
     x.lastmove = .init(row: 0, col: 0,movenumber:1)
     return x
   } ()

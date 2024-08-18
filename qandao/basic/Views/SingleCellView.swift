@@ -56,6 +56,7 @@ struct SingleCellView: View {
   let cellSize: CGFloat
   let onSingleTap: (_ row:Int, _ col:Int ) -> Bool
   @Binding var firstMove:Bool
+  @Binding var isTouching:Bool
   @State var alreadyPlayed:Sdi?
   var body: some View {
     let thisCellIsLastMove:Bool  = gs.lastmove?.row == row &&  gs.lastmove?.col == col
@@ -66,7 +67,7 @@ struct SingleCellView: View {
       // part 1:
       // if faceup show the question else blank
       VStack(alignment:.center, spacing:0) {
-        Text(!gs.facedown ? " " : challenge.question)
+        Text(gs.facedown ? " " : challenge.question)
           .font(.caption)
           .padding(10)
           .frame(width: cellSize, height: cellSize)
@@ -80,15 +81,15 @@ struct SingleCellView: View {
       }
       // part 3:
       // mark corner of last move with orange circle
-      if thisCellIsLastMove == true {
+      if thisCellIsLastMove && isTouching {
         Circle()
           .fill(Color.orange)
-          .frame(width: cellSize/5, height: cellSize/5)
-          .offset(x:-cellSize/2 + 10,y:-cellSize/2 + 10) 
+          .frame(width: cellSize/6, height: cellSize/6)
+          .offset(x:-cellSize/2 + 10,y:-cellSize/2 + 10)
       }// might have row or col out of whack here
       // mark upper right as well if its been replaced
       
-  if row<gs.boardsize && col<gs.boardsize {
+  if row<gs.boardsize && col<gs.boardsize && isTouching{
     if gs.startincorners { // playing corners
        
       if   ( gs.isCornerCell(row: row, col: col))  ||
@@ -104,7 +105,7 @@ struct SingleCellView: View {
       if gs.replaced[row][col] != [] {
         Circle()
           .fill(Color.neonRed)
-          .frame(width: cellSize/5, height: cellSize/5)
+          .frame(width: cellSize/6, height: cellSize/6)
           .offset(x:-cellSize/2 + 10,y:cellSize/2 - 10)
       }
           
@@ -119,7 +120,7 @@ struct SingleCellView: View {
         else {
           //use the sfsymbol
           Image(systemName:"\(gs.moveindex[row][col]).circle")
-            .font(.title)
+            .font(.body)
             .opacity(gs.moveindex[row][col] != -1 ? 0.7:0.0)
             .foregroundColor(foregroundColorFrom( backgroundColor:gs.colorForTopic (   challenge.topic ).0)
             )
@@ -167,8 +168,7 @@ struct SingleCellView: View {
   }// make one cell
 }
 
-struct SingleCellView_Previews: PreviewProvider {
-    static var previews: some View {
+#Preview ("No Touching") {
         SingleCellView(
           gs: GameState.mock,
             chmgr: ChaMan(playData:PlayData.mock),
@@ -176,11 +176,28 @@ struct SingleCellView_Previews: PreviewProvider {
             col: 0,
             chidx: 0,
             status: .unplayed,
-            cellSize: 50,
+            cellSize: 250,
             onSingleTap: { _, _ in true },
-            firstMove: .constant(true)
+          firstMove: .constant(false),
+          isTouching: .constant(false)
         )
         .previewLayout(.sizeThatFits)
         .padding()
     }
-}
+
+#Preview ("Touching"){
+        SingleCellView(
+          gs: GameState.mock,
+            chmgr: ChaMan(playData:PlayData.mock),
+            row: 0,
+            col: 0,
+            chidx: 0,
+            status: .unplayed,
+            cellSize: 250,
+            onSingleTap: { _, _ in true },
+          firstMove: .constant(true),
+          isTouching: .constant(true)
+        )
+        .previewLayout(.sizeThatFits)
+        .padding()
+    }

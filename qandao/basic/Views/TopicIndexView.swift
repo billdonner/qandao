@@ -12,12 +12,6 @@ struct TopicIndexView: View {
     @State var succ = false
     @State var topicDetailInfo: Tdi? = nil
 
-//    private let columns = [
-//        GridItem(.flexible(), alignment: .leading),
-//        GridItem(.flexible(), alignment: .leading),
-//        GridItem(.flexible(), alignment: .leading)
-//    ]
-
     var body: some View {
         GeometryReader { geometry in
             let isIpad = geometry.size.width > 600
@@ -52,11 +46,12 @@ struct TopicIndexView: View {
                 .background(Color.black.opacity(0.1))
                 .cornerRadius(10)
             }
+          .frame(height:50)
             .sheet(item: $topicDetailInfo) { tdi in
                 TopicDetailsView(topic: tdi.name, gs: gs, chmgr: chmgr)
             }
-            .padding()
         }
+        .debugBorder()
     }
 
     // Computed properties for background and text colors
@@ -68,13 +63,7 @@ struct TopicIndexView: View {
         colorScheme == .dark ? Color.white : Color.black
     }
 
-    private func truncatedText(_ text: String, count: Int) -> String {
-        if text.count > count {
-            let index = text.index(text.startIndex, offsetBy: count)
-            return String(text[..<index]) + "..."
-        }
-        return text
-    }
+
 }
 
 // Assuming you have the ChaMan and colorSchemes to preview the view

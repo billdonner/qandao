@@ -19,7 +19,7 @@ struct GameScreen: View {
   @State   var showWinAlert = false
   @State   var showLoseAlert = false
   @State   var showCantStartAlert = false
-  
+  @State private var isTouching: Bool = false
   
   var bodyMsg: String {
     let t =  """
@@ -29,20 +29,17 @@ struct GameScreen: View {
   }
   
   var body: some View {
-    VStack {
+ 
       VStack {
-        VStack(spacing:5) {
-          topButtonsVeew//.frame(height:40)// down below
-            .padding(.horizontal).border(.red)
-        }
+     
+        topButtonsVeew.padding([.bottom,.horizontal])
         
-        if gs.boardsize > 1 {
-          VStack(alignment: .center){
-            MainGridView(gs: gs, chmgr:chmgr,
-                         firstMove: $firstMove, onSingleTap: onSingleTap).border(Color.red)
-          }
+          if gs.boardsize > 1 {
+            MainGridView(gs: gs, chmgr:chmgr,  firstMove: $firstMove, isTouching: $isTouching, onSingleTap: onSingleTap)
+              .debugBorder()
           
-        ScoreBarView(gs: gs).border(.red)
+            ScoreBarView(gs: gs)
+              .debugBorder()
           
           .onChange(of:gs.cellstate) {
             onChangeOfCellState()
@@ -59,23 +56,33 @@ struct GameScreen: View {
         else {
           loadingVeew
         }
-        
       }
-      
       .youWinAlert(isPresented: $showWinAlert, title: "You Win",
                    bodyMessage: bodyMsg, buttonTitle: "OK"){
         onYouWin()
       }
-                   .youLoseAlert(isPresented: $showLoseAlert, title: "You Lose",
+      .youLoseAlert(isPresented: $showLoseAlert, title: "You Lose",
                                  bodyMessage: bodyMsg, buttonTitle: "OK"){
                      onYouLose()
-                   }
     }
   }
   
   var topButtonsVeew : some View{
     HStack {
       Image(systemName:"skew")
+        .resizable()
+               .frame(width: 40, height: 40)
+               .padding(.leading, 15)
+               .padding(.top, 15)
+        .gesture(
+                  DragGesture(minimumDistance: 0)
+                      .onChanged { _ in
+                          isTouching = true
+                      }
+                      .onEnded { _ in
+                          isTouching = false
+                      }
+              )
       Spacer()
       if gs.gamestate !=  StateOfPlay.playingNow {
         //Start Game
@@ -137,26 +144,18 @@ struct GameScreen: View {
 }
 
 
-// Preview Provider for SwiftUI preview
-//#Preview ("GameScreen") {
-//  @Previewable @State var topics: [String] = GameState.mock.topicsinplay
-//  Group {
-//    ForEach([8], id: \.self) { s in
-//      GameScreen(
-//        gs:GameState.mock ,
-//        chmgr: ChaMan(playData: PlayData.mock),
-//        topics:$topics,
-//        size:.constant(s),
-//        onSingleTap: { row,col in
-//          print("Tapped cell with challenge \(row) \(col)")
-//          return false
-//        }
-//      )
-//      //.previewLayout(.fixed(width: 300, height: 300))
-//      .previewDisplayName("Size \(s)x\(s)")
-//    }
-//  }
-//}
+#Preview ("GameScreen") {
 
+      GameScreen(
+        gs:GameState.mock ,
+        chmgr: ChaMan(playData: PlayData.mock),
+        topics:.constant(GameState.mock.topicsinplay),
+        size:.constant(3),
+        onSingleTap: { row,col in
+          print("Tapped cell with challenge \(row) \(col)")
+          return false
+        }
+      )
+    }
 
 

@@ -89,7 +89,7 @@ class GameState :  Codable {
     self.wrongcount = 0
     self.replacedcount = 0
     self.totaltime = 0.0
-    self.facedown = size < 5 
+    self.facedown = size > 4
     self.currentscheme = .summer
     self.veryfirstgame = true
     self.doublediag = false

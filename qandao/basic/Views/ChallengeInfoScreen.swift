@@ -73,20 +73,6 @@ struct ChallengeInfoScreen: View {
               Text(challenge.explanation ?? "none given").font(.headline)
             }
           }
-//          HStack{
-//            Text("Veracity Opinions From Other Chatbots").font(.headline)
-//            Spacer()
-//          }.font(.headline)
- //         VStack(spacing:5){
-
-//          HStack{
-//            Text("Prompt sent to ChatBot")
-//            Spacer()
-//          }.font(.headline)
-//          VStack(spacing:5){
-//            Text(decodeStringFromJSON(encodedString: challenge.prompt))
-//              .borderedStyle(.blue)
-//          }
         }
       }
       .navigationBarItems(leading:     Button {

@@ -9,18 +9,17 @@ struct ContentView: View {
   @State var chal: IdentifiablePoint? = nil
   @State var isPresentingDetailView = false
   
-  @State   var showSettings = false
-  @State   var showingHelp = false
+
   
   var body: some View {
-    VStack {
-      GeometryReader { geometry in
-        VStack {
+     GeometryReader { geometry in
+       VStack(spacing:20) {
           GameScreen(gs: gs, chmgr: chmgr, topics: $current_topics, size: $current_size) { row, col in
             isPresentingDetailView = true
             chal = IdentifiablePoint(row: row, col: col, status: chmgr.stati[row * gs.boardsize + col])
             return false
           }
+          .frame(width:geometry.size.width, height:geometry.size.width*1.37)
           .onAppear {
             if gs.veryfirstgame {
               chmgr.loadAllData(gs: gs)
@@ -46,53 +45,56 @@ struct ContentView: View {
             QandAScreen(row: cha.row, col: cha.col,
                         isPresentingDetailView: $isPresentingDetailView, chmgr: chmgr, gs: gs)
           }
-          .sheet(isPresented: $showSettings){
-            SettingsScreen(chmgr: chmgr, gs: gs)
-          }
-          .fullScreenCover(isPresented: $showingHelp ){
-            HowToPlayScreen (chmgr: chmgr, isPresented: $showingHelp)
-              .statusBar(hidden: true)
-          }
-          Spacer()
-        }
-        .frame(height: geometry.size.height * 0.85)
-        
-        VStack {
-          Spacer()
-          TopicIndexView(gs: gs, chmgr: chmgr).border(.red)
-            .frame(height: geometry.size.height * 0.13)
+          TopicIndexView(gs: gs, chmgr: chmgr)
+          ContentViewBottomButtons(gs:gs, chmgr: chmgr)
           
-          HStack {
-            //SETTINGS
-            Button(action: {  withAnimation {showSettings = true } } ) {
-              Text("Settings")
-                .padding()
-                .background(Color.blue)
-                .foregroundColor(.white)
-                .cornerRadius(8)
-                .font(.caption2)
-            }
-            .disabled(gs.gamestate == .playingNow)
-            .opacity(gs.gamestate != .playingNow ? 1 : 0.5)
-            Spacer()
-            Text("QandA \(AppVersionProvider.appVersion()) by Freeport Software").font(.caption2)
-            Spacer()
-            //Help
-            Button(action: { showingHelp = true }) {
-              Text("Help")
-                .padding()
-                .background(Color.blue)
-                .foregroundColor(.white)
-                .cornerRadius(8) 
-              .font(.caption2)
-            }
-              
-
-      
-          }.border(.red)
         }
       }
+  }
+}
+struct ContentViewBottomButtons : View {
+  let gs:GameState
+  let chmgr:ChaMan
+  
+  @State   var showSettings = false
+  @State   var showingHelp = false
+  var body: some View {
+    
+    HStack {
+      //SETTINGS
+      Button(action: {  withAnimation {showSettings = true } } ) {
+ 
+        Image(systemName:"gearshape.2")
+          .font(.title) 
+                 .frame(width: 40, height: 40)
+                 .padding(.leading, 15)
+                // .padding(.bottom, 15)
+      }
+      .disabled(gs.gamestate == .playingNow)
+      .opacity(gs.gamestate != .playingNow ? 1 : 0.5)
+      Spacer()
+      Text("QandA \(AppVersionProvider.appVersion()) by Freeport Software").font(.caption2)
+      Spacer()
+      //Help
+      Button(action: { showingHelp = true }) {
+        Image(systemName:"questionmark")
+          .font(.title)
+                 .frame(width: 40, height: 40)
+                 .padding(.trailing, 15)
+      }
+        
+
+
     }
+    .debugBorder()
+      .sheet(isPresented: $showSettings){
+        SettingsScreen(chmgr: chmgr, gs: gs)
+      }
+      .fullScreenCover(isPresented: $showingHelp ){
+        HowToPlayScreen (chmgr: chmgr, isPresented: $showingHelp)
+          .statusBar(hidden: true)
+      }
+  
   }
 }
 
