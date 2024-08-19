@@ -8,11 +8,21 @@
 import SwiftUI
 let playDataFileName = "playdata.json"
 let starting_size = 3 // Example size, can be 3 to 8
+let spareHeightFactor = 1.37 // controls layout of grid if too small
+let cornerradius = 0.0 // something like 8 makes nice rounded cord=ners
+var isDebugModeEnabled: Bool = false
+var debugBorderColor: Color = .red
+
+extension Color {
+  static let offBlack = Color(red: 0.1, green: 0.1, blue: 0.1)
+  static let offWhite = Color(red: 0.95, green: 0.95, blue: 0.95)
+}
 class OrientationLockedViewController: UIViewController {
   override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
     return .portrait
   }
 }
+
 
 
 // Assuming a mock PlayData JSON file in the main bundle

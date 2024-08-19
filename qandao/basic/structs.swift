@@ -1,4 +1,33 @@
 import SwiftUI
+
+struct Sdi: Identifiable
+{
+  let row:Int
+  let col:Int
+  let id=UUID()
+}
+enum ChallengeOutcomes: Codable {
+  
+  case playedCorrectly
+  case playedIncorrectly
+  case unplayed
+  
+  var borderColor: Color {
+    switch self {
+    case .playedCorrectly: return Color.neonGreen
+    case .playedIncorrectly: return Color.neonRed
+    case .unplayed: return .gray
+    }
+  }
+}
+enum CornerPosition: CaseIterable {
+    case topLeft
+    case topRight
+    case bottomLeft
+    case bottomRight
+}
+
+
 enum StateOfPlay : Int, Codable {
   case initializingApp
   case playingNow

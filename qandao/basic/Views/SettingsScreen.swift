@@ -29,7 +29,7 @@ fileprivate struct SettingsView: View {
   @State private var  l_facedown: Bool
   @State private var  l_doubleDiag: Bool
   @State private var  l_currentScheme: Int//ColorSchemeName
-  @State private var  l_difficultyLevel: DifficultyLevel
+  @State private var  l_difficultyLevel: Int
   @State private var  l_topicsinplay: [String]
   
   // @State var selectedTopics: [String]
@@ -192,8 +192,7 @@ fileprivate struct SettingsView: View {
           // print("//GameSettingsScreen Cancel Pressed topics were: \(l_topicsinplay)")
           self.presentationMode.wrappedValue.dismiss()
         },
-        trailing: Button("Done") {
-          // print("//GameSettingsScreen Done Pressed ")
+        trailing: Button("Done") { 
           onDonePressed()
           self.presentationMode.wrappedValue.dismiss()
         }

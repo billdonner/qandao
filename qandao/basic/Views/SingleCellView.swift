@@ -7,93 +7,6 @@
 
 
 import SwiftUI
-@ViewBuilder
-func markView(at position: CornerPosition, size: CGFloat) -> some View {
-  
-   let markSize: CGFloat = CGFloat(size)/10.0
-    let offset: CGFloat = 100.0
-    let xpos = position == .topLeft || position == .bottomLeft ? offset : size - offset
-    let ypos =  position == .topLeft || position == .topRight ? offset : size - offset
-  
-    Circle()
-        .fill(Color.orange)
-        .frame(width: markSize, height: markSize)
-        .position(x: xpos, y: ypos)
-}
-struct Sdi: Identifiable
-{
-  let row:Int
-  let col:Int
-  let id=UUID()
-}
-enum ChallengeOutcomes: Codable {
-  
-  case playedCorrectly
-  case playedIncorrectly
-  case unplayed
-  
-  var borderColor: Color {
-    switch self {
-    case .playedCorrectly: return Color.neonGreen
-    case .playedIncorrectly: return Color.neonRed
-    case .unplayed: return .gray
-    }
-  }
-}
-enum CornerPosition: CaseIterable {
-    case topLeft
-    case topRight
-    case bottomLeft
-    case bottomRight
-}
-extension Color {
-  static let offBlack = Color(red: 0.1, green: 0.1, blue: 0.1)
-  static let offWhite = Color(red: 0.95, green: 0.95, blue: 0.95)
-}
-struct HappySmileyView : View {
-  let color:Color
-  @Environment(\.colorScheme) var colorScheme //system light/dark
-  var body: some View {
-    ZStack {
-      colorScheme == .dark ? Color.offBlack : Color.offWhite
-      Circle().foregroundStyle(color)
-    }
-  }
-}
-#Preview ("Happy") {
-  HappySmileyView(color: .blue)
-    .frame(width: 100, height: 100) // Set the size of the square
-}
-
- 
-#Preview ("Gloomy"){
-  GloomyView(color:.red)
-    .frame(width: 100, height: 100) // Set the size of the square
-}
-
-let fudge = 3.0
-struct GloomyView: View {
-  let color:Color
-  @Environment(\.colorScheme) var colorScheme //system light/dark
-    var body: some View {
-        GeometryReader { geometry in
-            ZStack {
-                // Black background
-                colorScheme == .dark ? Color.offBlack : Color.offWhite
-                // White diagonal line
-                Path { path in
-                    let size = geometry.size
-                    path.move(to: CGPoint(x: fudge, y: fudge))
-                    path.addLine(to: CGPoint(x: size.width-fudge, y: size.height-fudge))
-                  path.move(to: CGPoint(x:  size.width-fudge, y: fudge))
-                  path.addLine(to: CGPoint(x:fudge, y: size.height-fudge))
-                }
-                .stroke(color, lineWidth: 5)
-            }
-        }
-    }
-}
-let cornerradius = 0.0
 
 struct SingleCellView: View {
   let gs:GameState
@@ -119,7 +32,6 @@ struct SingleCellView: View {
       VStack(alignment:.center, spacing:0) {
         if row<gs.boardsize && col<gs.boardsize {
           switch gs.cellstate[row][col] {
-            
           case .playedCorrectly:
             HappySmileyView(color:colormix.0)
               .cornerRadius(cornerradius)
@@ -150,12 +62,10 @@ struct SingleCellView: View {
                     .opacity(gs.gamestate == .playingNow ? 1.0:0.7)
               }
             }
-            
           }
         }
       }
- 
-      
+      //Layer
       // part 3:
       // mark corner of last move with orange circle
       if thisCellIsLastMove && isTouching {
@@ -166,50 +76,64 @@ struct SingleCellView: View {
       }// might have row or col out of whack here
       // mark upper right as well if its been replaced
       
-  if row<gs.boardsize && col<gs.boardsize && isTouching{
-    if gs.startincorners { // playing corners
-       
-      if   ( gs.isCornerCell(row: row, col: col))  ||
-        hasAdjacentNeighbor(withStates: [.playedCorrectly,.playedIncorrectly], in: gs.cellstate, for: (row,col)) {
+      if row<gs.boardsize && col<gs.boardsize {
+        
+      // put a symbol in the corner until we play
+      if gs.startincorners && gs.gamestate == .playingNow &&  gs.isCornerCell(row: row, col: col) && gs.cellstate [row][col] == .unplayed {
+        //Layer
+       // let _ = print("at target\(row),\(col)")
+        Image(systemName:"target")
+           .font(.largeTitle)
+         .foregroundColor(
+                            foregroundColorFrom( backgroundColor:gs.colorForTopic (challenge.topic ).0))
+          .frame(width: cellSize, height: cellSize)
+      }
+       //Layer
+    if gs.startincorners && isTouching  { // playing corners
+       // only show blue if we are actually in the game
+      if gs.gamestate ==  .playingNow && ( ( gs.isCornerCell(row: row, col: col))  ||
+        hasAdjacentNeighbor(withStates: [.playedCorrectly,.playedIncorrectly], in: gs.cellstate, for: (row,col)) ){
         Circle()
           .fill(Color.blue)
           .frame(width: cellSize/6, height: cellSize/6)
           .offset(x:cellSize/2 - 7,y:-cellSize/2 + 10)
       }
- 
     }
-    
-      if gs.replaced[row][col] != [] {
-        Circle()
-          .fill(Color.neonRed)
-          .frame(width: cellSize/6, height: cellSize/6)
-          .offset(x:-cellSize/2 + 10,y:cellSize/2 - 10)
-      }
-          
-        
-        // part 4:
-        // nice sfsymbols only until 50
-        if gs.moveindex[row][col] == -1 {
-          Text("???").font(.footnote).opacity(gs.moveindex[row][col] != -1 ? 1.0:0.0)
-        } else
-        if gs.moveindex[row][col] > 50 {     Text("\(gs.moveindex[row][col])").font(.footnote).opacity(gs.moveindex[row][col] != -1 ? 1.0:0.0)
-        }
-        else {
-          //use the sfsymbol // if cell incorrectly played always use white
-          Image(systemName:"\(gs.moveindex[row][col]).circle")
-            .font(.largeTitle)
-            .opacity(gs.moveindex[row][col] != -1 ? 0.7:0.0)
-            .foregroundColor( gs.cellstate[row][col] == .playedIncorrectly ?
-                              (colorScheme == .dark ? .white: .black) :
-              foregroundColorFrom( backgroundColor:gs.colorForTopic (challenge.topic ).0)
-            )
-        }
-        // part 5:
-        // highlight the winning path with a green checkmark overlays
-        if gs.onwinpath[row][col] {
-          Image(systemName:"checkmark")
-            .font(.largeTitle)
-            .foregroundColor(.green)
+        if isTouching {
+          //Layer
+          if gs.replaced[row][col] != [] {
+            Circle()
+              .fill(Color.neonRed)
+              .frame(width: cellSize/6, height: cellSize/6)
+              .offset(x:-cellSize/2 + 10,y:cellSize/2 - 10)
+          }
+          //Layer
+          // part 4:
+          // nice sfsymbols only until 50
+          if gs.moveindex[row][col] == -1 {
+            Text("???").font(.footnote).opacity(gs.moveindex[row][col] != -1 ? 1.0:0.0)
+          } else
+          if gs.moveindex[row][col] > 50 {
+            Text("\(gs.moveindex[row][col])").font(.footnote).opacity(gs.moveindex[row][col] != -1 ? 1.0:0.0)
+          }
+          else {
+            //use the sfsymbol // if cell incorrectly played always use white
+            Image(systemName:"\(gs.moveindex[row][col]).circle")
+              .font(.largeTitle)
+              .opacity(gs.moveindex[row][col] != -1 ? 0.7:0.0)
+              .foregroundColor( gs.cellstate[row][col] == .playedIncorrectly ?
+                                (colorScheme == .dark ? .white: .black) :
+                                  foregroundColorFrom( backgroundColor:gs.colorForTopic (challenge.topic ).0)
+              )
+          }
+          //Layer
+          // part 5:
+          // highlight the winning path with a green checkmark overlays
+          if gs.onwinpath[row][col] {
+            Image(systemName:"checkmark")
+              .font(.largeTitle)
+              .foregroundColor(.green)
+          }
         }
       }// row in bounds
     }
@@ -230,7 +154,8 @@ struct SingleCellView: View {
             if firstMove{
               tap =  gs.isCornerCell(row: row,col: col)
             } else {
-              tap =  gs.isCornerCell(row: row,col: col) ||      hasAdjacentNeighbor(withStates: [.playedCorrectly,.playedIncorrectly], in: gs.cellstate, for: (row,col))
+              tap =  gs.isCornerCell(row: row,col: col) ||      
+              hasAdjacentNeighbor(withStates: [.playedCorrectly,.playedIncorrectly], in: gs.cellstate, for: (row,col))
             }
           }
           else {

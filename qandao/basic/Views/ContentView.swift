@@ -19,7 +19,7 @@ struct ContentView: View {
             chal = IdentifiablePoint(row: row, col: col, status: chmgr.stati[row * gs.boardsize + col])
             return false
           }
-          .frame(width:geometry.size.width, height:geometry.size.width*1.37)
+          .frame(width:geometry.size.width, height:geometry.size.width*spareHeightFactor)
           .onAppear {
             if gs.veryfirstgame {
               chmgr.loadAllData(gs: gs)
@@ -50,51 +50,6 @@ struct ContentView: View {
           
         }
       }
-  }
-}
-struct ContentViewBottomButtons : View {
-  let gs:GameState
-  let chmgr:ChaMan
-  
-  @State   var showSettings = false
-  @State   var showingHelp = false
-  var body: some View {
-    
-    HStack {
-      //SETTINGS
-      Button(action: {  withAnimation {showSettings = true } } ) {
- 
-        Image(systemName:"gearshape.2")
-          .font(.title) 
-                 .frame(width: 40, height: 40)
-                 .padding(.leading, 15)
-                // .padding(.bottom, 15)
-      }
-      .disabled(gs.gamestate == .playingNow)
-      .opacity(gs.gamestate != .playingNow ? 1 : 0.5)
-      Spacer()
-      Text("QandA \(AppVersionProvider.appVersion()) by Freeport Software").font(.caption2)
-      Spacer()
-      //Help
-      Button(action: { showingHelp = true }) {
-        Image(systemName:"questionmark")
-          .font(.title)
-                 .frame(width: 40, height: 40)
-                 .padding(.trailing, 15)
-      }
-        
-
-
-    }
-    .debugBorder()
-      .sheet(isPresented: $showSettings){
-        SettingsScreen(chmgr: chmgr, gs: gs)
-      }
-      .fullScreenCover(isPresented: $showingHelp ){
-        HowToPlayScreen (chmgr: chmgr, isPresented: $showingHelp)
-          .statusBar(hidden: true)
-      }
-  
   }
 }
 

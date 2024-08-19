@@ -48,6 +48,8 @@
 		88460E912C6F798E00D5FA4A /* playdata.json in Resources */ = {isa = PBXBuildFile; fileRef = 88460E902C6F798E00D5FA4A /* playdata.json */; };
 		8867F1CA2C724C8800F1D2D6 /* DebugBorderViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8867F1C92C724C8800F1D2D6 /* DebugBorderViewModifier.swift */; };
 		889CEACA2B87809C00D88E38 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 889CEAC92B87809C00D88E38 /* Preview Assets.xcassets */; };
+		88D3F8492C73DD8E00143B76 /* ContentViewBottomButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D3F8482C73DD8E00143B76 /* ContentViewBottomButtons.swift */; };
+		88D3F84B2C73E3F400143B76 /* HappyGloomyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D3F84A2C73E3F400143B76 /* HappyGloomyView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -101,6 +103,8 @@
 		889CEAEF2B8780CC00D88E38 /* qanda.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = qanda.entitlements; sourceTree = "<group>"; };
 		889CEB272B8A76C700D88E38 /* qandao.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = qandao.entitlements; sourceTree = "<group>"; };
 		889CEB282B8A7A4800D88E38 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		88D3F8482C73DD8E00143B76 /* ContentViewBottomButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewBottomButtons.swift; sourceTree = "<group>"; };
+		88D3F84A2C73E3F400143B76 /* HappyGloomyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HappyGloomyView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,11 +133,13 @@
 				88460E3C2C6F796100D5FA4A /* AlreadyPlayedView.swift */,
 				88460E3D2C6F796100D5FA4A /* ChallengeInfoScreen.swift */,
 				88460E3E2C6F796100D5FA4A /* ContentView.swift */,
+				88D3F8482C73DD8E00143B76 /* ContentViewBottomButtons.swift */,
 				8867F1C92C724C8800F1D2D6 /* DebugBorderViewModifier.swift */,
 				88460E3F2C6F796100D5FA4A /* FreeportSettingsScreen.swift */,
 				88460E402C6F796100D5FA4A /* GameLogScreen.swift */,
 				88460E412C6F796100D5FA4A /* GameScreen.swift */,
 				88460E422C6F796100D5FA4A /* GameScreenExt.swift */,
+				88D3F84A2C73E3F400143B76 /* HappyGloomyView.swift */,
 				88460E432C6F796100D5FA4A /* HowToPlayScreen.swift */,
 				88460E442C6F796100D5FA4A /* MainGridView.swift */,
 				88460E452C6F796100D5FA4A /* OnboardingScreen.swift */,
@@ -334,6 +340,7 @@
 				88460E742C6F796100D5FA4A /* ScoreBarView.swift in Sources */,
 				88460E832C6F796100D5FA4A /* HowToGuts.swift in Sources */,
 				88460E6B2C6F796100D5FA4A /* GameScreen.swift in Sources */,
+				88D3F84B2C73E3F400143B76 /* HappyGloomyView.swift in Sources */,
 				88460E752C6F796100D5FA4A /* SettingsScreen.swift in Sources */,
 				8867F1CA2C724C8800F1D2D6 /* DebugBorderViewModifier.swift in Sources */,
 				88460E652C6F796100D5FA4A /* AllocatorView.swift in Sources */,
@@ -345,6 +352,7 @@
 				88460E7C2C6F796100D5FA4A /* AppColors.swift in Sources */,
 				88460E6D2C6F796100D5FA4A /* HowToPlayScreen.swift in Sources */,
 				88460E8A2C6F796100D5FA4A /* WinLose.swift in Sources */,
+				88D3F8492C73DD8E00143B76 /* ContentViewBottomButtons.swift in Sources */,
 				88460E6E2C6F796100D5FA4A /* MainGridView.swift in Sources */,
 				88460E852C6F796100D5FA4A /* mainapp.swift in Sources */,
 			);
@@ -480,7 +488,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = qandao/qandao.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
+				CURRENT_PROJECT_VERSION = 26;
 				DEVELOPMENT_ASSET_PATHS = "\"qandao/Preview Content\"";
 				DEVELOPMENT_TEAM = NEAY582ME4;
 				ENABLE_PREVIEWS = YES;
@@ -513,7 +521,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = qandao/qandao.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
+				CURRENT_PROJECT_VERSION = 26;
 				DEVELOPMENT_ASSET_PATHS = "\"qandao/Preview Content\"";
 				DEVELOPMENT_TEAM = NEAY582ME4;
 				ENABLE_PREVIEWS = YES;

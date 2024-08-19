@@ -7,10 +7,7 @@
 
 import SwiftUI
 
-// MARK: - Global Variables
-// Define global variables for enabling the debug border and setting the default color
-var isDebugModeEnabled: Bool = false
-var debugBorderColor: Color = .red
+
 
 // MARK: - DebugBorder ViewModifier
 // ViewModifier to apply a one-pixel border around a view

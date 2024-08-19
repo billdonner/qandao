@@ -11,9 +11,9 @@ struct GameMove : Codable,Hashable {
   let col:Int
   let movenumber:Int 
 }
-enum DifficultyLevel: Int,Codable {
-  case easy,normal,hard
-}
+//enum DifficultyLevel: Int,Codable {
+//  case easy,normal,hard
+//}
 @Observable
 class GameState :  Codable {
   var board: [[Int]]  // Array of arrays to represent the game board with challenges
@@ -38,7 +38,7 @@ class GameState :  Codable {
   var veryfirstgame:Bool
   var startincorners:Bool
   var doublediag:Bool
-  var difficultylevel:DifficultyLevel
+  var difficultylevel:Int
   var lastmove: GameMove?
   var gamestart:Date // when game started
   
@@ -93,7 +93,7 @@ class GameState :  Codable {
     self.currentscheme = .summer
     self.veryfirstgame = true
     self.doublediag = false
-    self.difficultylevel = .easy
+    self.difficultylevel = 0//.easy
     self.startincorners = false
     self.gamestart = Date()
   }
@@ -193,12 +193,13 @@ class GameState :  Codable {
     + (facedown ? 5 : 0)
     
     let part3 = switch difficultylevel {
-    case .easy:
+    case 0://.easy:
      0
-    case .normal:
+    case 1://.normal:
       5
-    case .hard:
+    case 2://.hard:
       10
+    default: 0 
     }
     
     let total = part1 + part2 + part3
