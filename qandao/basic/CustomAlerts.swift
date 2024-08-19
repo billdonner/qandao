@@ -32,8 +32,9 @@ fileprivate struct RotateAndFadeModifier: ViewModifier {
 
 // A frosted background view using a blur effect
 fileprivate struct FrostedBackgroundView: View {
+  @Environment(\.colorScheme) var colorScheme //system light/dark
     var body: some View {
-        BlurView(style: .dark)
+      BlurView(style:colorScheme == .dark ? .dark:.light)
             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
             .shadow(radius: 10)
             .padding()

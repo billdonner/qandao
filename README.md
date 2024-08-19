@@ -1,10 +1,9 @@
 #  QANDAO - revised test app for Q20K
-version 0.7.24 many changes, still in darkmode, out to testflight
-version 0.7.23 put everything into dark mode for first round testflight,start with size of 3, faceup 
-version 0.7.22 integrate code from basic app
-
-version 0.7.21 retest testflight
-
+- version 0.7.25 working in light mode now
+- version 0.7.24 many changes, still in darkmode, out to testflight
+- version 0.7.23 put everything into dark mode for first round testflight,start with size of 3, faceup 
+- version 0.7.22 integrate code from basic app
+- version 0.7.21 retest testflight
 - version 0.3.20 "start in corners" option fully supported with new rules
 - version 0.3.18 general 
 - version 0.3.17 fix topics, qanda picks 3, they pick 0-7 more, game log, set requires full screen,spacing of flags

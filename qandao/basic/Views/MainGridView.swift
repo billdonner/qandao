@@ -16,11 +16,9 @@ struct MainGridView : View {
   let onSingleTap: (Int,Int)->Bool
   
   var body: some View {
-    let spacing: CGFloat = 5.0 * (isIpad ? 1.2 : 1.0)
+    let spacing: CGFloat = 1.0 * (isIpad ? 1.2 : 1.0)
     
     return   GeometryReader { geometry in
-      //  let _ = print("gs.boardsize \(gs.boardsize) gs.board.count \(gs.board.count) geometry.size.width \(geometry.size.width) geometry.size.height \(geometry.size.height)")
-      //PUT SOME SPACE ON BOTH SIDES//
       let totalSpacing = spacing * CGFloat(gs.boardsize + 1)
       let axisSize = min(geometry.size.width, geometry.size.height) - totalSpacing
       let cellSize = (axisSize / CGFloat(gs.boardsize)) //* shrinkFactor  // Apply shrink factor

@@ -46,12 +46,16 @@ enum CornerPosition: CaseIterable {
     case bottomLeft
     case bottomRight
 }
-
+extension Color {
+  static let offBlack = Color(red: 0.1, green: 0.1, blue: 0.1)
+  static let offWhite = Color(red: 0.95, green: 0.95, blue: 0.95)
+}
 struct HappySmileyView : View {
   let color:Color
+  @Environment(\.colorScheme) var colorScheme //system light/dark
   var body: some View {
     ZStack {
-      Color.black
+      colorScheme == .dark ? Color.offBlack : Color.offWhite
       Circle().foregroundStyle(color)
     }
   }
@@ -67,14 +71,15 @@ struct HappySmileyView : View {
     .frame(width: 100, height: 100) // Set the size of the square
 }
 
+let fudge = 3.0
 struct GloomyView: View {
-  let fudge = 3.0
   let color:Color
+  @Environment(\.colorScheme) var colorScheme //system light/dark
     var body: some View {
         GeometryReader { geometry in
             ZStack {
                 // Black background
-                Color.black
+                colorScheme == .dark ? Color.offBlack : Color.offWhite
                 // White diagonal line
                 Path { path in
                     let size = geometry.size
@@ -88,6 +93,8 @@ struct GloomyView: View {
         }
     }
 }
+let cornerradius = 0.0
+
 struct SingleCellView: View {
   let gs:GameState
   let chmgr:ChaMan
@@ -99,6 +106,7 @@ struct SingleCellView: View {
   let onSingleTap: (_ row:Int, _ col:Int ) -> Bool
   @Binding var firstMove:Bool
   @Binding var isTouching:Bool
+  @Environment(\.colorScheme) var colorScheme //system light/dark
   @State var alreadyPlayed:Sdi?
   var body: some View {
     let thisCellIsLastMove:Bool  = gs.lastmove?.row == row &&  gs.lastmove?.col == col
@@ -109,27 +117,42 @@ struct SingleCellView: View {
       // part 1:
       // if faceup show the question else blank
       VStack(alignment:.center, spacing:0) {
-        switch gs.cellstate[row][col] {
-          
-        case .playedCorrectly:
-          HappySmileyView(color:colormix.0)
-            .frame(width: cellSize, height: cellSize)
-        case .playedIncorrectly:
-          GloomyView(color:colormix.0).frame(width: cellSize, height: cellSize)
-        case .unplayed:
-          Text(gs.facedown ? " " : challenge.question)
-            .font(.caption)
-            .padding(10)
-            .frame(width: cellSize, height: cellSize)
-            .background(colormix.0)
-            .foregroundColor(foregroundColorFrom( backgroundColor: colormix.0 ))
-          //part 2:
-          //color border according to correctness
-          //  .border(status.borderColor , width: gs.cellBorderSize()) //3=8,8=3
-            .cornerRadius(8)
-            .opacity(gs.gamestate == .playingNow ? 1.0:0.0)
+        if row<gs.boardsize && col<gs.boardsize {
+          switch gs.cellstate[row][col] {
+            
+          case .playedCorrectly:
+            HappySmileyView(color:colormix.0)
+              .cornerRadius(cornerradius)
+              .frame(width: cellSize, height: cellSize)
+              .opacity(gs.gamestate == .playingNow ? 1.0:0.7)
+          case .playedIncorrectly:
+            GloomyView(color:colormix.0)
+              .cornerRadius(cornerradius)
+              .frame(width: cellSize, height: cellSize)
+              .opacity(gs.gamestate == .playingNow ? 1.0:0.7)
+          case .unplayed:
+            if ( gs.gamestate == .playingNow ) {
+              Text(gs.facedown ? "" : challenge.question)
+                .font(.caption)
+                .padding(10)
+                .frame(width: cellSize, height: cellSize)
+                .background(colormix.0)
+                .foregroundColor(foregroundColorFrom( backgroundColor: colormix.0 ))
+                .cornerRadius(cornerradius)
+                .opacity(gs.gamestate == .playingNow ? 1.0:0.7)
+            } else {
+              if  colorScheme == .dark { Color.offBlack
+                  .cornerRadius(cornerradius)
+                  .opacity(gs.gamestate == .playingNow ? 1.0:0.7)
+              } else {
+                Color.offWhite
+                    .cornerRadius(cornerradius)
+                    .opacity(gs.gamestate == .playingNow ? 1.0:0.7)
+              }
+            }
+            
+          }
         }
-
       }
  
       
@@ -172,11 +195,13 @@ struct SingleCellView: View {
         if gs.moveindex[row][col] > 50 {     Text("\(gs.moveindex[row][col])").font(.footnote).opacity(gs.moveindex[row][col] != -1 ? 1.0:0.0)
         }
         else {
-          //use the sfsymbol
+          //use the sfsymbol // if cell incorrectly played always use white
           Image(systemName:"\(gs.moveindex[row][col]).circle")
-            .font(.body)
+            .font(.largeTitle)
             .opacity(gs.moveindex[row][col] != -1 ? 0.7:0.0)
-            .foregroundColor(foregroundColorFrom( backgroundColor:gs.colorForTopic (   challenge.topic ).0)
+            .foregroundColor( gs.cellstate[row][col] == .playedIncorrectly ?
+                              (colorScheme == .dark ? .white: .black) :
+              foregroundColorFrom( backgroundColor:gs.colorForTopic (challenge.topic ).0)
             )
         }
         // part 5:

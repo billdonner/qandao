@@ -61,18 +61,24 @@ fileprivate struct SettingsView: View {
     //// wrong refreshTopics()
   }
   fileprivate func startInCorners () -> Binding<Bool> {
-   // if  l_boardsize < 5  {  return .constant(false) }  else {
-    //  if l_boardsize > 6 { return  .constant(true) } else {
-        return  $l_startInCorners
-     // }
-   // }
+    switch l_boardsize {
+    case 3: return  $l_startInCorners//.constant(false)
+    case 4: return  $l_startInCorners//.constant(false)
+    case 5:  return $l_startInCorners
+    case 6: return $l_startInCorners
+    case 7: return  $l_startInCorners//.constant(true)
+    default: return  $l_startInCorners//.constant(true)
+    }
   }
   fileprivate func faceDown () -> Binding<Bool> {
-   // if  l_boardsize < 5  {  return .constant(false) }  else {
-    //  if l_boardsize > 6 { return  .constant(true) } else {
-        return  $l_facedown
-     // }
-   // }
+    switch l_boardsize {
+    case 3: return  $l_facedown
+    case 4: return  $l_facedown
+    case 5:  return $l_facedown//.constant(true)
+    case 6: return $l_facedown//.constant(true)
+    case 7: return $l_facedown//.constant(true)
+    default: return $l_facedown//.constant(true)
+    }
   }
   
   var body: some View {
