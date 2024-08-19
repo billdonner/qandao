@@ -60,14 +60,20 @@ fileprivate struct SettingsView: View {
   fileprivate func onParameterChange() {
     //// wrong refreshTopics()
   }
-  fileprivate func qq () -> Binding<Bool> {
-    if  l_boardsize < 5  {  return .constant(false) }  else {
-      if l_boardsize > 6 { return  .constant(true) } else {
+  fileprivate func startInCorners () -> Binding<Bool> {
+   // if  l_boardsize < 5  {  return .constant(false) }  else {
+    //  if l_boardsize > 6 { return  .constant(true) } else {
         return  $l_startInCorners
-      }
-    }
+     // }
+   // }
   }
-  
+  fileprivate func faceDown () -> Binding<Bool> {
+   // if  l_boardsize < 5  {  return .constant(false) }  else {
+    //  if l_boardsize > 6 { return  .constant(true) } else {
+        return  $l_facedown
+     // }
+   // }
+  }
   
   var body: some View {
     VStack {
@@ -94,14 +100,13 @@ fileprivate struct SettingsView: View {
           
           
           HStack {
-            Text("Start Anywhere")
+            Text("Loose")
             Spacer()
-            Toggle("", isOn:$l_startInCorners )
+            Toggle("", isOn: startInCorners())
               .labelsHidden()
-            
-            .disabled(l_boardsize>6)
+           // .disabled(l_boardsize>6)
             Spacer()
-            Text("Start in Corners")
+            Text("Strict")
           }
           .frame(maxWidth: .infinity)
           
@@ -109,8 +114,8 @@ fileprivate struct SettingsView: View {
           HStack {
             Text("Face Up")
             Spacer()
-            Toggle("", isOn: qq())
-              .disabled(l_boardsize>4)
+            Toggle("", isOn:faceDown())
+              //.disabled(l_boardsize>4)
               .labelsHidden()
             Spacer()
             Text("Face Down")

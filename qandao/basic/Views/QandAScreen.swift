@@ -4,14 +4,14 @@ import SwiftUI
 struct QandAScreen: View {
   let row: Int
   let col: Int
- // let st: ChaMan.ChallengeStatus?
+  // let st: ChaMan.ChallengeStatus?
   @Binding var isPresentingDetailView: Bool
   @Bindable  var chmgr:ChaMan //
   @Bindable var gs: GameState  //
   @Environment(\.dismiss) var dismiss  // Environment value for dismissing the view
   @State  var showInfo = false
- // @State   var gimmeeAllAlert = false
-   @State   var gimmeeAlert = false
+  // @State   var gimmeeAllAlert = false
+  @State   var gimmeeAlert = false
   @State   var showThumbsUp:Challenge? = nil
   @State   var showThumbsDown: Challenge? = nil
   @State   var selectedAnswer: String? = nil  // State to track selected answer
@@ -32,22 +32,24 @@ struct QandAScreen: View {
       ZStack {
         VStack {
           QandATopBarView(
-            gs: gs, geometry:geometry, 
+            gs: gs,
             topic: ch.topic,
             hint: ch.hint,
             handlePass:handlePass,
-            handleGimmee: handleGimmee, 
+            handleGimmee: handleGimmee,
             toggleHint:  toggleHint,
             elapsedTime: $elapsedTime,
             killTimer: $killTimer)
           .disabled(questionedWasAnswered)
+          .debugBorder()
           
-          questionAndAnswersSectionVue(geometry: geometry).disabled(questionedWasAnswered)
+          questionAndAnswersSectionVue(geometry: geometry)
+            .disabled(questionedWasAnswered)
         }
         .background(Color(UIColor.systemBackground))
         .cornerRadius(12)
         .shadow(radius: 10)
-        .padding(.horizontal, 10)
+        //.padding(.horizontal, 10)
         .padding(.bottom, 30)
         
         .hintAlert(isPresented: $showHint, title: "Here's Your Hint: ", message: ch.hint,
@@ -55,14 +57,14 @@ struct QandAScreen: View {
           handleDismissal(toRoot:false)
         }, animation: .spring())
         
-        .answeredAlert(isPresented: $answerGiven, 
-                       title: (answerCorrect ? "Correct: " :"Incorrect: ") + ch.correct,
+        .answeredAlert(isPresented: $answerGiven,
+                       title: (answerCorrect ? "You Got It!\nThe answer is:\n " :"Sorry...\nThe answer is:\n") + ch.correct, 
                        message: ch.explanation ?? "xxx",
                        buttonTitle: "OK",
                        onButtonTapped: {
-                        handleDismissal(toRoot:true)
-                        questionedWasAnswered = false // to guard against tapping toomany times
-                          })
+          handleDismissal(toRoot:true)
+          questionedWasAnswered = false // to guard against tapping toomany times
+        })
         .sheet(isPresented: $showInfo){
           ChallengeInfoScreen(challenge: ch)
         }
@@ -80,12 +82,12 @@ struct QandAScreen: View {
                      onButton1Tapped: handleGimmee,
                      onButton2Tapped: { print("Gimmee cancelled")  },
                      animation: .spring())
- 
+        
       }
     }
   }
   
- 
+  
 }
 extension QandAScreen {
   func questionAndAnswersSectionVue(geometry: GeometryProxy) -> some View {
@@ -101,49 +103,53 @@ extension QandAScreen {
   }
   
   func questionSectionVue(geometry: GeometryProxy) -> some View {
-    let paddingWidth = geometry.size.width * 0.1
-    let contentWidth = geometry.size.width - paddingWidth
+  //  let paddingWidth = geometry.size.width * 0.1
+   // let contentWidth = geometry.size.width - paddingWidth
     let ch = chmgr.everyChallenge[gs.board[row][col]]
     let topicColor =   gs.colorForTopic(ch.topic).0
     
-    return
-      ZStack {
-        RoundedRectangle(cornerRadius: 10).fill(topicColor.opacity(0.8))
-        // Invalid frame dimension (negative or non-finite).?
-          .frame(width: max(0,contentWidth), height:max(0,  geometry.size.height * 0.4))
-        VStack {
-        HStack(spacing:10) {
-          HStack(spacing:5){
-            gimmeeButton
-            thumbsUpButton
-            thumbsDownButton
-          }
-          Spacer()
-          if freeportButtons {
-            markCorrectButton
-            markIncorrectButton
-            infoButton
-          }
-          hintButton
-        }
-        
-        .frame(width: max(0,contentWidth*0.9),height:buttSize)
-        .foregroundColor(foregroundColorFrom( backgroundColor: topicColor ))
-        //      .offset(x:0, y:-geometry.size.height * 0.15 + 25)
-        
-        Text(ch.question)
-          .font(.title2)
-          .padding(.horizontal)
-          .frame(width: max(0,contentWidth), height:max(0,  geometry.size.height * 0.3))//0.2
-          .lineLimit(8)
-          .fixedSize(horizontal: false, vertical: true) // Ensure the text box grows vertically
+    return ZStack {
+      RoundedRectangle(cornerRadius: 10).fill(topicColor.opacity(1.0))
+      // Invalid frame dimension (negative or non-finite).?
+      
+      VStack(spacing:10) {
+        buttonRow
           .foregroundColor(foregroundColorFrom( backgroundColor: topicColor ))
-        
+          .padding()
+          //.frame(width: max(0,contentWidth*0.9),height:buttSize)
+          .debugBorder()
+   Spacer()
+        Text(ch.question)
+          .font(.title3)
+          .padding()//([.top,.horizontal])
+         // .frame(width: max(0,contentWidth), height:max(0,  geometry.size.height * 0.3))//0.2
+          .lineLimit(8)
+          .fixedSize(horizontal: false, vertical: true)
+          .foregroundColor(foregroundColorFrom( backgroundColor: topicColor ))
+          .debugBorder()
+        Spacer()
       }
-
+    }.debugBorder()
+   // .frame(width: max(0,contentWidth), height:max(0,  geometry.size.height * 0.33))
+  }
+  
+  var buttonRow: some View {
+    HStack(spacing:10) {
+      HStack(spacing:5){
+        gimmeeButton
+        thumbsUpButton
+        thumbsDownButton
+      }
+      Spacer()
+      if freeportButtons {
+        markCorrectButton
+        markIncorrectButton
+        infoButton
+      }
+      hintButton
     }
   }
- 
+  
   
   func answerButtonsVue(geometry: GeometryProxy) -> some View {
     let answers = chmgr.everyChallenge[gs.board[row][col]]
@@ -170,7 +176,6 @@ extension QandAScreen {
             .padding(.top, 10)
         }
         
-        // Invalid frame dimension (negative or non-finite).?
           .frame(width: contentWidth) // Set width of the scrolling area
         
       )
@@ -238,11 +243,11 @@ extension QandAScreen {
         .font(.body)
         .foregroundColor(.white)
         .padding()
-        //.frame(width: buttonWidth*0.9, height: buttonHeight*0.9)
-        .background(
-          Group {
-            ff()
-          }
+        .frame(width: buttonWidth*0.9, height: buttonHeight*0.9)
+        .background(.blue
+                    //          Group {
+                    //            ff()
+                    //          }
         )
         .cornerRadius(5)  // Make the buttons rounded rectangles
         .minimumScaleFactor(0.5)  // Adjust font size to fit

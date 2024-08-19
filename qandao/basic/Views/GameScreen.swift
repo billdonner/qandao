@@ -68,12 +68,14 @@ struct GameScreen: View {
   }
   
   var topButtonsVeew : some View{
-    HStack {
-      Image(systemName:"skew")
+    HStack(alignment:.center ){
+      Image(systemName:gs.startincorners ? "skew" : "character.duployan")
         .resizable()
-               .frame(width: 40, height: 40)
-               .padding(.leading, 15)
-               .padding(.top, 15)
+               .frame(width: 50, height: 50)
+               //.padding(.leading, 10)
+              // .padding(.top, 15)
+               //.padding(.bottom,10)
+               .foregroundColor(.blue)
         .gesture(
                   DragGesture(minimumDistance: 0)
                       .onChanged { _ in
@@ -83,6 +85,8 @@ struct GameScreen: View {
                           isTouching = false
                       }
               )
+      Spacer()
+      Text(" Q a n d A").font(.largeTitle).bold()
       Spacer()
       if gs.gamestate !=  StateOfPlay.playingNow {
         //Start Game
@@ -96,12 +100,14 @@ struct GameScreen: View {
             assert(gs.checkVsChaMan(chmgr: chmgr))
           }
         }) {
-          Text("Start Game")
-            .padding()
-            .background(Color.blue)
+          Text("Play")
+            .frame(width:50)
+            .lineLimit(2)
+            .padding(10)
+            .background(.blue.opacity(0.8))
             .foregroundColor(.white)
             .cornerRadius(8)
-            .font(.caption)
+            .font(.body)
         }
         .alert("Can't start new Game - consider changing the topics or hit Full Reset",isPresented: $showCantStartAlert){
           Button("OK", role: .cancel) {
@@ -119,16 +125,18 @@ struct GameScreen: View {
             chmgr.checkAllTopicConsistency("GameScreen EndGamePressed")
           }
         }) {
-          Text("End Game")
-            .padding()
-            .background(Color.red)
+          Text("End")
+            .frame(width:50)
+            .lineLimit(2)
+            .padding(10)
+            .background(.red.opacity(0.8))
             .foregroundColor(.white)
             .cornerRadius(8)
-            .font(.caption)
+            .font(.body)
         }
       }
 
-    }.font(.body).lineLimit(1)
+    }.font(.body)
   }
   var loadingVeew: some View {
     Text("Loading...")
@@ -145,7 +153,6 @@ struct GameScreen: View {
 
 
 #Preview ("GameScreen") {
-
       GameScreen(
         gs:GameState.mock ,
         chmgr: ChaMan(playData: PlayData.mock),
@@ -159,3 +166,15 @@ struct GameScreen: View {
     }
 
 
+#Preview ("Dark") {
+      GameScreen(
+        gs:GameState.mock ,
+        chmgr: ChaMan(playData: PlayData.mock),
+        topics:.constant(GameState.mock.topicsinplay),
+        size:.constant(3),
+        onSingleTap: { row,col in
+          print("Tapped cell with challenge \(row) \(col)")
+          return false
+        }
+      ).preferredColorScheme( .dark)
+    }

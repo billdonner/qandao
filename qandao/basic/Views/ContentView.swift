@@ -98,8 +98,13 @@ struct ContentViewBottomButtons : View {
   }
 }
 
-#Preview {
+#Preview ("light"){
   ContentView(gs: GameState.mock, chmgr: ChaMan.mock)
 }
+#Preview ("dark"){
+  ContentView(gs: GameState.mock, chmgr: ChaMan.mock)
+    .preferredColorScheme(/*@START_MENU_TOKEN@*/.dark/*@END_MENU_TOKEN@*/)
+}
+
 
 

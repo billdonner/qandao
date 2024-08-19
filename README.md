@@ -1,5 +1,5 @@
 #  QANDAO - revised test app for Q20K
-version 0.7.24
+version 0.7.24 many changes, still in darkmode, out to testflight
 version 0.7.23 put everything into dark mode for first round testflight,start with size of 3, faceup 
 version 0.7.22 integrate code from basic app
 

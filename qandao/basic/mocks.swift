@@ -49,6 +49,7 @@ extension GameState {
     x.movenumber = 1
     x.moveindex[0][0] = 1
     x.replaced[0][0] = [2]
+    x.cellstate[0][1] = .playedCorrectly
     x.lastmove = .init(row: 0, col: 0,movenumber:1)
     return x
   } ()

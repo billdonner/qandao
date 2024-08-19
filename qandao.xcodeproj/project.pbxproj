@@ -129,6 +129,7 @@
 				88460E3C2C6F796100D5FA4A /* AlreadyPlayedView.swift */,
 				88460E3D2C6F796100D5FA4A /* ChallengeInfoScreen.swift */,
 				88460E3E2C6F796100D5FA4A /* ContentView.swift */,
+				8867F1C92C724C8800F1D2D6 /* DebugBorderViewModifier.swift */,
 				88460E3F2C6F796100D5FA4A /* FreeportSettingsScreen.swift */,
 				88460E402C6F796100D5FA4A /* GameLogScreen.swift */,
 				88460E412C6F796100D5FA4A /* GameScreen.swift */,
@@ -147,7 +148,6 @@
 				88460E4E2C6F796100D5FA4A /* TopicIndexView.swift */,
 				88460E4F2C6F796100D5FA4A /* TopicsChooserScreen.swift */,
 				88460E502C6F796100D5FA4A /* TopicSelectorView.swift */,
-				8867F1C92C724C8800F1D2D6 /* DebugBorderViewModifier.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";

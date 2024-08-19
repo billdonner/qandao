@@ -46,6 +46,48 @@ enum CornerPosition: CaseIterable {
     case bottomLeft
     case bottomRight
 }
+
+struct HappySmileyView : View {
+  let color:Color
+  var body: some View {
+    ZStack {
+      Color.black
+      Circle().foregroundStyle(color)
+    }
+  }
+}
+#Preview ("Happy") {
+  HappySmileyView(color: .blue)
+    .frame(width: 100, height: 100) // Set the size of the square
+}
+
+ 
+#Preview ("Gloomy"){
+  GloomyView(color:.red)
+    .frame(width: 100, height: 100) // Set the size of the square
+}
+
+struct GloomyView: View {
+  let fudge = 3.0
+  let color:Color
+    var body: some View {
+        GeometryReader { geometry in
+            ZStack {
+                // Black background
+                Color.black
+                // White diagonal line
+                Path { path in
+                    let size = geometry.size
+                    path.move(to: CGPoint(x: fudge, y: fudge))
+                    path.addLine(to: CGPoint(x: size.width-fudge, y: size.height-fudge))
+                  path.move(to: CGPoint(x:  size.width-fudge, y: fudge))
+                  path.addLine(to: CGPoint(x:fudge, y: size.height-fudge))
+                }
+                .stroke(color, lineWidth: 5)
+            }
+        }
+    }
+}
 struct SingleCellView: View {
   let gs:GameState
   let chmgr:ChaMan
@@ -67,18 +109,30 @@ struct SingleCellView: View {
       // part 1:
       // if faceup show the question else blank
       VStack(alignment:.center, spacing:0) {
-        Text(gs.facedown ? " " : challenge.question)
-          .font(.caption)
-          .padding(10)
-          .frame(width: cellSize, height: cellSize)
-          .background(colormix.0)
-          .foregroundColor(foregroundColorFrom( backgroundColor: colormix.0 ))
-        //part 2:
-        //color border according to correctness
-          .border(status.borderColor , width: gs.cellBorderSize()) //3=8,8=3
-          .cornerRadius(8)
-          .opacity(gs.gamestate == .playingNow ? 1.0:0.4)
+        switch gs.cellstate[row][col] {
+          
+        case .playedCorrectly:
+          HappySmileyView(color:colormix.0)
+            .frame(width: cellSize, height: cellSize)
+        case .playedIncorrectly:
+          GloomyView(color:colormix.0).frame(width: cellSize, height: cellSize)
+        case .unplayed:
+          Text(gs.facedown ? " " : challenge.question)
+            .font(.caption)
+            .padding(10)
+            .frame(width: cellSize, height: cellSize)
+            .background(colormix.0)
+            .foregroundColor(foregroundColorFrom( backgroundColor: colormix.0 ))
+          //part 2:
+          //color border according to correctness
+          //  .border(status.borderColor , width: gs.cellBorderSize()) //3=8,8=3
+            .cornerRadius(8)
+            .opacity(gs.gamestate == .playingNow ? 1.0:0.0)
+        }
+
       }
+ 
+      
       // part 3:
       // mark corner of last move with orange circle
       if thisCellIsLastMove && isTouching {
@@ -169,7 +223,10 @@ struct SingleCellView: View {
 }
 
 #Preview ("No Touching") {
-        SingleCellView(
+  
+  let gs = GameState.mock
+  gs.cellstate[0][0] = .playedIncorrectly
+      return   SingleCellView(
           gs: GameState.mock,
             chmgr: ChaMan(playData:PlayData.mock),
             row: 0,
@@ -182,11 +239,12 @@ struct SingleCellView: View {
           isTouching: .constant(false)
         )
         .previewLayout(.sizeThatFits)
-        .padding()
     }
 
 #Preview ("Touching"){
-        SingleCellView(
+  let gs = GameState.mock
+  gs.cellstate[0][0] = .playedCorrectly
+        return SingleCellView(
           gs: GameState.mock,
             chmgr: ChaMan(playData:PlayData.mock),
             row: 0,
@@ -199,5 +257,4 @@ struct SingleCellView: View {
           isTouching: .constant(true)
         )
         .previewLayout(.sizeThatFits)
-        .padding()
     }

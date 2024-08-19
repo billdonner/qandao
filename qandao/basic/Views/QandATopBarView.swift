@@ -1,7 +1,7 @@
 import SwiftUI
 struct QandATopBarView: View {
     let gs:GameState
-    let geometry: GeometryProxy
+   // let geometry: GeometryProxy
     let topic: String
     let hint:String
     let handlePass: () -> Void
@@ -38,27 +38,24 @@ struct QandATopBarView: View {
   
     var body: some View {
      // let _ = print("//QandATopBarView \(formattedElapsedTime)")
-        ZStack {
-            HStack {
-                passButton
-                    .padding(.leading, 20)
-                Spacer()
-//              gimmeeButton
-//                .padding(.trailing, 4)
-          
-//                hintButton
-//                    .padding(.trailing, 20)
-            }
-          VStack(alignment:.center) {
-            Text(topic).multilineTextAlignment(.center)
-                    .font(.headline)
-                    .lineLimit(2)//,reservesSpace: true)
-                    .foregroundColor(.primary)
-                elapsedTimeView
-                additionalInfoView
-            }.frame(width:geometry.size.width * 0.6)
+     
+      VStack(alignment:.leading, spacing:0) {
+        HStack {
+          Spacer()
+         passButton
+            .padding(.trailing, 20)
         }
-        .padding(.top)
+        VStack(alignment:.leading) {
+          Text(topic).multilineTextAlignment(.leading)
+            .font(.headline)
+            .lineLimit(2)//,reservesSpace: true)
+            .foregroundColor(.primary)
+          elapsedTimeView
+          additionalInfoView
+        }.padding().debugBorder()
+ 
+      }.debugBorder()
+        //.padding(.top)
 
         .onAppear {
           startTimer()
@@ -75,39 +72,48 @@ struct QandATopBarView: View {
         Button(action: {
             handlePass()
         }) {
-            Image(systemName: "multiply.circle")
-                .font(.title)
-                .foregroundColor(.white)
-                .frame(width: buttSize, height: buttSize)
-                .background(Color.gray)
-                .cornerRadius(10)
+            Image(systemName: "xmark")
+               // .font(.title)
+                .foregroundColor(.primary)
+               // .frame(width: buttSize, height: buttSize)
+               // .background(Color.gray)
+                //.cornerRadius(10)
         }
     }
 
     var elapsedTimeView: some View {
-        Text("Elapsed Time: \(formattedElapsedTime)")
+        Text("time to answer: \(formattedElapsedTime)")
             .font(.footnote)
             .foregroundColor(.secondary)
     }
 
     var additionalInfoView: some View {
-      Text("won:\(gs.woncount) lost:\(gs.lostcount) gimmees:\(gs.gimmees)")
+      Text("total time:\(Int(gs.totaltime)) score:\(gs.totalScore()) gimmees:\(gs.gimmees)")
             .font(.footnote)
             .foregroundColor(.secondary)
     }
 }
 
 #Preview {
-  GeometryReader { geometry in
-    
+
     QandATopBarView(
-      gs: GameState(size:1, topics:["foo"],challenges:[Challenge.complexMock]),
-      geometry: geometry,
-      topic: "American History running to great lengths",
+      gs: GameState.mock,
+      topic: "American History running and running to great lengths",
       hint: "What can we say about history?",
       handlePass:{}, handleGimmee: {}, toggleHint: {},
       elapsedTime: .constant(23984923.0),
       killTimer:.constant(false)
     )
   }
-}
+#Preview ("dark"){
+
+    QandATopBarView(
+      gs: GameState.mock,
+      topic: "American History running and running to great lengths",
+      hint: "What can we say about history?",
+      handlePass:{}, handleGimmee: {}, toggleHint: {},
+      elapsedTime: .constant(23984923.0),
+      killTimer:.constant(false)
+    )
+    .preferredColorScheme(/*@START_MENU_TOKEN@*/.dark/*@END_MENU_TOKEN@*/)
+  }

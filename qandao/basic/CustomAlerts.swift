@@ -33,7 +33,7 @@ fileprivate struct RotateAndFadeModifier: ViewModifier {
 // A frosted background view using a blur effect
 fileprivate struct FrostedBackgroundView: View {
     var body: some View {
-        BlurView(style: .light)
+        BlurView(style: .dark)
             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
             .shadow(radius: 10)
             .padding()
@@ -355,7 +355,9 @@ fileprivate struct AnsweredAlert: View {
     
     var body: some View {
         VStack(spacing: 16) {
+          
           VStack {
+        //    Spacer()
             Text(title)
               .font(.headline)
               .foregroundColor(.primary)
@@ -378,7 +380,8 @@ fileprivate struct AnsweredAlert: View {
                 withAnimation(.easeInOut(duration: 2)) { // Slowed down by 2x
                     onButtonTapped()
                 }
-            }) {
+            }) 
+          {
                 Text(buttonTitle)
                     .font(.headline)
                     .foregroundColor(.primary)
@@ -471,21 +474,23 @@ fileprivate struct AnsweredAlertModifier: ViewModifier {
   func body(content: Content) -> some View {
       ZStack {
           content
-              .blur(radius: isPresented ? 1 : 0)
-          
-          if isPresented {
-              AnsweredAlert(
-                  title: title,
-                  message: message,
-                  buttonTitle: buttonTitle,
-                  onButtonTapped: {
-                    withAnimation(.easeInOut(duration: 0.75)) { // Slowed down by 1.25x
-                          isPresented = false
-                      }
-                      onButtonTapped()
-                  }
-              )
+             // .blur(radius: isPresented ? 1 : 0)
+        if isPresented {
+          VStack (spacing:0){
+            Spacer(minLength: 0)
+            AnsweredAlert(
+              title: title,
+              message: message,
+              buttonTitle: buttonTitle,
+              onButtonTapped: {
+                withAnimation(.easeInOut(duration: 0.75)) { // Slowed down by 1.25x
+                  isPresented = false
+                }
+                onButtonTapped()
+              }
+            )
           }
+        }
       }
   }
 }

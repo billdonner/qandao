@@ -33,6 +33,7 @@ struct ChallengeGameApp: App {
     WindowGroup {
       
       ContentView(gs: gs,chmgr: chmgr)
+        .statusBar(hidden: true) // Hide the status b
         .preferredColorScheme(.dark) // Enforce dark mode for this view
         .sheet(isPresented: $showOnboarding) {
           OnboardingScreen(isPresented: $showOnboarding)
