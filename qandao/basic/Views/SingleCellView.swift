@@ -34,13 +34,14 @@ struct SingleCellView: View {
           switch gs.cellstate[row][col] {
           case .playedCorrectly:
             HappySmileyView(color:colormix.0)
+            .frame(width: cellSize, height: cellSize)
               .cornerRadius(cornerradius)
-              .frame(width: cellSize, height: cellSize)
               .opacity(gs.gamestate == .playingNow ? 1.0:0.7)
           case .playedIncorrectly:
             GloomyView(color:colormix.0)
+            
+            .frame(width: cellSize, height: cellSize)
               .cornerRadius(cornerradius)
-              .frame(width: cellSize, height: cellSize)
               .opacity(gs.gamestate == .playingNow ? 1.0:0.7)
           case .unplayed:
             if ( gs.gamestate == .playingNow ) {
@@ -48,17 +49,20 @@ struct SingleCellView: View {
                 .font(.caption)
                 .padding(10)
                 .frame(width: cellSize, height: cellSize)
+                .cornerRadius(cornerradius)
                 .background(colormix.0)
                 .foregroundColor(foregroundColorFrom( backgroundColor: colormix.0 ))
-                .cornerRadius(cornerradius)
                 .opacity(gs.gamestate == .playingNow ? 1.0:0.7)
             } else {
-              if  colorScheme == .dark { Color.offBlack
+              if  colorScheme == .dark { 
+                Color.offBlack
+                  .frame(width: cellSize, height: cellSize)
                   .cornerRadius(cornerradius)
                   .opacity(gs.gamestate == .playingNow ? 1.0:0.7)
               } else {
                 Color.offWhite
-                    .cornerRadius(cornerradius)
+                  .frame(width: cellSize, height: cellSize)
+                  .cornerRadius(cornerradius)
                     .opacity(gs.gamestate == .playingNow ? 1.0:0.7)
               }
             }
@@ -120,6 +124,7 @@ struct SingleCellView: View {
             //use the sfsymbol // if cell incorrectly played always use white
             Image(systemName:"\(gs.moveindex[row][col]).circle")
               .font(.largeTitle)
+              .frame(width: cellSize, height: cellSize)
               .opacity(gs.moveindex[row][col] != -1 ? 0.7:0.0)
               .foregroundColor( gs.cellstate[row][col] == .playedIncorrectly ?
                                 (colorScheme == .dark ? .white: .black) :
@@ -132,6 +137,7 @@ struct SingleCellView: View {
           if gs.onwinpath[row][col] {
             Image(systemName:"checkmark")
               .font(.largeTitle)
+              .frame(width: cellSize, height: cellSize)
               .foregroundColor(.green)
           }
         }

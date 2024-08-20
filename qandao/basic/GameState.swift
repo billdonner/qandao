@@ -222,6 +222,36 @@ class GameState :  Codable {
     }
    return moves.sorted(by: { $0.movenumber < $1.movenumber })
   }
+  func looker(row:Int,col:Int,path:[(Int,Int)]) -> Int? {
+    for (idx,p) in path.enumerated() {
+      if p.0==row && p.1==col { return idx }
+    }
+    return nil
+  }
+  func winningPathOfGameMoves() -> [GameMove] { 
+    
+    let (path,found) =  winningPath(in:cellstate)
+    if !found { return [] }
+    
+    var z:[GameMove]=[]
+    for row in 0 ..< boardsize{
+      for col in 0 ..< boardsize{
+        if let x = looker(row:row,col:col,path:path) {
+          z.append(GameMove(row:row,col:col,movenumber:x))
+        }
+      }
+    }
+    return z.sorted(by: { $0.movenumber < $1.movenumber })
+  }
+  func prettyPathOfGameMoves( ) -> String {
+    let moves = winningPathOfGameMoves()
+    var out = ""
+    for move in moves {
+      out.append("(\(move.row),\(move.col))")
+    }
+    return out
+  }
+  
   func isCornerCell(row:Int,col:Int ) -> Bool {
     return row==0&&col==0  ||
     row==0 && col == self.boardsize-1 ||

@@ -86,7 +86,7 @@ struct GameScreen: View {
                       }
               )
       Spacer()
-      Text(" Q a n d A").font(.largeTitle).bold()
+      Text(" q a n d a").font(.largeTitle).bold()
       Spacer()
       if gs.gamestate !=  StateOfPlay.playingNow {
         //Start Game
