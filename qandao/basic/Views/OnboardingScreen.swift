@@ -64,11 +64,11 @@ struct OB02: View {
     ZStack {
       WrappedDismissButton(isPresented: $isPresented)
       VStack {
-        Image("Onboarding2")
+        Image("GameBoard")
           .resizable()
           .scaledToFit()
           .padding()
-        Text("Game Board & Topics")
+        Text("Game Board")
           .font(.title)
           .padding()
         Text("Each game board is a grid of cells with questions inside. Each cell is color-coded by topic. Choose and answer questions in any order, but you must create a continuous path of correct answers from corner to corner!")
@@ -92,7 +92,7 @@ struct OB03: View {
     ZStack {
       WrappedDismissButton(isPresented: $isPresented)
       VStack {
-        Image("Onboarding3")
+        Image("Topics")
           .resizable()
           .scaledToFit()
           .padding()
@@ -120,7 +120,7 @@ struct OB04: View {
     ZStack {
       WrappedDismissButton(isPresented: $isPresented)
       VStack {
-        Image("Onboarding4")
+        Image("Questions")
           .resizable()
           .scaledToFit()
           .padding()
@@ -145,7 +145,7 @@ struct OB05: View {
     ZStack {
       WrappedDismissButton(isPresented: $isPresented)
       VStack {
-        Image("Onboarding5")
+        Image("Gimmees")
           .resizable()
           .scaledToFit()
           .padding()
@@ -170,7 +170,7 @@ struct OB06: View {
     ZStack {
       WrappedDismissButton(isPresented: $isPresented)
       VStack {
-        Image("Onboarding6")
+        Image("Winning")
           .resizable()
           .scaledToFit()
           .padding()

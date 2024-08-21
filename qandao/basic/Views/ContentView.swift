@@ -26,7 +26,7 @@ struct ContentView: View {
               chmgr.checkAllTopicConsistency("ContentView onAppear0")
               current_size = gs.boardsize
               if gs.topicsinplay.count == 0 {
-                gs.topicsinplay = getRandomTopics(GameState.minTopicsForBoardSize(current_size),
+                gs.topicsinplay = getRandomTopics(7,//GameState.minTopicsForBoardSize(current_size),
                                                   from: chmgr.everyTopicName)
               }
               current_topics = gs.topicsinplay
