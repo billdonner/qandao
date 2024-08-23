@@ -10,6 +10,68 @@ import SwiftUI
 var isIpad: Bool {
   UIDevice.current.systemName == "iPadOS"
 }
+import Foundation
+
+func compareVersionStrings(_ version1: String, _ version2: String) -> ComparisonResult {
+    // Split the version strings into components
+    let components1 = version1.split(separator: ".").compactMap { Int($0) }
+    let components2 = version2.split(separator: ".").compactMap { Int($0) }
+    
+    // Determine the maximum length between the two version components
+    let maxLength = max(components1.count, components2.count)
+    
+    // Compare each corresponding component, treating missing components as 0
+    for i in 0..<maxLength {
+        let value1 = i < components1.count ? components1[i] : 0
+        let value2 = i < components2.count ? components2[i] : 0
+        
+        if value1 < value2 {
+            return .orderedAscending
+        } else if value1 > value2 {
+            return .orderedDescending
+        }
+    }
+    
+    return .orderedSame
+}
+
+func haveMajorComponentsChanged(_ version1: String, _ version2: String) -> Bool {
+    // Split the version strings into components
+    let components1 = version1.split(separator: ".").compactMap { Int($0) }
+    let components2 = version2.split(separator: ".").compactMap { Int($0) }
+    
+    // Compare the w, x, and y components
+    for i in 0..<3 {
+        let value1 = i < components1.count ? components1[i] : 0
+        let value2 = i < components2.count ? components2[i] : 0
+        
+        if value1 != value2 {
+            return true
+        }
+    }
+    
+    return false
+}
+
+
+func testcc() {
+  let comparisonResult1 = compareVersionStrings("1.2.3.4", "1.2.3.5") // Should return .orderedAscending
+  let comparisonResult2 = compareVersionStrings("1.2.3", "1.2.3.0")    // Should return .orderedSame
+  let comparisonResult3 = compareVersionStrings("2.0.0.0", "1.9.9.9")  // Should return .orderedDescending
+
+  // Checking if major components (w, x, or y) have changed with four-component versions
+  let hasChanged1 = haveMajorComponentsChanged("1.2.3.4", "1.2.4") // Should return true (y component changed)
+  let hasChanged2 = haveMajorComponentsChanged("1.2.3.4", "1.2.3") // Should return false (only z component changed)
+  let hasChanged3 = haveMajorComponentsChanged("1.2.3.4", "2.0.0") //
+  
+  print("comparison results, \(comparisonResult1),\(comparisonResult2),\(comparisonResult3)")
+  
+  print("haschangec ",hasChanged1,hasChanged2,hasChanged3)
+  
+}
+
+
+
 func deleteFiles(at fileURLs: [URL]) {
     for fileURL in fileURLs {
         do {
@@ -22,7 +84,7 @@ func deleteFiles(at fileURLs: [URL]) {
 }
 
 func deleteAllState() {
-  print("--.deleting saved state")
+  print("--> deleting saved state")
   deleteFiles(at: [AnsweredInfo.getAnsweredInfoFilePath(),
                    ChaMan.getChallengeStatusesFilePath(),
                    GameState.getGameStateFilePath(),

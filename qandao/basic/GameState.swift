@@ -25,8 +25,25 @@ class GameState : Codable {
   var topicsinplay: [String] // a subset of allTopics (which is constant and maintained in ChaMan)
   var gamestate: StateOfPlay = .initializingApp
   var totaltime: TimeInterval // aka Double
-  var gamenumber:  Int
-  var movenumber:  Int
+  var veryfirstgame:Bool
+  @ObservationIgnored
+  var gimmees: Int  // Number of "gimmee" actions available
+  @ObservationIgnored
+  var currentscheme: ColorSchemeName
+  @ObservationIgnored
+  var facedown:Bool
+  @ObservationIgnored
+  var startincorners:Bool
+  @ObservationIgnored
+  var doublediag:Bool
+  @ObservationIgnored
+  var difficultylevel:Int
+  @ObservationIgnored
+  var lastmove: GameMove?
+  @ObservationIgnored
+  var gamestart:Date // when game started
+  @ObservationIgnored
+  var swversion:String // if this changes we must delete all state
   @ObservationIgnored
   var woncount:  Int
   @ObservationIgnored
@@ -37,47 +54,45 @@ class GameState : Codable {
   var wrongcount: Int
   @ObservationIgnored
   var replacedcount: Int
-  var facedown:Bool
-  var gimmees: Int  // Number of "gimmee" actions available
-  var currentscheme: ColorSchemeName
-  var veryfirstgame:Bool
-  var startincorners:Bool
-  var doublediag:Bool
-  var difficultylevel:Int
-  var lastmove: GameMove?
-//@ObservationIgnored
-  var gamestart:Date // when game started
   @ObservationIgnored
-  var swversion:String // if this changes we must delete all state
+  var gamenumber:  Int
+  @ObservationIgnored
+  var movenumber:  Int
   
-//  
-//  enum CodingKeys: String, CodingKey {
-//    case _board = "board"
-//    case _cellstate = "cellstate"
-//    case _boardsize = "boardsize"
-//    case _topicsinplay = "topicsinplay"
-//    case _gamestate = "gamestate"
-//    case _totaltime = "totaltime"
-//    case _gamenumber = "gamenumber"
-//    case _movenumber = "movenumber"
-//    case _woncount = "woncount"
-//    case _lostcount = "lostcount"
-//    case _rightcount = "rightcount"
-//    case _wrongcount = "wrongcount"
-//    case _replacedcount = "replacedcount"
-//    case _facedown = "facedown"
-//    case _gimmees = "gimmees"
-//    case _currentscheme = "currentscheme"
-//    case _veryfirstgame = "veryfirstgame"
-//    case _startincorners = "startincorners"
-//    case _doublediag = "doublediag"
-//    case _difficultylevel = "difficultylevel"
-//    case _moveindex = "moveindex"
-//    case _onwinpath = "onwinpath"
-//    case _replaced = "replaced"
-//    case _gamestart =   "gamestart"
-//   // case _swversion = "swversion"
-//  }
+  
+  
+//
+  enum CodingKeys: String, CodingKey {
+    case board
+    case cellstate
+    case moveindex
+    case onwinpath
+    case replaced
+    case boardsize
+    case topicsinplay
+    case gamestate
+    case totaltime
+    case veryfirstgame
+    
+    case gimmees
+    case currentscheme
+    case facedown
+    case startincorners
+    case doublediag
+    case difficultylevel
+    case lastmove
+    case gamestart
+    case swversion
+    case woncount
+    case lostcount
+    case rightcount
+    case wrongcount
+    case replacedcount
+    case gamenumber
+    case movenumber
+  }
+  
+
 
   
   
@@ -108,6 +123,68 @@ class GameState : Codable {
     self.swversion = AppVersionProvider.appVersion()
   }
   
+  // Codable conformance: decode the properties
+  required init(from decoder: Decoder) throws {
+    let container = try decoder.container(keyedBy: CodingKeys.self)
+    self.topicsinplay = try container.decode([String].self,forKey:.topicsinplay)
+    self.boardsize = try container.decode(Int.self,forKey:.boardsize)
+    self.board = try container.decode([[Int]].self,forKey:.board)
+    self.cellstate = try container.decode([[ChallengeOutcomes]].self,forKey:.cellstate)
+    self.moveindex = try container.decode([[Int]].self,forKey:.moveindex)
+    self.onwinpath = try container.decode([[Bool]].self,forKey:.onwinpath)
+    self.replaced = try container.decode([[[Int]]].self,forKey:.replaced)
+    self.gimmees = try container.decode(Int.self,forKey:.gimmees)
+    self.gamenumber = try container.decode(Int.self,forKey:.gamenumber)
+    self.movenumber = try container.decode(Int.self,forKey:.movenumber)
+    self.woncount = try container.decode(Int.self,forKey:.woncount)
+    self.lostcount = try container.decode(Int.self,forKey:.lostcount)
+    self.rightcount = try container.decode(Int.self,forKey:.rightcount)
+    self.wrongcount = try container.decode(Int.self,forKey:.wrongcount)
+    self.replacedcount = try container.decode(Int.self,forKey:.replacedcount)
+    self.totaltime = try container.decode(TimeInterval.self,forKey:.totaltime)
+    self.facedown = try container.decode(Bool.self,forKey:.facedown)
+    self.currentscheme = try container.decode(ColorSchemeName.self,forKey:.currentscheme)
+    self.veryfirstgame = try container.decode(Bool.self,forKey:.veryfirstgame)
+    self.doublediag = try container.decode(Bool.self,forKey:.doublediag)
+    self.difficultylevel = try container.decode(Int.self,forKey:.difficultylevel) //0//.easy
+    self.startincorners = try container.decode(Bool.self,forKey:.startincorners)
+    self.gamestart = try container.decode(Date.self,forKey:.gamestart)
+    self.swversion = try container.decode(String.self,forKey:.swversion)
+    
+  }
+  
+  
+  func encode(to encoder: Encoder) throws {
+      var container = encoder.container(keyedBy: CodingKeys.self)
+      try container.encode(board, forKey: .board)
+    try container.encode(cellstate, forKey: .cellstate)
+    try container.encode(moveindex, forKey: .moveindex)
+    try container.encode(onwinpath, forKey: .onwinpath)
+    try container.encode(replaced, forKey: .replaced)
+    try container.encode(boardsize, forKey: .boardsize)
+    try container.encode(topicsinplay, forKey: .topicsinplay)
+    try container.encode(gamestate, forKey: .gamestate)
+    try container.encode(totaltime, forKey: .totaltime)
+    try container.encode(veryfirstgame, forKey: .veryfirstgame)
+      // `nonObservedProperties`
+    try container.encode(gimmees, forKey: .gimmees)
+    try container.encode(currentscheme, forKey: .currentscheme)
+    try container.encode(facedown, forKey: .facedown)
+    try container.encode(startincorners, forKey: .startincorners)
+    try container.encode(doublediag, forKey: .doublediag)
+    try container.encode(difficultylevel, forKey: .difficultylevel)
+    try container.encode(lastmove, forKey: .lastmove)
+    try container.encode(gamestart, forKey: .gamestart)
+    try container.encode(swversion, forKey: .swversion)
+    try container.encode(woncount, forKey: .woncount)
+    try container.encode(lostcount, forKey: .lostcount)
+    try container.encode(rightcount, forKey: .rightcount)
+    try container.encode(wrongcount, forKey: .wrongcount)
+    try container.encode(replacedcount, forKey: .replacedcount)
+    try container.encode(gamenumber, forKey: .gamenumber)
+    try container.encode(movenumber, forKey: .movenumber)
+    
+  }
   func setupForNewGame (boardsize:Int, chmgr:ChaMan) -> Bool {
     // assume all cleaned up, using size
     var allocatedChallengeIndices:[Int] = []
@@ -420,9 +497,18 @@ class GameState : Codable {
     do {
       let data = try Data(contentsOf: filePath)
       let gb = try JSONDecoder().decode(GameState.self, from: data)
+      switch compareVersionStrings(gb.swversion, AppVersionProvider.appVersion()) {
+        
+      case .orderedAscending:
+        print("sw version changed from \(gb.swversion) to \(AppVersionProvider.appVersion())")
+      case .orderedSame:
+        print("sw version is the same")
+      case .orderedDescending:
+        print("yikes! sw version went backwards")
+      }
       // Let's check right now to make sure the software version has not changed
-      if gb.swversion !=   AppVersionProvider.appVersion() {
-        print ("***sw version changed from \(gb.swversion) to \(AppVersionProvider.appVersion()) ")
+      if haveMajorComponentsChanged(gb.swversion, AppVersionProvider.appVersion()) {
+        print ("***major sw version change ")
         deleteAllState()
         return nil // version change
       }
@@ -436,3 +522,31 @@ class GameState : Codable {
   
 
 }
+//
+//  enum CodingKeys: String, CodingKey {
+//    case _board = "board"
+//    case _cellstate = "cellstate"
+//    case _boardsize = "boardsize"
+//    case _topicsinplay = "topicsinplay"
+//    case _gamestate = "gamestate"
+//    case _totaltime = "totaltime"
+//    case _gamenumber = "gamenumber"
+//    case _movenumber = "movenumber"
+//    case _woncount = "woncount"
+//    case _lostcount = "lostcount"
+//    case _rightcount = "rightcount"
+//    case _wrongcount = "wrongcount"
+//    case _replacedcount = "replacedcount"
+//    case _facedown = "facedown"
+//    case _gimmees = "gimmees"
+//    case _currentscheme = "currentscheme"
+//    case _veryfirstgame = "veryfirstgame"
+//    case _startincorners = "startincorners"
+//    case _doublediag = "doublediag"
+//    case _difficultylevel = "difficultylevel"
+//    case _moveindex = "moveindex"
+//    case _onwinpath = "onwinpath"
+//    case _replaced = "replaced"
+//    case _gamestart =   "gamestart"
+//   // case _swversion = "swversion"
+//  }

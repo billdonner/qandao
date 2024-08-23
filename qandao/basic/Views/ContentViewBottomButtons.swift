@@ -38,7 +38,7 @@ struct ContentViewBottomButtons : View {
       Text("QandA \(AppVersionProvider.appVersion()) by Freeport Software").font(.caption2)
       Spacer()
       //Help
-      Button(action: { showingHelp = true }) {
+      Button(action: { showingHelp = true; testcc() }) {
         Image(systemName:"questionmark")
           //.foregroundColor( isTouching ? .red : .green)
           .font(.title)
