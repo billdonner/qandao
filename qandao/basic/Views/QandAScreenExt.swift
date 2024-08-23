@@ -8,10 +8,11 @@
 import SwiftUI
 
 extension QandAScreen {
-  func questionAndAnswersSectionVue(geometry: GeometryProxy) -> some View {
+  func questionAndAnswersSectionVue(answers:[String],geometry: GeometryProxy) -> some View {
+
     VStack(spacing: 15) {
       questionSectionVue(geometry: geometry)
-      answerButtonsVue(geometry: geometry)
+      answerButtonsVue(answers: answers, geometry: geometry)
     }
     .padding(.horizontal)
     .padding(.bottom)
@@ -68,67 +69,62 @@ extension QandAScreen {
     }
   }
   
-  
-  func answerButtonsVue(geometry: GeometryProxy) -> some View {
-    let answers = chmgr.everyChallenge[gs.board[row][col]]
-      .answers.shuffled() // mix it up
-    let paddingWidth = geometry.size.width * 0.1
-    let contentWidth = geometry.size.width - paddingWidth
-    
-    if answers.count >= 5 {
-      let buttonWidth = (contentWidth / 2.5) - 10 // Adjust width to fit 2.5 buttons
-      let buttonHeight = buttonWidth * 1.57 // 57% higher than the four-answer case
-      return AnyView(
-        VStack {
-          ScrollView(.horizontal) {
-            HStack(spacing: 15) {
-              ForEach(answers, id: \.self) { answer in
-                answerButtonVue(answer: answer, row:row,col:col, buttonWidth: buttonWidth, buttonHeight: buttonHeight, taller: true)
+  func answerButtonsVue(answers:[String] ,geometry: GeometryProxy) -> some View {
+ 
+      let paddingWidth = geometry.size.width * 0.1
+      let contentWidth = geometry.size.width - paddingWidth
+      
+      if answers.count >= 5 {
+          let buttonWidth = (contentWidth / 2.5) - 10 // Adjust width to fit 2.5 buttons
+          let buttonHeight = buttonWidth * 1.57 // 57% higher than the four-answer case
+          return AnyView(
+              VStack {
+                  ScrollView(.horizontal) {
+                      HStack(spacing: 15) {
+                          ForEach(Array(answers.enumerated()), id: \.offset) { index, answer in
+                              answerButtonVue(answer: answer, row: row, col: col, buttonWidth: buttonWidth, buttonHeight: buttonHeight, taller: true)
+                          }
+                      }
+                      .padding(.horizontal)
+                      .disabled(questionedWasAnswered)  // Disable all answer buttons after an answer is given
+                  }
+                  Image(systemName: "arrow.right")
+                      .foregroundColor(.gray)
+                      .padding(.top, 10)
               }
-            }
-            .padding(.horizontal)
-            .disabled(questionedWasAnswered)  // Disable all answer buttons after an answer is given
-          }
-          Image(systemName: "arrow.right")
-            .foregroundColor(.gray)
-            .padding(.top, 10)
-        }
-        
-          .frame(width: contentWidth) // Set width of the scrolling area
-        
-      )
-    } else if answers.count == 3 {
-      return AnyView(
-        VStack(spacing: 15) {
-          answerButtonVue(answer: answers[0],row:row,col:col, buttonWidth: contentWidth / 2, buttonHeight: contentWidth / 2)
-          HStack {
-            answerButtonVue(answer: answers[1],row:row,col:col, buttonWidth: contentWidth / 2.5, buttonHeight: contentWidth / 2.5)
-            answerButtonVue(answer: answers[2],row:row,col:col, buttonWidth: contentWidth / 2.5, buttonHeight: contentWidth / 2.5)
-          }
-        }
-          .padding(.horizontal)
-          .disabled(questionedWasAnswered)  // Disable all answer buttons after an answer is given
-      )
-    } else {
-      let buttonWidth = min(geometry.size.width / 3 - 20, 100) * 1.5
-      let buttonHeight = buttonWidth * 0.8 // Adjust height to fit more lines
-      return AnyView(
-        VStack(spacing: 15) {
-          HStack {
-            answerButtonVue(answer: answers[0],row:row,col:col, buttonWidth: buttonWidth , buttonHeight:buttonHeight)
-            answerButtonVue(answer: answers[1],row:row,col:col, buttonWidth: buttonWidth , buttonHeight:buttonHeight)
-          }
-          HStack {
-            answerButtonVue(answer: answers[2],row:row,col:col, buttonWidth: buttonWidth , buttonHeight:buttonHeight)
-            answerButtonVue(answer: answers[3],row:row,col:col, buttonWidth: buttonWidth , buttonHeight:buttonHeight)
-          }
-        }
-          .padding(.horizontal)
-          .disabled(questionedWasAnswered)  // Disable all answer buttons after an answer is given
-      )
-    }
+              .frame(width: contentWidth) // Set width of the scrolling area
+          )
+      } else if answers.count == 3 {
+          return AnyView(
+              VStack(spacing: 15) {
+                  answerButtonVue(answer: answers[0], row: row, col: col, buttonWidth: contentWidth / 2, buttonHeight: contentWidth / 2)
+                  HStack {
+                      answerButtonVue(answer: answers[1], row: row, col: col, buttonWidth: contentWidth / 2.5, buttonHeight: contentWidth / 2.5)
+                      answerButtonVue(answer: answers[2], row: row, col: col, buttonWidth: contentWidth / 2.5, buttonHeight: contentWidth / 2.5)
+                  }
+              }
+              .padding(.horizontal)
+              .disabled(questionedWasAnswered)  // Disable all answer buttons after an answer is given
+          )
+      } else {
+          let buttonWidth = min(geometry.size.width / 3 - 20, 100) * 1.5
+          let buttonHeight = buttonWidth * 0.8 // Adjust height to fit more lines
+          return AnyView(
+              VStack(spacing: 15) {
+                  HStack {
+                      answerButtonVue(answer: answers[0], row: row, col: col, buttonWidth: buttonWidth, buttonHeight: buttonHeight)
+                      answerButtonVue(answer: answers[1], row: row, col: col, buttonWidth: buttonWidth, buttonHeight: buttonHeight)
+                  }
+                  HStack {
+                      answerButtonVue(answer: answers[2], row: row, col: col, buttonWidth: buttonWidth, buttonHeight: buttonHeight)
+                      answerButtonVue(answer: answers[3], row: row, col: col, buttonWidth: buttonWidth, buttonHeight: buttonHeight)
+                  }
+              }
+              .padding(.horizontal)
+              .disabled(questionedWasAnswered)  // Disable all answer buttons after an answer is given
+          )
+      }
   }
-  
   func answerButtonVue(answer: String,row:Int,col:Int, buttonWidth: CGFloat, buttonHeight: CGFloat, taller: Bool = false) -> some View {
     func ff()->some View {
       let ch = chmgr.everyChallenge[gs.board[row][col]]

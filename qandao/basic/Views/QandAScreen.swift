@@ -41,8 +41,8 @@ struct QandAScreen: View {
             killTimer: $killTimer)
           .disabled(questionedWasAnswered)
           .debugBorder()
-          
-          questionAndAnswersSectionVue(geometry: geometry)
+          // pass in the answers explicitly to eliminate flip flopsy behavior
+          questionAndAnswersSectionVue(answers:ch.answers, geometry: geometry)
             .disabled(questionedWasAnswered)
         }
         .background(Color(UIColor.systemBackground))

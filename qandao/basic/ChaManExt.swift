@@ -9,7 +9,7 @@ import Foundation
 
 extension ChaMan {
   // Get the file path for storing challenge statuses
-  func getChallengeStatusesFilePath() -> URL {
+ static  func getChallengeStatusesFilePath() -> URL {
     let fileManager = FileManager.default
     let urls = fileManager.urls(for:.documentDirectory, in: .userDomainMask)
     return urls[0].appendingPathComponent("challengeStatuses.json")
@@ -22,7 +22,7 @@ extension ChaMan {
     }
   // Save the challenge statuses to a file
   func saveChallengeStatuses(_ statuses: [ChallengeStatus]) {
-    let filePath = getChallengeStatusesFilePath()
+    let filePath = Self.getChallengeStatusesFilePath()
     do {
       let data = try JSONEncoder().encode(statuses)
       try data.write(to: filePath)
@@ -33,7 +33,7 @@ extension ChaMan {
   
   // Load the challenge statuses from a file
   func loadChallengeStatuses() -> [ChallengeStatus]? {
-    let filePath = getChallengeStatusesFilePath()
+    let filePath = Self.getChallengeStatusesFilePath()
     do {
       let data = try Data(contentsOf: filePath)
       let statuses = try JSONDecoder().decode([ChallengeStatus].self, from: data)

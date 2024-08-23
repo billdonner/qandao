@@ -12,6 +12,7 @@ struct GameScreen: View {
   @Bindable var chmgr: ChaMan
   @Binding  var topics: [String]
   @Binding  var size:Int
+  @Binding var isTouching: Bool
   let onSingleTap: (_ row:Int, _ col:Int ) -> Bool
   
   @State   var firstMove = true
@@ -19,7 +20,8 @@ struct GameScreen: View {
   @State   var showWinAlert = false
   @State   var showLoseAlert = false
   @State   var showCantStartAlert = false
-  @State private var isTouching: Bool = false
+  
+  @State   var showSettings = false
   
   var bodyMsg: String {
     let t =  """
@@ -32,7 +34,7 @@ struct GameScreen: View {
  
       VStack {
      
-        topButtonsVeew.padding([.bottom,.horizontal])
+        topButtonsVeew.padding()
         
           if gs.boardsize > 1 {
             MainGridView(gs: gs, chmgr:chmgr,  firstMove: $firstMove, isTouching: $isTouching, onSingleTap: onSingleTap)
@@ -48,7 +50,7 @@ struct GameScreen: View {
             print("//GameScreen onChangeof(Size) to \(gs.boardsize)")
             onBoardSizeChange ()
           }
-
+     
           .onDisappear {
             print("Yikes the GameScreen is Disappearing!")
           }
@@ -69,22 +71,14 @@ struct GameScreen: View {
   
   var topButtonsVeew : some View{
     HStack(alignment:.center ){
-      Image(systemName:gs.startincorners ? "skew" : "character.duployan")
-        .resizable()
-               .frame(width: 50, height: 50)
-               //.padding(.leading, 10)
-              // .padding(.top, 15)
-               //.padding(.bottom,10)
-               .foregroundColor(.blue)
-        .gesture(
-                  DragGesture(minimumDistance: 0)
-                      .onChanged { _ in
-                          isTouching = true
-                      }
-                      .onEnded { _ in
-                          isTouching = false
-                      }
-              )
+      Button(action: {  withAnimation {showSettings = true } } ) {
+        Image(systemName:"gearshape")
+          .font(.title)
+          .frame(width: 40, height: 40)
+          .foregroundColor(.blue)
+
+      }.disabled(gs.gamestate == .playingNow)
+        .opacity(gs.gamestate == .playingNow ? 0.5:1.0)
       Spacer()
       Text(" q a n d a").font(.largeTitle).bold()
       Spacer()
@@ -101,9 +95,8 @@ struct GameScreen: View {
           }
         }) {
           Text("Play")
-            .frame(width:50)
-            .lineLimit(2)
-            .padding(10)
+            .frame(width:40)
+            .padding(5)
             .background(.blue.opacity(0.8))
             .foregroundColor(.white)
             .cornerRadius(8)
@@ -119,16 +112,15 @@ struct GameScreen: View {
       } else {
         // END GAME
         Button(action: {
-          withAnimation {
+        //  withAnimation {
             assert(gs.checkVsChaMan(chmgr: chmgr)) //cant check after endgamepressed
             onEndGamePressed()  //should estore consistency
             chmgr.checkAllTopicConsistency("GameScreen EndGamePressed")
-          }
+         // }
         }) {
           Text("End")
-            .frame(width:50)
-            .lineLimit(2)
-            .padding(10)
+            .frame(width:40)
+            .padding(5)
             .background(.red.opacity(0.8))
             .foregroundColor(.white)
             .cornerRadius(8)
@@ -137,6 +129,9 @@ struct GameScreen: View {
       }
 
     }.font(.body)
+      .sheet(isPresented: $showSettings){
+        SettingsScreen(chmgr: chmgr, gs: gs)
+      }
   }
   var loadingVeew: some View {
     Text("Loading...")
@@ -157,7 +152,7 @@ struct GameScreen: View {
         gs:GameState.mock ,
         chmgr: ChaMan(playData: PlayData.mock),
         topics:.constant(GameState.mock.topicsinplay),
-        size:.constant(3),
+        size:.constant(3), isTouching: .constant(true) ,
         onSingleTap: { row,col in
           print("Tapped cell with challenge \(row) \(col)")
           return false
@@ -171,7 +166,7 @@ struct GameScreen: View {
         gs:GameState.mock ,
         chmgr: ChaMan(playData: PlayData.mock),
         topics:.constant(GameState.mock.topicsinplay),
-        size:.constant(3),
+        size:.constant(3),isTouching: .constant(true) ,
         onSingleTap: { row,col in
           print("Tapped cell with challenge \(row) \(col)")
           return false

@@ -1,4 +1,7 @@
 #  QANDAO - revised test app for Q20K
+- version 0.7.29.1 testing multilevel version numbers
+- version 0.7.29 remove jumpiness when answering
+- version 0.7.28 tinkering
 - version 0.7.27 improve onboarding
 - version 0.7.26 suppress blue dots after game over, show targets in startcorners  strict game
 - version 0.7.25 working in light mode now

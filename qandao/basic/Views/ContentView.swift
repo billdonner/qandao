@@ -9,12 +9,13 @@ struct ContentView: View {
   @State var chal: IdentifiablePoint? = nil
   @State var isPresentingDetailView = false
   
-
+  
+  @State  var isTouching = false
   
   var body: some View {
      GeometryReader { geometry in
        VStack(spacing:20) {
-          GameScreen(gs: gs, chmgr: chmgr, topics: $current_topics, size: $current_size) { row, col in
+         GameScreen(gs: gs, chmgr: chmgr, topics: $current_topics, size: $current_size, isTouching: $isTouching) { row, col in
             isPresentingDetailView = true
             chal = IdentifiablePoint(row: row, col: col, status: chmgr.stati[row * gs.boardsize + col])
             return false
@@ -46,7 +47,7 @@ struct ContentView: View {
                         isPresentingDetailView: $isPresentingDetailView, chmgr: chmgr, gs: gs)
           }
           TopicIndexView(gs: gs, chmgr: chmgr)
-          ContentViewBottomButtons(gs:gs, chmgr: chmgr)
+         ContentViewBottomButtons(gs:gs, chmgr: chmgr, isTouching: $isTouching)
           
         }
       }

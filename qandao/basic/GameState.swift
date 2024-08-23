@@ -15,7 +15,7 @@ struct GameMove : Codable,Hashable {
 //  case easy,normal,hard
 //}
 @Observable
-class GameState :  Codable {
+class GameState : Codable {
   var board: [[Int]]  // Array of arrays to represent the game board with challenges
   var cellstate: [[ChallengeOutcomes]]  // Array of arrays to represent the state of each cell 
   var moveindex: [[Int]] // -1 is unplayed
@@ -27,10 +27,15 @@ class GameState :  Codable {
   var totaltime: TimeInterval // aka Double
   var gamenumber:  Int
   var movenumber:  Int
+  @ObservationIgnored
   var woncount:  Int
+  @ObservationIgnored
   var lostcount:  Int
+  @ObservationIgnored
   var rightcount: Int
+  @ObservationIgnored
   var wrongcount: Int
+  @ObservationIgnored
   var replacedcount: Int
   var facedown:Bool
   var gimmees: Int  // Number of "gimmee" actions available
@@ -40,35 +45,39 @@ class GameState :  Codable {
   var doublediag:Bool
   var difficultylevel:Int
   var lastmove: GameMove?
+//@ObservationIgnored
   var gamestart:Date // when game started
+  @ObservationIgnored
+  var swversion:String // if this changes we must delete all state
   
-  
-  enum CodingKeys: String, CodingKey {
-    case _board = "board"
-    case _cellstate = "cellstate"
-    case _boardsize = "boardsize"
-    case _topicsinplay = "topicsinplay"
-    case _gamestate = "gamestate"
-    case _totaltime = "totaltime"
-    case _gamenumber = "gamenumber"
-    case _movenumber = "movenumber"
-    case _woncount = "woncount"
-    case _lostcount = "lostcount"
-    case _rightcount = "rightcount"
-    case _wrongcount = "wrongcount"
-    case _replacedcount = "replacedcount"
-    case _facedown = "facedown"
-    case _gimmees = "gimmees"
-    case _currentscheme = "currentscheme"
-    case _veryfirstgame = "veryfirstgame"
-    case _startincorners = "startincorners"
-    case _doublediag = "doublediag"
-    case _difficultylevel = "difficultylevel"
-    case _moveindex = "moveindex"
-    case _onwinpath = "onwinpath"
-    case _replaced = "replaced"
-    case _gamestart =   "gamestart"
-  }
+//  
+//  enum CodingKeys: String, CodingKey {
+//    case _board = "board"
+//    case _cellstate = "cellstate"
+//    case _boardsize = "boardsize"
+//    case _topicsinplay = "topicsinplay"
+//    case _gamestate = "gamestate"
+//    case _totaltime = "totaltime"
+//    case _gamenumber = "gamenumber"
+//    case _movenumber = "movenumber"
+//    case _woncount = "woncount"
+//    case _lostcount = "lostcount"
+//    case _rightcount = "rightcount"
+//    case _wrongcount = "wrongcount"
+//    case _replacedcount = "replacedcount"
+//    case _facedown = "facedown"
+//    case _gimmees = "gimmees"
+//    case _currentscheme = "currentscheme"
+//    case _veryfirstgame = "veryfirstgame"
+//    case _startincorners = "startincorners"
+//    case _doublediag = "doublediag"
+//    case _difficultylevel = "difficultylevel"
+//    case _moveindex = "moveindex"
+//    case _onwinpath = "onwinpath"
+//    case _replaced = "replaced"
+//    case _gamestart =   "gamestart"
+//   // case _swversion = "swversion"
+//  }
 
   
   
@@ -96,6 +105,7 @@ class GameState :  Codable {
     self.difficultylevel = 0//.easy
     self.startincorners = false
     self.gamestart = Date()
+    self.swversion = AppVersionProvider.appVersion()
   }
   
   func setupForNewGame (boardsize:Int, chmgr:ChaMan) -> Bool {
@@ -389,14 +399,14 @@ class GameState :  Codable {
     return unplayedInts
   }
   // Get the file path for storing challenge statuses
-  static func getGameStateFileURL() -> URL {
+  static func getGameStateFilePath() -> URL {
     let fileManager = FileManager.default
     let urls = fileManager.urls(for:.documentDirectory, in: .userDomainMask)
     return urls[0].appendingPathComponent("gameBoard.json")
   }
   
   func saveGameState( ) {
-    let filePath = Self.getGameStateFileURL()
+    let filePath = Self.getGameStateFilePath()
     do {
       let data = try JSONEncoder().encode(self)
       try data.write(to: filePath)
@@ -406,13 +416,20 @@ class GameState :  Codable {
   }
   // Load the GameBoard
   static func loadGameState() -> GameState? {
-    let filePath = getGameStateFileURL()
+    let filePath = getGameStateFilePath()
     do {
       let data = try Data(contentsOf: filePath)
       let gb = try JSONDecoder().decode(GameState.self, from: data)
+      // Let's check right now to make sure the software version has not changed
+      if gb.swversion !=   AppVersionProvider.appVersion() {
+        print ("***sw version changed from \(gb.swversion) to \(AppVersionProvider.appVersion()) ")
+        deleteAllState()
+        return nil // version change
+      }
       return gb
     } catch {
       print("Failed to load gs: \(error)")
+      deleteAllState()
       return nil
     }
   }

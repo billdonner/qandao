@@ -10,7 +10,25 @@ import SwiftUI
 var isIpad: Bool {
   UIDevice.current.systemName == "iPadOS"
 }
+func deleteFiles(at fileURLs: [URL]) {
+    for fileURL in fileURLs {
+        do {
+            try FileManager.default.removeItem(at: fileURL)
+            print("Successfully deleted file at: \(fileURL)")
+        } catch {
+            print("Failed to delete file at: \(fileURL). Error: \(error)")
+        }
+    }
+}
 
+func deleteAllState() {
+  print("--.deleting saved state")
+  deleteFiles(at: [AnsweredInfo.getAnsweredInfoFilePath(),
+                   ChaMan.getChallengeStatusesFilePath(),
+                   GameState.getGameStateFilePath(),
+                   TopicInfo.getTopicInfoFilePath()
+                  ])
+}
 
 extension String {
     /// Pads or truncates the string to the specified length.
