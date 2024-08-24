@@ -11,8 +11,11 @@ import SwiftUI
    
     let allTopics: [String]
     @Binding var selectedTopics: [String]
-    @Binding var selectedSchemeIndex: Int
-    let chmgr: ChaMan
+    @Binding var selectedSchemeIndex: ColorSchemeName
+   
+   
+   
+   let chmgr: ChaMan
     let boardSize: Int
     @State private var searchText = ""
     @State private var rerolledTopics: [String: String] = [:]  // Dictionary to keep track of rerolled topics

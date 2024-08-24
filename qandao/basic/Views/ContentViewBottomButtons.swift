@@ -13,7 +13,18 @@ struct ContentViewBottomButtons : View {
   
   @Binding   var isTouching:Bool
   @State   var showingHelp = false
+  @State var colorSchemeName : ColorSchemeName = 2//.summer // hack //summer
   var body: some View {
+    Picker("Color Palette", selection: $colorSchemeName) {
+      ForEach(AppColors.allSchemes.indices.sorted(),id:\.self) { idx in
+        Text("\(AppColors.pretty(for:AppColors.allSchemes[idx].name))")
+          .tag(idx)
+      }
+    }
+    .pickerStyle(SegmentedPickerStyle())
+    .background(colorPaletteBackground(for:gs.currentscheme).clipShape(RoundedRectangle(cornerRadius: 10)))
+    .padding(.horizontal)
+
     HStack {
      Image(systemName:gs.startincorners ? "skew" : "character.duployan")
           .font(.title)
@@ -32,6 +43,7 @@ struct ContentViewBottomButtons : View {
       Text("QandA \(AppVersionProvider.appVersion()) by Freeport Software")
         .font(isIpad ? .headline: .caption2)
       
+
       Spacer()
       
       //Help
@@ -49,7 +61,12 @@ struct ContentViewBottomButtons : View {
         HowToPlayScreen (chmgr: chmgr, isPresented: $showingHelp)
           .statusBar(hidden: true)
       }
-  
+  .onChange(of: colorSchemeName) {
+    withAnimation {
+      gs.currentscheme = colorSchemeName
+    }
   }
+    
+    }
 }
  

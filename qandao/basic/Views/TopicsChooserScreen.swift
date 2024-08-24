@@ -16,7 +16,7 @@ struct TopicsChooserScreen: View {
   let chmgr:ChaMan
   
  // let chmgr: ChaMan
-  @Binding var currentScheme: Int
+  @Binding var currentScheme: ColorSchemeName
   @Binding var selectedTopics: [String]
   
   var body: some View {
@@ -30,7 +30,10 @@ struct TopicsChooserScreen: View {
 //          .font(.subheadline)
         
         if !selectedTopics.isEmpty {
-          TopicSelectorView(allTopics: allTopics, selectedTopics: $selectedTopics, selectedSchemeIndex: $currentScheme, chmgr: chmgr, boardSize:boardsize)
+          TopicSelectorView(allTopics: allTopics, 
+                            selectedTopics: $selectedTopics,
+                            selectedSchemeIndex: $currentScheme,
+                            chmgr: chmgr, boardSize:boardsize)
         }
        
       }

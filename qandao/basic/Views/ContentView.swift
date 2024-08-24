@@ -14,7 +14,7 @@ struct ContentView: View {
   
   var body: some View {
      GeometryReader { geometry in
-       VStack(spacing:20) {
+       VStack(spacing:isIpad ? 20: 10) {
          GameScreen(gs: gs, chmgr: chmgr, topics: $current_topics, size: $current_size, isTouching: $isTouching) { row, col in
             isPresentingDetailView = true
             chal = IdentifiablePoint(row: row, col: col, status: chmgr.stati[row * gs.boardsize + col])

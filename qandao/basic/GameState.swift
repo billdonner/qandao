@@ -118,7 +118,7 @@ class GameState : Codable {
     self.replacedcount = 0
     self.totaltime = 0.0
     self.facedown = size > 4
-    self.currentscheme = .summer
+    self.currentscheme = 2//.summer
     self.veryfirstgame = true
     self.doublediag = false
     self.difficultylevel = 0//.easy

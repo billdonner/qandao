@@ -10,8 +10,23 @@ import SwiftUI
 var isIpad: Bool {
   UIDevice.current.systemName == "iPadOS"
 }
-import Foundation
-
+func removeElements<T: Equatable>(from array: [T], elementsToRemove: [T]) -> [T] {
+    return array.filter { !elementsToRemove.contains($0) }
+}
+func colorPaletteBackground(for scheme:ColorSchemeName) -> LinearGradient {
+  switch scheme{
+  case 1://.winter:
+    return LinearGradient(gradient: Gradient(colors: [Color.blue, Color.cyan]), startPoint: .topLeading, endPoint: .bottomTrailing)
+  case 2:// .spring:
+    return LinearGradient(gradient: Gradient(colors: [Color.green, Color.yellow]), startPoint: .topLeading, endPoint: .bottomTrailing)
+  case  3://.summer:
+    return LinearGradient(gradient: Gradient(colors: [Color.green, Color.orange]), startPoint: .topLeading, endPoint: .bottomTrailing)
+  case 4:// .autumn:
+    return LinearGradient(gradient: Gradient(colors: [Color.brown, Color.orange]), startPoint: .topLeading, endPoint: .bottomTrailing)
+  default://case 0:// .bleak:
+    return LinearGradient(gradient: Gradient(colors: [Color.gray, Color.black]), startPoint: .topLeading, endPoint: .bottomTrailing)
+  }
+}
 func customNSLog(_ message: String) {
     // Cache the DateFormatter instance for efficiency
     struct DateFormatterCache {

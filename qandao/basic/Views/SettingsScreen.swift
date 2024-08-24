@@ -1,7 +1,5 @@
 import SwiftUI
-func removeElements<T: Equatable>(from array: [T], elementsToRemove: [T]) -> [T] {
-    return array.filter { !elementsToRemove.contains($0) }
-}
+
 fileprivate struct SettingsView: View {
   
   @Bindable var chmgr:ChaMan
@@ -19,7 +17,7 @@ fileprivate struct SettingsView: View {
     l_facedown = gs.facedown
     l_boardsize = gs.boardsize
     l_doubleDiag = gs.doublediag
-    l_currentScheme = gs.currentscheme.rawValue
+    l_currentScheme = gs.currentscheme
     l_difficultyLevel = gs.difficultylevel
     l_startInCorners = gs.startincorners
   }
@@ -28,7 +26,7 @@ fileprivate struct SettingsView: View {
   @State private var  l_startInCorners: Bool
   @State private var  l_facedown: Bool
   @State private var  l_doubleDiag: Bool
-  @State private var  l_currentScheme: Int//ColorSchemeName
+  @State private var  l_currentScheme:ColorSchemeName
   @State private var  l_difficultyLevel: Int
   @State private var  l_topicsinplay: [String]
   
@@ -41,52 +39,12 @@ fileprivate struct SettingsView: View {
   
   @State private var showSettings = false
   @Environment(\.presentationMode) var presentationMode
-  
-  var colorPaletteBackground: LinearGradient {
-    switch l_currentScheme {
-    case 1://.winter:
-      return LinearGradient(gradient: Gradient(colors: [Color.blue, Color.cyan]), startPoint: .topLeading, endPoint: .bottomTrailing)
-    case 2://.spring:
-      return LinearGradient(gradient: Gradient(colors: [Color.green, Color.yellow]), startPoint: .topLeading, endPoint: .bottomTrailing)
-    case 3://.summer:
-      return LinearGradient(gradient: Gradient(colors: [Color.green, Color.orange]), startPoint: .topLeading, endPoint: .bottomTrailing)
-    case 4://.autumn:
-      return LinearGradient(gradient: Gradient(colors: [Color.brown, Color.orange]), startPoint: .topLeading, endPoint: .bottomTrailing)
-    default:
-      return LinearGradient(gradient: Gradient(colors: [Color.gray, Color.black]), startPoint: .topLeading, endPoint: .bottomTrailing)
-    }
-  }
-  
-  fileprivate func onParameterChange() {
-    //// wrong refreshTopics()
-  }
-  fileprivate func startInCorners () -> Binding<Bool> {
-    switch l_boardsize {
-    case 3: return  $l_startInCorners//.constant(false)
-    case 4: return  $l_startInCorners//.constant(false)
-    case 5:  return $l_startInCorners
-    case 6: return $l_startInCorners
-    case 7: return  $l_startInCorners//.constant(true)
-    default: return  $l_startInCorners//.constant(true)
-    }
-  }
-  fileprivate func faceDown () -> Binding<Bool> {
-    switch l_boardsize {
-    case 3: return  $l_facedown
-    case 4: return  $l_facedown
-    case 5:  return $l_facedown//.constant(true)
-    case 6: return $l_facedown//.constant(true)
-    case 7: return $l_facedown//.constant(true)
-    default: return $l_facedown//.constant(true)
-    }
-  }
+
   
   var body: some View {
     VStack {
       Form {
-        Section(header: Text("Settings")) {
-  
-          
+        Section(header: Text("Complexity")) {
           SizePickerView(chosenSize: $l_boardsize)
             .onChange(of:l_boardsize) {
               switch l_boardsize {
@@ -98,18 +56,9 @@ fileprivate struct SettingsView: View {
               default :l_facedown=true;l_startInCorners=true
               }
             }
-            
-
-          
-          Picker("Color Palette", selection: $l_currentScheme) {
-            ForEach(AppColors.allSchemes.indices.sorted(),id:\.self) { idx in
-              Text("\(AppColors.allSchemes[idx].name)")
-                .tag(idx)
-            }
-          }
-          .pickerStyle(SegmentedPickerStyle())
-          .background(colorPaletteBackground.clipShape(RoundedRectangle(cornerRadius: 10)))
-          
+        }
+        
+        Section(header: Text("Topics")) {
           NavigationLink(destination: TopicsChooserScreen(
             allTopics:chmgr.everyTopicName,
             schemes: AppColors.allSchemes,
@@ -121,15 +70,8 @@ fileprivate struct SettingsView: View {
           {
             Text("Choose Topics")
           }
-          
-          
         }
-        .onAppear {
-          if firstOnAppear {
-            firstOnAppear = false
-            chmgr.checkAllTopicConsistency("GameSettings onAppear")
-          }
-        }
+        
         
         Section(header:Text("About QANDA")) {
           VStack{
@@ -141,9 +83,7 @@ fileprivate struct SettingsView: View {
               )
               Spacer()
             }
-            .onChange(of:l_topicsinplay,initial:true ) { old,newer in
-              print("Game With Topics:",l_topicsinplay.joined(separator: ","))
-            }
+            
             
             Button(action: { showSettings.toggle() }) {
               Text("Freeport Settings")
@@ -151,12 +91,16 @@ fileprivate struct SettingsView: View {
           }
         }
       }
+      }
       .sheet(isPresented:$showSettings){
         FreeportSettingsScreen(gs: gs, chmgr: chmgr)
       }
-      //    .onDisappear {
-      //      onExit(l_topicsinplay) // do whatever
-      //    }
+      .onAppear {
+        if firstOnAppear {
+          firstOnAppear = false
+          chmgr.checkAllTopicConsistency("GameSettings onAppear")
+        }
+      }
       .navigationBarTitle("Game Settings", displayMode: .inline)
       .navigationBarItems(
         leading: Button("Cancel") {
@@ -171,7 +115,7 @@ fileprivate struct SettingsView: View {
       )
 
     }
-  }
+ 
   private func onDonePressed() {
     // copy every change into gameState
     gs.doublediag = l_doubleDiag
@@ -185,7 +129,7 @@ fileprivate struct SettingsView: View {
     gs.onwinpath = Array(repeating: Array(repeating: false, count: l_boardsize), count: l_boardsize)
     gs.replaced = Array(repeating: Array(repeating: [], count: l_boardsize), count: l_boardsize)
     gs.topicsinplay = l_topicsinplay // //*****2
-    gs.currentscheme = ColorSchemeName(rawValue:l_currentScheme) ?? .bleak
+    gs.currentscheme =  l_currentScheme 
     chmgr.checkAllTopicConsistency("GameSettingScreen onDonePressed")
     gs.saveGameState()
   }
