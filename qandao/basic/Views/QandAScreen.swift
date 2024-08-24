@@ -81,7 +81,6 @@ struct QandAScreen: View {
                      onButton1Tapped: handleGimmee,
                      onButton2Tapped: { print("Gimmee cancelled")  },
                      animation: .spring())
-        
       }
     }
   }

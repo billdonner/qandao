@@ -74,11 +74,11 @@ struct GameScreen: View {
       Button(action: {  withAnimation {showSettings = true } } ) {
         Image(systemName:"gearshape")
           .font(.title)
-          .frame(width: 40, height: 40)
+        .frame(width: isIpad ? 60:40, height: isIpad ? 60 : 40)
           .foregroundColor(.blue)
 
       }.disabled(gs.gamestate == .playingNow)
-        .opacity(gs.gamestate == .playingNow ? 0.5:1.0)
+        .opacity(gs.gamestate == .playingNow ? 0.2:1.0)
       Spacer()
       Text(" q a n d a").font(.largeTitle).bold()
       Spacer()
@@ -91,16 +91,16 @@ struct GameScreen: View {
               showCantStartAlert = true
             }
             chmgr.checkAllTopicConsistency("GameScreen StartGamePressed")
-            assert(gs.checkVsChaMan(chmgr: chmgr))
+            conditionalAssert(gs.checkVsChaMan(chmgr: chmgr))
           }
         }) {
           Text("Play")
-            .frame(width:40)
+            .frame(width: isIpad ? 60:40, height: isIpad ? 60 : 40)
             .padding(5)
             .background(.blue.opacity(0.8))
             .foregroundColor(.white)
             .cornerRadius(8)
-            .font(.body)
+            .font(isIpad ? .title:.body)
         }
         .alert("Can't start new Game - consider changing the topics or hit Full Reset",isPresented: $showCantStartAlert){
           Button("OK", role: .cancel) {
@@ -113,18 +113,18 @@ struct GameScreen: View {
         // END GAME
         Button(action: {
         //  withAnimation {
-            assert(gs.checkVsChaMan(chmgr: chmgr)) //cant check after endgamepressed
+           // conditionalAssert(gs.checkVsChaMan(chmgr: chmgr)) //cant check after endgamepressed
             onEndGamePressed()  //should estore consistency
             chmgr.checkAllTopicConsistency("GameScreen EndGamePressed")
          // }
         }) {
           Text("End")
-            .frame(width:40)
+            .frame(width: isIpad ? 60:40, height: isIpad ? 60 : 40)
             .padding(5)
             .background(.red.opacity(0.8))
             .foregroundColor(.white)
             .cornerRadius(8)
-            .font(.body)
+            .font(isIpad ? .title:.body)
         }
       }
 

@@ -14,43 +14,34 @@ struct ContentViewBottomButtons : View {
   @Binding   var isTouching:Bool
   @State   var showingHelp = false
   var body: some View {
-    
     HStack {
-
      Image(systemName:gs.startincorners ? "skew" : "character.duployan")
           .font(.title)
-          .foregroundColor( .blue)
-                 .frame(width: 40, height: 40)
+          .frame(width: isIpad ? 60:40, height: isIpad ? 60 : 40)
                  .padding(.leading, 15)
-                // .padding(.bottom, 15)
-    //  }
-                 .gesture(
-                           DragGesture(minimumDistance: 0)
-                               .onChanged { _ in
-                                isTouching = true
-                               }
-                               .onEnded { _ in
-                                 isTouching = false
-                               }
-                       )
-     // .opacity(gs.gamestate != .playingNow ? 1 : 0.5)
+//                 .gesture( DragGesture(minimumDistance: 0)
+//                               .onChanged { _ in
+//                                isTouching = true
+//                               }
+//                               .onEnded { _ in
+//                                 isTouching = false
+//                               }  )
       Spacer()
+      
       Text("QandA \(AppVersionProvider.appVersion()) by Freeport Software").font(.caption2)
+      
       Spacer()
       //Help
-      Button(action: { showingHelp = true; testcc() }) {
+      Button(action: { 
+        showingHelp = true
+      }) {
         Image(systemName:"questionmark")
-          //.foregroundColor( isTouching ? .red : .green)
           .font(.title)
-                 .frame(width: 40, height: 40)
+          .frame(width: isIpad ? 60:40, height: isIpad ? 60 : 40)
                  .padding(.trailing, 15)
       }
-        
-
-
     }
     .debugBorder()
-
       .fullScreenCover(isPresented: $showingHelp ){
         HowToPlayScreen (chmgr: chmgr, isPresented: $showingHelp)
           .statusBar(hidden: true)

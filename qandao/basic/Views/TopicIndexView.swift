@@ -46,7 +46,7 @@ struct TopicIndexView: View {
                 .background(Color.black.opacity(0.1))
                 .cornerRadius(10)
             }
-          .frame(height:50)
+         // .frame(height:50)
             .sheet(item: $topicDetailInfo) { tdi in
                 TopicDetailsView(topic: tdi.name, gs: gs, chmgr: chmgr)
             }

@@ -14,11 +14,11 @@ private struct zz:View {
       HStack {
       Text(showchars).font(showchars.count<=1 ? .title:.footnote)
         
-        Text("time:");Text(formatTimeInterval(gs.totaltime)).font(.headline)
+        Text("time:");Text(formatTimeInterval(gs.totaltime)) .font(isIpad ? .title:.headline)
         Text("score:");Text("\(gs.totalScore())")
-          .font(.headline)
+          .font(isIpad ? .title:.headline)
         Text("gimmees:");Text("\(gs.gimmees)")
-          .font(.headline)
+          .font(isIpad ? .title:.headline)
         HStack {
           Text("games:");Text("\(gs.gamenumber)")
           Text("won:");Text("\(gs.woncount)")
@@ -27,7 +27,7 @@ private struct zz:View {
           Text("wrong:");Text("\(gs.wrongcount)")
         }.opacity(0.8)
       }
-    }.font(isIpad ?.body:.footnote)
+    }.font(isIpad ? .title:.footnote)
     }
   }
 struct ScoreBarView: View {
@@ -45,7 +45,7 @@ struct ScoreBarView: View {
            " "// "possibles: \(numberOfPossibleMoves(in: gs.cellstate))"
           }
         }
-        zz(showchars: showchars,gs:gs).font(isIpad ?.headline:.body)
+        zz(showchars: showchars,gs:gs).font(isIpad ?.title:.body)
       }
         if gs.gamestate == .playingNow {
          /// Text ("game in progress...").foregroundStyle(.blue )

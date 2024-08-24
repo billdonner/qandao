@@ -1,5 +1,6 @@
 #  QANDAO - revised test app for Q20K
-- version 0.7.29.2 gamestate observability reduced
+- version 0.7.30.1 massive safety
+- version 0.7.29.2 improved icon, gamestate observability reduced
 - version 0.7.29.1 testing multilevel version numbers, resets on major version change
 - version 0.7.29 remove jumpiness when answering
 - version 0.7.28 tinkering

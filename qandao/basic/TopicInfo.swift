@@ -39,6 +39,7 @@ struct TopicInfo : Codable {
   }
   // Save the topicInfo to a file
   static func saveTopicInfo (_ info:[String:TopicInfo]) {
+    NSLog("SAVE TOPIC INFO")
     let filePath = Self.getTopicInfoFilePath()
       do {
           let data = try JSONEncoder().encode(info)

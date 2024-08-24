@@ -8,10 +8,11 @@
 import SwiftUI
 let playDataFileName = "playdata.json"
 let starting_size = 3 // Example size, can be 3 to 8
-let spareHeightFactor = 1.37 // controls layout of grid if too small
+let spareHeightFactor = isIpad ? 1.15:1.37 // controls layout of grid if too small
 let cornerradius = 0.0 // something like 8 makes nice rounded cord=ners
 var isDebugModeEnabled: Bool = false
 var debugBorderColor: Color = .red
+var shouldAssert = true //// External flag to control whether assertions should be enforced
 
 extension Color {
   static let offBlack = Color(red: 0.1, green: 0.1, blue: 0.1)
@@ -49,7 +50,8 @@ struct ChallengeGameApp: App {
           OnboardingScreen(isPresented: $showOnboarding)
         }
         .onAppear {
-          assert(gs.checkVsChaMan(chmgr: chmgr))
+          let _ = print("Assertions are \(shouldAssert ? "ON":"OFF")")
+          conditionalAssert(gs.checkVsChaMan(chmgr: chmgr))
           AppDelegate.lockOrientation(.portrait)// ensure applied
           if (onboardingdone == false ) { // if not yet done then trigger it
             showOnboarding = true

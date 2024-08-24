@@ -46,7 +46,10 @@ struct ContentView: View {
             QandAScreen(row: cha.row, col: cha.col,
                         isPresentingDetailView: $isPresentingDetailView, chmgr: chmgr, gs: gs)
           }
+         
+         Divider()
           TopicIndexView(gs: gs, chmgr: chmgr)
+         Divider()
          ContentViewBottomButtons(gs:gs, chmgr: chmgr, isTouching: $isTouching)
           
         }

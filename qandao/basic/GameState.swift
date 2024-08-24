@@ -17,15 +17,19 @@ struct GameMove : Codable,Hashable {
 @Observable
 class GameState : Codable {
   var board: [[Int]]  // Array of arrays to represent the game board with challenges
-  var cellstate: [[ChallengeOutcomes]]  // Array of arrays to represent the state of each cell 
+  var cellstate: [[GameCellState]]  // Array of arrays to represent the state of each cell 
   var moveindex: [[Int]] // -1 is unplayed
-  var onwinpath: [[Bool]] // only set after win detected
   var replaced:[[[Int]]] // list of replacements in this cell
   var boardsize: Int  // Size of the game board
-  var topicsinplay: [String] // a subset of allTopics (which is constant and maintained in ChaMan)
+
   var gamestate: StateOfPlay = .initializingApp
   var totaltime: TimeInterval // aka Double
+  
   var veryfirstgame:Bool
+  @ObservationIgnored
+  var topicsinplay: [String] // a subset of allTopics (which is constant and maintained in ChaMan)
+  @ObservationIgnored
+  var onwinpath: [[Bool]] // only set after win detected
   @ObservationIgnored
   var gimmees: Int  // Number of "gimmee" actions available
   @ObservationIgnored
@@ -129,7 +133,7 @@ class GameState : Codable {
     self.topicsinplay = try container.decode([String].self,forKey:.topicsinplay)
     self.boardsize = try container.decode(Int.self,forKey:.boardsize)
     self.board = try container.decode([[Int]].self,forKey:.board)
-    self.cellstate = try container.decode([[ChallengeOutcomes]].self,forKey:.cellstate)
+    self.cellstate = try container.decode([[GameCellState]].self,forKey:.cellstate)
     self.moveindex = try container.decode([[Int]].self,forKey:.moveindex)
     self.onwinpath = try container.decode([[Bool]].self,forKey:.onwinpath)
     self.replaced = try container.decode([[[Int]]].self,forKey:.replaced)
@@ -204,7 +208,7 @@ class GameState : Codable {
     let result:AllocationResult = chmgr.allocateChallenges(forTopics: topicsinplay, count: boardsize * boardsize)
     switch result {
     case .success(let x):
-      assert(x.count == boardsize*boardsize)
+      conditionalAssert(x.count == boardsize*boardsize)
      // print("Success:\(x.count)")
       allocatedChallengeIndices = x.shuffled()
       //continue after the error path
@@ -483,6 +487,7 @@ class GameState : Codable {
   }
   
   func saveGameState( ) {
+    NSLog("SAVE GAMESTATE")
     let filePath = Self.getGameStateFilePath()
     do {
       let data = try JSONEncoder().encode(self)

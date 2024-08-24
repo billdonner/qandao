@@ -10,8 +10,9 @@ import SwiftUI
 extension QandAScreen {
   func questionAndAnswersSectionVue(answers:[String],geometry: GeometryProxy) -> some View {
 
-    VStack(spacing: 15) {
+    VStack(spacing: 10) {
       questionSectionVue(geometry: geometry)
+        .frame(maxWidth: max(0, geometry.size.width), maxHeight: max(0, geometry.size.height * 0.4))//make bigger when bottom buttons gone
       answerButtonsVue(answers: answers, geometry: geometry)
     }
     .padding(.horizontal)
@@ -22,8 +23,8 @@ extension QandAScreen {
   }
   
   func questionSectionVue(geometry: GeometryProxy) -> some View {
-  //  let paddingWidth = geometry.size.width * 0.1
-   // let contentWidth = geometry.size.width - paddingWidth
+   let paddingWidth = geometry.size.width * 0.1
+   let contentWidth = geometry.size.width - paddingWidth
     let ch = chmgr.everyChallenge[gs.board[row][col]]
     let topicColor =   gs.colorForTopic(ch.topic).0
     
@@ -35,13 +36,12 @@ extension QandAScreen {
         buttonRow
           .foregroundColor(foregroundColorFrom( backgroundColor: topicColor ))
           .padding()
-          //.frame(width: max(0,contentWidth*0.9),height:buttSize)
           .debugBorder()
-   Spacer()
+        Spacer()
         Text(ch.question)
-          .font(.title3)
+          .font(isIpad ? .largeTitle:.title3)
           .padding()//([.top,.horizontal])
-         // .frame(width: max(0,contentWidth), height:max(0,  geometry.size.height * 0.3))//0.2
+           .frame(width: max(0,contentWidth), height:max(0,  geometry.size.height * 0.25))//0.2
           .lineLimit(8)
           .fixedSize(horizontal: false, vertical: true)
           .foregroundColor(foregroundColorFrom( backgroundColor: topicColor ))
@@ -54,7 +54,7 @@ extension QandAScreen {
   
   var buttonRow: some View {
     HStack(spacing:10) {
-      HStack(spacing:5){
+      HStack(spacing:isIpad ? 25:15){
         gimmeeButton
         thumbsUpButton
         thumbsDownButton
@@ -107,10 +107,10 @@ extension QandAScreen {
               .disabled(questionedWasAnswered)  // Disable all answer buttons after an answer is given
           )
       } else {
-          let buttonWidth = min(geometry.size.width / 3 - 20, 100) * 1.5
+        let buttonWidth = min(geometry.size.width / 3 - 20, isIpad ? 200:100) * 1.5
           let buttonHeight = buttonWidth * 0.8 // Adjust height to fit more lines
           return AnyView(
-              VStack(spacing: 15) {
+              VStack(spacing: 10) {
                   HStack {
                       answerButtonVue(answer: answers[0], row: row, col: col, buttonWidth: buttonWidth, buttonHeight: buttonHeight)
                       answerButtonVue(answer: answers[1], row: row, col: col, buttonWidth: buttonWidth, buttonHeight: buttonHeight)
@@ -147,7 +147,7 @@ extension QandAScreen {
     {
       let ch = chmgr.everyChallenge[gs.board[row][col]]
       Text(answer)
-        .font(.body)
+        .font(isIpad ? .title:.body)
         .foregroundColor(.white)
         .padding()
       .frame(width:max(20, buttonWidth*0.9), height: max(20,buttonHeight*0.9)) // clamp up
@@ -157,10 +157,10 @@ extension QandAScreen {
         .minimumScaleFactor(0.5)  // Adjust font size to fit
         .lineLimit(8)
         //.rotationEffect(showCorrectAnswer && answer == ch.correct ? .degrees(360) : .degrees(0))
-        .overlay(
-          RoundedRectangle(cornerRadius: 5)  // Match the corner radius
-            .stroke(showBorders && answer == selectedAnswer && !answerCorrect ? Color.red : showBorders && answer == ch.correct && answerCorrect == false ? Color.green : Color.clear, lineWidth: 5)
-        )
+//        .overlay(
+//          RoundedRectangle(cornerRadius: 5)  // Match the corner radius
+//            .stroke(showBorders && answer == selectedAnswer && !answerCorrect ? Color.red : showBorders && answer == ch.correct && answerCorrect == false ? Color.green : Color.clear, lineWidth: 5)
+//        )
         //.animation(.easeInOut(duration: showCorrectAnswer ? 1.0 : 0.5), value: showCorrectAnswer)
         .animation(.easeInOut(duration: answerGiven ? 1.0 : 0.5), value: animateBackToBlue)
         //.animation(.easeInOut(duration: 0.5), value: showBorders)
@@ -217,7 +217,7 @@ func handleDismissal(toRoot:Bool) {
   
   func answeredCorrectly(_ ch:Challenge,row:Int,col:Int,answered:String) {
     chmgr.checkAllTopicConsistency("mark correct before")
-    assert(gs.checkVsChaMan(chmgr: chmgr))
+    conditionalAssert(gs.checkVsChaMan(chmgr: chmgr))
     answerCorrect = true
     answerGiven = true
     showBorders = true
@@ -237,7 +237,7 @@ func handleDismissal(toRoot:Bool) {
   }
   func answeredIncorrectly(_ ch:Challenge,row:Int,col:Int,answered:String) {
     chmgr.checkAllTopicConsistency("mark incorrect before")
-    assert(gs.checkVsChaMan(chmgr: chmgr))
+    conditionalAssert(gs.checkVsChaMan(chmgr: chmgr))
     answerCorrect = false
     answerGiven = true
     showCorrectAnswer = false

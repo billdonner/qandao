@@ -6,7 +6,7 @@
 //
 
 import Foundation
-func numberOfPossibleMoves(in matrix: [[ChallengeOutcomes]]) -> Int {
+func numberOfPossibleMoves(in matrix: [[GameCellState]]) -> Int {
     let n = matrix.count
     guard n > 0 else { return 0 }
     
@@ -39,11 +39,11 @@ func areCellsAdjacent(_ cell1: (Int, Int), _ cell2: (Int, Int)) -> Bool {
     let colDifference = abs(cell1.1 - cell2.1)
     return rowDifference <= 1 && colDifference <= 1 && !(rowDifference == 0 && colDifference == 0)
 }
-func isWinningPath(in matrix: [[ChallengeOutcomes]]) -> Bool {
+func isWinningPath(in matrix: [[GameCellState]]) -> Bool {
   let (_,x) = winningPath(in: matrix)
   return x
 }
-func winningPath(in matrix: [[ChallengeOutcomes]]) -> ([(Int, Int)], Bool) {
+func winningPath(in matrix: [[GameCellState]]) -> ([(Int, Int)], Bool) {
     let n = matrix.count
     guard n > 0 else { return ([], false) }
 
@@ -97,7 +97,7 @@ func winningPath(in matrix: [[ChallengeOutcomes]]) -> ([(Int, Int)], Bool) {
     
     return ([], false)
 }
-func OLDisWinningPath(in matrix: [[ChallengeOutcomes]]) -> Bool {
+func OLDisWinningPath(in matrix: [[GameCellState]]) -> Bool {
     let n = matrix.count
     guard n > 0 else { return false }
 
@@ -143,7 +143,7 @@ func OLDisWinningPath(in matrix: [[ChallengeOutcomes]]) -> Bool {
     
     return false
 }
-func isPossibleWinningPath(in matrix: [[ChallengeOutcomes]]) -> Bool {
+func isPossibleWinningPath(in matrix: [[GameCellState]]) -> Bool {
   let n = matrix.count
   guard n > 0 else { return false }
 
@@ -192,7 +192,7 @@ func isPossibleWinningPath(in matrix: [[ChallengeOutcomes]]) -> Bool {
   
   return false
 }
-func hasAdjacentNeighbor(withStates states: Set<ChallengeOutcomes>, in matrix: [[ChallengeOutcomes]], for cell: (Int, Int)) -> Bool {
+func hasAdjacentNeighbor(withStates states: Set<GameCellState>, in matrix: [[GameCellState]], for cell: (Int, Int)) -> Bool {
     let n = matrix.count
     let (row, col) = cell
 

@@ -22,6 +22,7 @@ extension ChaMan {
     }
   // Save the challenge statuses to a file
   func saveChallengeStatuses(_ statuses: [ChallengeStatus]) {
+    NSLog("SAVE CHALLENGE STATUSES")
     let filePath = Self.getChallengeStatusesFilePath()
     do {
       let data = try JSONEncoder().encode(statuses)
@@ -164,21 +165,21 @@ extension ChaMan {
   func checkSingleTopicConsistency(_ topic:String,_ message:String) {
     
     let ti = tinfo[topic]
-    assert(ti != nil)
+    conditionalAssert(ti != nil)
     let t = ti!
     let free = freeChallengesCount(for:topic)
     let alloc = allocatedChallengesCount(for:topic)
     let abandon = abandonedChallengesCount(for:topic)
     let correct = correctChallengesCount(for:topic)
     let incorrect = incorrectChallengesCount(for:topic)
-    assert(free == t.freecount,"\(message) \(topic) free \(free) != \(t.freecount)")
-    assert(alloc == t.alloccount,"\(message) \(topic) alloc \(alloc) != \(t.alloccount)")
-    assert(abandon == t.replacedcount,"\(message) \(topic) abandon \(abandon) != \(t.replacedcount)")
-    assert(correct == t.rightcount,"\(message) \(topic) correct \(correct) != \(t.rightcount)")
-    assert(incorrect == t.wrongcount,"\(message) \(topic) incorrect \(incorrect) != \(t.wrongcount)")
+    conditionalAssert(free == t.freecount,"\(message) \(topic) free \(free) != \(t.freecount)")
+    conditionalAssert(alloc == t.alloccount,"\(message) \(topic) alloc \(alloc) != \(t.alloccount)")
+    conditionalAssert(abandon == t.replacedcount,"\(message) \(topic) abandon \(abandon) != \(t.replacedcount)")
+    conditionalAssert(correct == t.rightcount,"\(message) \(topic) correct \(correct) != \(t.rightcount)")
+    conditionalAssert(incorrect == t.wrongcount,"\(message) \(topic) incorrect \(incorrect) != \(t.wrongcount)")
   }
   func checkAllTopicConsistency(_ message:String) {
-    // assert( verifySync(),"\(message) sync")
+    // conditionalAssert( verifySync(),"\(message) sync")
 
     var freecount = 0
     let freeFromStati = freeChallengesCount()
@@ -199,11 +200,11 @@ extension ChaMan {
       correctcount += correctChallengesCount(for:t.name)
       incorrectcount +=  incorrectChallengesCount(for:t.name)
     }
-    assert(abandoncount == abandonFromStati,"\(message) abandoncount \(abandoncount) not \(abandonFromStati)")
-    assert(correctcount == correctFromStati,"\(message) correctcount \(correctcount) not \(correctFromStati)")
-    assert(incorrectcount == incorrectFromStati,"\(message) incorrectcount \(incorrectcount) not \(incorrectFromStati)")
-    assert(freecount ==  freeFromStati,"\(message) freecount\(freecount) not \(freeFromStati)")
-    assert(alloccount == allocFromStati ,"\(message) alloccount\(alloccount) not \(allocFromStati)")
+    conditionalAssert(abandoncount == abandonFromStati,"\(message) abandoncount \(abandoncount) not \(abandonFromStati)")
+    conditionalAssert(correctcount == correctFromStati,"\(message) correctcount \(correctcount) not \(correctFromStati)")
+    conditionalAssert(incorrectcount == incorrectFromStati,"\(message) incorrectcount \(incorrectcount) not \(incorrectFromStati)")
+    conditionalAssert(freecount ==  freeFromStati,"\(message) freecount\(freecount) not \(freeFromStati)")
+    conditionalAssert(alloccount == allocFromStati ,"\(message) alloccount\(alloccount) not \(allocFromStati)")
   }
   
   func dumpTopics () {

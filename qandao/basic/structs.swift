@@ -6,8 +6,7 @@ struct Sdi: Identifiable
   let col:Int
   let id=UUID()
 }
-enum ChallengeOutcomes: Codable {
-  
+enum GameCellState: Codable {
   case playedCorrectly
   case playedIncorrectly
   case unplayed

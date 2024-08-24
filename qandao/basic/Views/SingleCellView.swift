@@ -14,7 +14,7 @@ struct SingleCellView: View {
   let row:Int
   let col:Int
   let chidx:Int
-  let status:ChallengeOutcomes
+  let status:GameCellState
   let cellSize: CGFloat
   let onSingleTap: (_ row:Int, _ col:Int ) -> Bool
   @Binding var firstMove:Bool
@@ -46,7 +46,7 @@ struct SingleCellView: View {
           case .unplayed:
             if ( gs.gamestate == .playingNow ) {
               Text(gs.facedown ? "" : challenge.question)
-                .font(.caption)
+                .font(isIpad ? .title:.caption)
                 .padding(10)
                 .frame(width: cellSize, height: cellSize)
                 .cornerRadius(cornerradius)
