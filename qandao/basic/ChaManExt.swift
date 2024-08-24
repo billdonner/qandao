@@ -22,7 +22,7 @@ extension ChaMan {
     }
   // Save the challenge statuses to a file
   func saveChallengeStatuses(_ statuses: [ChallengeStatus]) {
-    NSLog("SAVE CHALLENGE STATUSES")
+    customNSLog("SAVE CHALLENGE STATUSES")
     let filePath = Self.getChallengeStatusesFilePath()
     do {
       let data = try JSONEncoder().encode(statuses)
@@ -75,7 +75,7 @@ extension ChaMan {
         gs.onwinpath = gb.onwinpath
         gs.replaced = gb.replaced
       }
-      try self.loadPlayData(from: playDataFileName)
+      try self.loadPlayData()
       
     } catch {
       print("Failed to load PlayData: \(error)")

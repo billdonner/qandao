@@ -61,8 +61,8 @@ struct QandAScreen: View {
                        message: ch.explanation ?? "xxx",
                        buttonTitle: "OK",
                        onButtonTapped: {
-          handleDismissal(toRoot:true)
-          questionedWasAnswered = false // to guard against tapping toomany times
+                            handleDismissal(toRoot:true)
+                            questionedWasAnswered = false // to guard against tapping toomany times
         })
         .sheet(isPresented: $showInfo){
           ChallengeInfoScreen(challenge: ch)

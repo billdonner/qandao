@@ -299,9 +299,9 @@ class ChaMan {
     return .error(.invalidTopics([topic]))
   }
   
-  func loadPlayData(from filename: String ) throws {
+  func loadPlayData( ) throws {
     let starttime = Date.now
-    guard let url = Bundle.main.url(forResource: filename, withExtension: nil) else {
+    guard let url = playDataURL  else {
       throw URLError(.fileDoesNotExist)
     }
     let data = try Data(contentsOf: url)
@@ -329,7 +329,7 @@ class ChaMan {
     } else {
       setupAnsweredInfo()
     }
-    print("Loaded \(self.stati.count) challenges from PlayData in \(formatTimeInterval(Date.now.timeIntervalSince(starttime))) secs")
+    customNSLog("Loaded \(self.stati.count) challenges from mainBundle PlayData in \(formatTimeInterval(Date.now.timeIntervalSince(starttime))) secs")
   }
   
   

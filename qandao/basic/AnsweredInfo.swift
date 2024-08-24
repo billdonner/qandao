@@ -42,7 +42,7 @@ struct AnsweredInfo: Codable {
       return urls[0].appendingPathComponent("answeredinfo.json")
   }
   static func saveAnsweredInfo (_ info:[String:AnsweredInfo]) {
-    NSLog("SAVE ANSWER INFO")
+    customNSLog("SAVE ANSWER INFO")
     let filePath = Self.getAnsweredInfoFilePath()
       do {
           let data = try JSONEncoder().encode(info)

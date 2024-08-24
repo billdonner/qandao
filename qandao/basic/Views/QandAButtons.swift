@@ -9,7 +9,7 @@ import SwiftUI
 let freeportButtons = false
 let buttSize = 45.0
 let buttRadius = 8.0
-let buttFont : Font = .headline
+let buttFont : Font = isIpad ? .title : .headline
 extension QandAScreen {
   
    var hintButton: some View {

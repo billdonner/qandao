@@ -17,27 +17,30 @@ struct ContentViewBottomButtons : View {
     HStack {
      Image(systemName:gs.startincorners ? "skew" : "character.duployan")
           .font(.title)
-          .frame(width: isIpad ? 60:40, height: isIpad ? 60 : 40)
+          .foregroundColor(.accent)
+          .frame(width: isIpad ? 70 : 50 , height: isIpad ? 70 : 50)
                  .padding(.leading, 15)
-//                 .gesture( DragGesture(minimumDistance: 0)
-//                               .onChanged { _ in
-//                                isTouching = true
-//                               }
-//                               .onEnded { _ in
-//                                 isTouching = false
-//                               }  )
+                 .gesture( DragGesture(minimumDistance: 0)
+                               .onChanged { _ in
+                                isTouching = true
+                               }
+                               .onEnded { _ in
+                                 isTouching = false
+                               }  )
       Spacer()
       
-      Text("QandA \(AppVersionProvider.appVersion()) by Freeport Software").font(.caption2)
+      Text("QandA \(AppVersionProvider.appVersion()) by Freeport Software")
+        .font(isIpad ? .headline: .caption2)
       
       Spacer()
+      
       //Help
       Button(action: { 
         showingHelp = true
       }) {
         Image(systemName:"questionmark")
           .font(.title)
-          .frame(width: isIpad ? 60:40, height: isIpad ? 60 : 40)
+          .frame(width: isIpad ? 70 : 50, height: isIpad ? 70 : 50)
                  .padding(.trailing, 15)
       }
     }

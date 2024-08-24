@@ -74,11 +74,10 @@ struct GameScreen: View {
       Button(action: {  withAnimation {showSettings = true } } ) {
         Image(systemName:"gearshape")
           .font(.title)
-        .frame(width: isIpad ? 60:40, height: isIpad ? 60 : 40)
-          .foregroundColor(.blue)
+        .frame(width: isIpad ? 70:50, height: isIpad ? 70:50)
 
       }.disabled(gs.gamestate == .playingNow)
-        .opacity(gs.gamestate == .playingNow ? 0.2:1.0)
+        .opacity(gs.gamestate == .playingNow ? 0.5:1.0)
       Spacer()
       Text(" q a n d a").font(.largeTitle).bold()
       Spacer()
@@ -95,11 +94,11 @@ struct GameScreen: View {
           }
         }) {
           Text("Play")
-            .frame(width: isIpad ? 60:40, height: isIpad ? 60 : 40)
+            .frame(width: isIpad ? 70:50, height: isIpad ? 70 : 50)
             .padding(5)
-            .background(.blue.opacity(0.8))
-            .foregroundColor(.white)
-            .cornerRadius(8)
+            //.background(.blue.opacity(0.8))
+           // .foregroundColor(.white)
+          //  .cornerRadius(8)
             .font(isIpad ? .title:.body)
         }
         .alert("Can't start new Game - consider changing the topics or hit Full Reset",isPresented: $showCantStartAlert){
@@ -112,18 +111,19 @@ struct GameScreen: View {
       } else {
         // END GAME
         Button(action: {
-        //  withAnimation {
-           // conditionalAssert(gs.checkVsChaMan(chmgr: chmgr)) //cant check after endgamepressed
+          withAnimation {
+            // this one has been trouble
+        // conditionalAssert(gs.checkVsChaMan(chmgr: chmgr)) //cant check after endgamepressed
             onEndGamePressed()  //should estore consistency
             chmgr.checkAllTopicConsistency("GameScreen EndGamePressed")
-         // }
+           }
         }) {
           Text("End")
-            .frame(width: isIpad ? 60:40, height: isIpad ? 60 : 40)
+            .frame(width: isIpad ? 70:50, height: isIpad ? 70:50)
             .padding(5)
-            .background(.red.opacity(0.8))
-            .foregroundColor(.white)
-            .cornerRadius(8)
+           // .background(.red.opacity(0.8))
+           // .foregroundColor(.white)
+          //  .cornerRadius(8)
             .font(isIpad ? .title:.body)
         }
       }

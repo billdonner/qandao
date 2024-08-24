@@ -1,4 +1,5 @@
 #  QANDAO - revised test app for Q20K
+- version 0.7.30.2 ipad cleanup, simplified settings
 - version 0.7.30.1 massive safety
 - version 0.7.29.2 improved icon, gamestate observability reduced
 - version 0.7.29.1 testing multilevel version numbers, resets on major version change

@@ -39,7 +39,7 @@ struct TopicInfo : Codable {
   }
   // Save the topicInfo to a file
   static func saveTopicInfo (_ info:[String:TopicInfo]) {
-    NSLog("SAVE TOPIC INFO")
+    customNSLog("SAVE TOPIC INFO")
     let filePath = Self.getTopicInfoFilePath()
       do {
           let data = try JSONEncoder().encode(info)
@@ -107,7 +107,7 @@ extension ChaMan {
       t.alloccount -= 1
       tinfo[topic] = t
     }
-    TopicInfo.saveTopicInfo(tinfo)
+   // TopicInfo.saveTopicInfo(tinfo)
   }
   func bumpRightcount(topic:String){
     if var t =  tinfo[topic] {
@@ -115,7 +115,7 @@ extension ChaMan {
       t.alloccount -= 1
       tinfo[topic] = t
     }
-    TopicInfo.saveTopicInfo(tinfo)
+   // TopicInfo.saveTopicInfo(tinfo)
   }
   
   

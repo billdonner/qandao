@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		882D640D2C7A1D38001F21B0 /* SizePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882D640C2C7A1D38001F21B0 /* SizePickerView.swift */; };
 		88460E642C6F796100D5FA4A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88460E392C6F796100D5FA4A /* Preview Assets.xcassets */; };
 		88460E652C6F796100D5FA4A /* AllocatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88460E3B2C6F796100D5FA4A /* AllocatorView.swift */; };
 		88460E662C6F796100D5FA4A /* AlreadyPlayedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88460E3C2C6F796100D5FA4A /* AlreadyPlayedView.swift */; };
@@ -53,6 +54,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		882D640C2C7A1D38001F21B0 /* SizePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizePickerView.swift; sourceTree = "<group>"; };
 		88460E392C6F796100D5FA4A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		88460E3B2C6F796100D5FA4A /* AllocatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllocatorView.swift; sourceTree = "<group>"; };
 		88460E3C2C6F796100D5FA4A /* AlreadyPlayedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlreadyPlayedView.swift; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 				88460E4A2C6F796100D5FA4A /* ScoreBarView.swift */,
 				88460E4B2C6F796100D5FA4A /* SettingsScreen.swift */,
 				88460E4C2C6F796100D5FA4A /* SingleCellView.swift */,
+				882D640C2C7A1D38001F21B0 /* SizePickerView.swift */,
 				88460E4D2C6F796100D5FA4A /* TopicDetailsView.swift */,
 				88460E4E2C6F796100D5FA4A /* TopicIndexView.swift */,
 				88460E4F2C6F796100D5FA4A /* TopicsChooserScreen.swift */,
@@ -343,6 +346,7 @@
 				88D3F84B2C73E3F400143B76 /* HappyGloomyView.swift in Sources */,
 				88460E752C6F796100D5FA4A /* SettingsScreen.swift in Sources */,
 				8867F1CA2C724C8800F1D2D6 /* DebugBorderViewModifier.swift in Sources */,
+				882D640D2C7A1D38001F21B0 /* SizePickerView.swift in Sources */,
 				88460E652C6F796100D5FA4A /* AllocatorView.swift in Sources */,
 				88460E802C6F796100D5FA4A /* CloudSentiments.swift in Sources */,
 				88460E7A2C6F796100D5FA4A /* TopicSelectorView.swift in Sources */,
@@ -488,7 +492,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = qandao/qandao.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 30.1;
+				CURRENT_PROJECT_VERSION = 31.2;
 				DEVELOPMENT_ASSET_PATHS = "\"qandao/Preview Content\"";
 				DEVELOPMENT_TEAM = NEAY582ME4;
 				ENABLE_PREVIEWS = YES;
@@ -521,7 +525,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = qandao/qandao.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 30.1;
+				CURRENT_PROJECT_VERSION = 31.2;
 				DEVELOPMENT_ASSET_PATHS = "\"qandao/Preview Content\"";
 				DEVELOPMENT_TEAM = NEAY582ME4;
 				ENABLE_PREVIEWS = YES;

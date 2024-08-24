@@ -11,6 +11,25 @@ var isIpad: Bool {
   UIDevice.current.systemName == "iPadOS"
 }
 import Foundation
+
+func customNSLog(_ message: String) {
+    // Cache the DateFormatter instance for efficiency
+    struct DateFormatterCache {
+        static let shared = DateFormatter()
+    }
+    
+    // Configure the DateFormatter only once
+    let dateFormatter = DateFormatterCache.shared
+    if dateFormatter.dateFormat.isEmpty {
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
+    }
+    
+    // Generate the timestamp
+    let timestamp = dateFormatter.string(from: Date())
+    
+    // Print the log with the timestamp
+    NSLog("[\(timestamp)] \(message)")
+}
  func conditionalAssert(_ condition: @autoclosure () -> Bool, _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) {
     if shouldAssert {
         assert(condition(), message(), file: file, line: line)

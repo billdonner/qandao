@@ -42,7 +42,7 @@ struct ContentView: View {
           .onDisappear {
             print("Yikes the ContentView is Disappearing!")
           }
-          .sheet(item: $chal) { cha in
+          .fullScreenCover(item: $chal) { cha in
             QandAScreen(row: cha.row, col: cha.col,
                         isPresentingDetailView: $isPresentingDetailView, chmgr: chmgr, gs: gs)
           }

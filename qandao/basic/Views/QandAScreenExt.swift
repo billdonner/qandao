@@ -145,7 +145,7 @@ extension QandAScreen {
       handleAnswerSelection(answer: answer,row:row,col:col)
     })
     {
-      let ch = chmgr.everyChallenge[gs.board[row][col]]
+     // let ch = chmgr.everyChallenge[gs.board[row][col]]
       Text(answer)
         .font(isIpad ? .title:.body)
         .foregroundColor(.white)

@@ -83,51 +83,23 @@ fileprivate struct SettingsView: View {
   
   var body: some View {
     VStack {
-
       Form {
         Section(header: Text("Settings")) {
+  
           
-          Picker("Board Size", selection: $l_boardsize) {
-            Text("3x3").tag(3)
-            Text("4x4").tag(4)
-            Text("5x5").tag(5)
-            Text("6x6").tag(6)
-            Text("7x7").tag(7)
-            Text("8x8").tag(8)
-          }
-          .pickerStyle(SegmentedPickerStyle())
-          Picker("Difficulty Level", selection: $l_difficultyLevel) {
-            Text("Easy").tag(1)
-            Text("Normal").tag(2)
-            Text("Hard").tag(3)
-          }
-          .pickerStyle(SegmentedPickerStyle())
-          .background(Color(.systemBackground).clipShape(RoundedRectangle(cornerRadius: 10)))
-          
-          
-          HStack {
-            Text("Loose")
-            Spacer()
-            Toggle("", isOn: startInCorners())
-              .labelsHidden()
-           // .disabled(l_boardsize>6)
-            Spacer()
-            Text("Strict")
-          }
-          .frame(maxWidth: .infinity)
-          
-          
-          HStack {
-            Text("Face Up")
-            Spacer()
-            Toggle("", isOn:faceDown())
-              //.disabled(l_boardsize>4)
-              .labelsHidden()
-            Spacer()
-            Text("Face Down")
-          }
-            .frame(maxWidth: .infinity)
-          
+          SizePickerView(chosenSize: $l_boardsize)
+            .onChange(of:l_boardsize) {
+              switch l_boardsize {
+              case 3:l_facedown=false;l_startInCorners=false
+              case 4:l_facedown=false;l_startInCorners=false
+              case 5:l_facedown=true;l_startInCorners=false
+              case 6:l_facedown=true;l_startInCorners=true
+              case 7:l_facedown=true;l_startInCorners=true
+              default :l_facedown=true;l_startInCorners=true
+              }
+            }
+            
+
           
           Picker("Color Palette", selection: $l_currentScheme) {
             ForEach(AppColors.allSchemes.indices.sorted(),id:\.self) { idx in
@@ -192,7 +164,7 @@ fileprivate struct SettingsView: View {
           // print("//GameSettingsScreen Cancel Pressed topics were: \(l_topicsinplay)")
           self.presentationMode.wrappedValue.dismiss()
         },
-        trailing: Button("Done") { 
+        trailing: Button("Done") {
           onDonePressed()
           self.presentationMode.wrappedValue.dismiss()
         }
@@ -204,7 +176,7 @@ fileprivate struct SettingsView: View {
     // copy every change into gameState
     gs.doublediag = l_doubleDiag
     gs.difficultylevel = l_difficultyLevel
-    gs.startincorners = l_startInCorners 
+    gs.startincorners = l_startInCorners
     gs.facedown = l_facedown
     gs.boardsize = l_boardsize
     gs.board = Array(repeating: Array(repeating: -1, count: l_boardsize), count: l_boardsize)
@@ -238,3 +210,46 @@ struct SettingsScreen :
 #Preview {
   SettingsScreen(chmgr: ChaMan.mock,gs:GameState.mock)
 }
+/*
+ Picker("Board Size", selection: $l_boardsize) {
+   Text("3x3").tag(3)
+   Text("4x4").tag(4)
+   Text("5x5").tag(5)
+   Text("6x6").tag(6)
+   Text("7x7").tag(7)
+   Text("8x8").tag(8)
+ }
+ .pickerStyle(SegmentedPickerStyle())
+ Picker("Difficulty Level", selection: $l_difficultyLevel) {
+   Text("Easy").tag(1)
+   Text("Normal").tag(2)
+   Text("Hard").tag(3)
+ }
+ .pickerStyle(SegmentedPickerStyle())
+ .background(Color(.systemBackground).clipShape(RoundedRectangle(cornerRadius: 10)))
+ 
+ 
+ HStack {
+   Text("Loose")
+   Spacer()
+   Toggle("", isOn: startInCorners())
+     .labelsHidden()
+  // .disabled(l_boardsize>6)
+   Spacer()
+   Text("Strict")
+ }
+ .frame(maxWidth: .infinity)
+ 
+ 
+ HStack {
+   Text("Face Up")
+   Spacer()
+   Toggle("", isOn:faceDown())
+     //.disabled(l_boardsize>4)
+     .labelsHidden()
+   Spacer()
+   Text("Face Down")
+ }
+   .frame(maxWidth: .infinity)
+ 
+ */

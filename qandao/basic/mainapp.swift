@@ -6,7 +6,8 @@
 //
 
 import SwiftUI
-let playDataFileName = "playdata.json"
+
+let playDataURL  = Bundle.main.url(forResource: "playdata.json", withExtension: nil)
 let starting_size = 3 // Example size, can be 3 to 8
 let spareHeightFactor = isIpad ? 1.15:1.37 // controls layout of grid if too small
 let cornerradius = 0.0 // something like 8 makes nice rounded cord=ners
@@ -50,7 +51,7 @@ struct ChallengeGameApp: App {
           OnboardingScreen(isPresented: $showOnboarding)
         }
         .onAppear {
-          let _ = print("Assertions are \(shouldAssert ? "ON":"OFF")")
+          customNSLog("Assertions are \(shouldAssert ? "ON":"OFF")")
           conditionalAssert(gs.checkVsChaMan(chmgr: chmgr))
           AppDelegate.lockOrientation(.portrait)// ensure applied
           if (onboardingdone == false ) { // if not yet done then trigger it

@@ -26,41 +26,41 @@ class GameState : Codable {
   var totaltime: TimeInterval // aka Double
   
   var veryfirstgame:Bool
-  @ObservationIgnored
+ // @ObservationIgnored
   var topicsinplay: [String] // a subset of allTopics (which is constant and maintained in ChaMan)
-  @ObservationIgnored
+ // @ObservationIgnored
   var onwinpath: [[Bool]] // only set after win detected
-  @ObservationIgnored
+ // @ObservationIgnored
   var gimmees: Int  // Number of "gimmee" actions available
-  @ObservationIgnored
+ // @ObservationIgnored
   var currentscheme: ColorSchemeName
-  @ObservationIgnored
+ // @ObservationIgnored
   var facedown:Bool
-  @ObservationIgnored
+ // @ObservationIgnored
   var startincorners:Bool
-  @ObservationIgnored
+ // @ObservationIgnored
   var doublediag:Bool
-  @ObservationIgnored
+//  @ObservationIgnored
   var difficultylevel:Int
-  @ObservationIgnored
+ // @ObservationIgnored
   var lastmove: GameMove?
-  @ObservationIgnored
+ // @ObservationIgnored
   var gamestart:Date // when game started
-  @ObservationIgnored
+//  @ObservationIgnored
   var swversion:String // if this changes we must delete all state
-  @ObservationIgnored
+//  @ObservationIgnored
   var woncount:  Int
-  @ObservationIgnored
+//  @ObservationIgnored
   var lostcount:  Int
-  @ObservationIgnored
+ // @ObservationIgnored
   var rightcount: Int
-  @ObservationIgnored
+ // @ObservationIgnored
   var wrongcount: Int
-  @ObservationIgnored
+ // @ObservationIgnored
   var replacedcount: Int
-  @ObservationIgnored
+ // @ObservationIgnored
   var gamenumber:  Int
-  @ObservationIgnored
+//  @ObservationIgnored
   var movenumber:  Int
   
   
@@ -487,7 +487,7 @@ class GameState : Codable {
   }
   
   func saveGameState( ) {
-    NSLog("SAVE GAMESTATE")
+    customNSLog("SAVE GAMESTATE")
     let filePath = Self.getGameStateFilePath()
     do {
       let data = try JSONEncoder().encode(self)
@@ -505,11 +505,11 @@ class GameState : Codable {
       switch compareVersionStrings(gb.swversion, AppVersionProvider.appVersion()) {
         
       case .orderedAscending:
-        print("sw version changed from \(gb.swversion) to \(AppVersionProvider.appVersion())")
+        customNSLog("sw version changed from \(gb.swversion) to \(AppVersionProvider.appVersion())")
       case .orderedSame:
-        print("sw version is the same")
+        customNSLog("sw version is the same")
       case .orderedDescending:
-        print("yikes! sw version went backwards")
+        customNSLog("yikes! sw version went backwards")
       }
       // Let's check right now to make sure the software version has not changed
       if haveMajorComponentsChanged(gb.swversion, AppVersionProvider.appVersion()) {
