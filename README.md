@@ -1,4 +1,5 @@
 #  QANDAO - revised test app for Q20K
+- version 0.7.31.4 added a leaderboard, still needs work
 - version 0.7.31.3 moved color control to front
 - version 0.7.30.2 ipad cleanup, simplified settings
 - version 0.7.30.1 massive safety

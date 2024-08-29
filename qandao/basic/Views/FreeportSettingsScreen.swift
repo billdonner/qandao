@@ -35,6 +35,7 @@ struct FreeportSettingsScreen: View {
   @AppStorage("border") private var border = 3.0
   @State var selectedLevel:Int = 1
   @State var showOnBoarding = false
+  @State var showLeaderboard = false
   @State var showReset = false
   @State var showDebug = false
   @State private var isSelectedArray = [Bool](repeating: false, count: 26)
@@ -66,6 +67,10 @@ struct FreeportSettingsScreen: View {
               Text("Replay OnBoarding")
             }.padding(.vertical)
             
+            Button(action:{ showLeaderboard.toggle() }) {
+              Text("Show Leaderboard")
+            }.padding(.vertical)
+            
             Button(action:{ showDebug.toggle() }) {
               Text("Show Debug")
             }.padding(.vertical)
@@ -82,6 +87,9 @@ struct FreeportSettingsScreen: View {
         }
         .fullScreenCover(isPresented: $showOnBoarding) {
           OnboardingScreen(isPresented: $showOnBoarding)
+        }
+        .fullScreenCover(isPresented: $showLeaderboard) {
+          LeaderboardScreen()
         }
         .fullScreenCover(isPresented: $showDebug) {
           AllocatorView(chmgr:chmgr,gs:gs)
