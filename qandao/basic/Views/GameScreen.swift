@@ -131,7 +131,7 @@ struct GameScreen: View {
 
     }.font(.body)
       .sheet(isPresented: $showSettings){
-        SettingsScreen(chmgr: chmgr, gs: gs)
+        SettingsScreen(chmgr: chmgr, gs: gs,lrdb:lrdb)
       }
   }
   var loadingVeew: some View {

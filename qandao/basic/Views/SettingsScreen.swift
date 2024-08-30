@@ -5,10 +5,13 @@ fileprivate struct SettingsView: View {
   @Bindable var chmgr:ChaMan
   @Bindable var gs:GameState
   
-  internal init(chmgr:ChaMan,gs:GameState)//,
+  let lrdb:LeaderboardService
+
+  internal init(chmgr:ChaMan,gs:GameState,lrdb:LeaderboardService)//,
   {
     self.gs = gs
     self.chmgr = chmgr
+    self.lrdb = lrdb
     self.ourTopics =    chmgr.playData.allTopics
    // let remainingTopics = removeElements(from:chmgr.playData.allTopics,elementsToRemove:gs.topicsinplay)
     l_topicsinplay = gs.topicsinplay//State(initialValue: chosenTopics)
@@ -79,7 +82,7 @@ fileprivate struct SettingsView: View {
       }
       }
       .sheet(isPresented:$showSettings){
-        FreeportSettingsScreen(gs: gs, chmgr: chmgr)
+        FreeportSettingsScreen(gs: gs, chmgr: chmgr, lrdb: lrdb)
       }
       .onAppear {
         if firstOnAppear {
@@ -124,20 +127,24 @@ struct SettingsScreen :
   View {
   @Bindable var chmgr: ChaMan
   @Bindable var gs: GameState
+  
+  let lrdb:LeaderboardService
+
  // let onExit: ([String])->()
   
   var body: some View {
     NavigationView  {
       SettingsView(
         chmgr: chmgr,
-        gs:gs//,
+        gs:gs,
+        lrdb:lrdb//,
        // onExit: onExit
       )
     }
   }
 }
 #Preview {
-  SettingsScreen(chmgr: ChaMan.mock,gs:GameState.mock)
+  SettingsScreen(chmgr: ChaMan.mock,gs:GameState.mock,lrdb:LeaderboardService())
 }
 /*
  Picker("Board Size", selection: $l_boardsize) {
