@@ -10,10 +10,10 @@ import SwiftUI
 let playDataURL  = Bundle.main.url(forResource: "playdata.json", withExtension: nil)
 let starting_size = 3 // Example size, can be 3 to 8
 let spareHeightFactor = isIpad ? 1.15:1.37 // controls layout of grid if too small
-let cornerradius = 0.0 // something like 8 makes nice rounded cord=ners
-var isDebugModeEnabled: Bool = false
-var debugBorderColor: Color = .red
-var shouldAssert = true //// External flag to control whether assertions should be enforced
+let cornerradius = 0.0 // something like 8 makes nice rounded corners in main grid
+let isDebugModeEnabled: Bool = false
+let debugBorderColor: Color = .red
+let shouldAssert = true //// External flag to control whether assertions should be enforced
 
 extension Color {
   static let offBlack = Color(red: 0.1, green: 0.1, blue: 0.1)
@@ -35,6 +35,7 @@ class OrientationLockedViewController: UIViewController {
 struct ChallengeGameApp: App {
   @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
   @AppStorage("OnboardingDone") private var onboardingdone = false
+  @State var leaderboardService = LeaderboardService()
   @State var showOnboarding = false
   @State var chmgr = ChaMan(playData: PlayData.mock )
   @State var gs = GameState(size: starting_size,
@@ -44,7 +45,7 @@ struct ChallengeGameApp: App {
   var body: some Scene {
     WindowGroup {
       
-      ContentView(gs: gs,chmgr: chmgr)
+      ContentView(gs: gs,chmgr: chmgr,lrdb:leaderboardService)
         .statusBar(hidden: true) // Hide the status bar
         .fullScreenCover(isPresented: $showOnboarding) {
           OnboardingScreen(isPresented: $showOnboarding)

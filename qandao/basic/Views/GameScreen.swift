@@ -10,6 +10,7 @@ struct GameScreen: View {
 
   @Bindable var gs: GameState
   @Bindable var chmgr: ChaMan
+  @Bindable var lrdb: LeaderboardService
   @Binding  var topics: [String]
   @Binding  var size:Int
   @Binding var isTouching: Bool
@@ -151,6 +152,7 @@ struct GameScreen: View {
       GameScreen(
         gs:GameState.mock ,
         chmgr: ChaMan(playData: PlayData.mock),
+        lrdb: LeaderboardService(),
         topics:.constant(GameState.mock.topicsinplay),
         size:.constant(3), isTouching: .constant(true) ,
         onSingleTap: { row,col in
@@ -165,6 +167,7 @@ struct GameScreen: View {
       GameScreen(
         gs:GameState.mock ,
         chmgr: ChaMan(playData: PlayData.mock),
+        lrdb: LeaderboardService(),
         topics:.constant(GameState.mock.topicsinplay),
         size:.constant(3),isTouching: .constant(true) ,
         onSingleTap: { row,col in

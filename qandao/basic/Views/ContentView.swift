@@ -4,6 +4,7 @@ struct ContentView: View {
   @State var restartCount = 0
   @Bindable var gs: GameState
   @Bindable var chmgr: ChaMan
+  @Bindable var lrdb: LeaderboardService
   @State var current_size: Int = starting_size
   @State var current_topics: [String] = []
   @State var chal: IdentifiablePoint? = nil
@@ -15,7 +16,7 @@ struct ContentView: View {
   var body: some View {
      GeometryReader { geometry in
        VStack(spacing:isIpad ? 20: 10) {
-         GameScreen(gs: gs, chmgr: chmgr, topics: $current_topics, size: $current_size, isTouching: $isTouching) { row, col in
+         GameScreen(gs: gs, chmgr: chmgr, lrdb:lrdb, topics: $current_topics, size: $current_size, isTouching: $isTouching) { row, col in
             isPresentingDetailView = true
             chal = IdentifiablePoint(row: row, col: col, status: chmgr.stati[row * gs.boardsize + col])
             return false
@@ -58,10 +59,10 @@ struct ContentView: View {
 }
 
 #Preview ("light"){
-  ContentView(gs: GameState.mock, chmgr: ChaMan.mock)
+  ContentView(gs: GameState.mock, chmgr: ChaMan.mock, lrdb:LeaderboardService())
 }
 #Preview ("dark"){
-  ContentView(gs: GameState.mock, chmgr: ChaMan.mock)
+  ContentView(gs: GameState.mock, chmgr: ChaMan.mock, lrdb:LeaderboardService())
     .preferredColorScheme(/*@START_MENU_TOKEN@*/.dark/*@END_MENU_TOKEN@*/)
 }
 

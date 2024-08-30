@@ -10,10 +10,8 @@ fileprivate struct SettingsView: View {
     self.gs = gs
     self.chmgr = chmgr
     self.ourTopics =    chmgr.playData.allTopics
-    let chosenTopics = gs.topicsinplay
-    let remainingTopics = removeElements(from:chmgr.playData.allTopics,elementsToRemove:chosenTopics)
-    _l_topicsinplay = State(initialValue: chosenTopics)
-    _availableTopics = State(initialValue: remainingTopics)
+   // let remainingTopics = removeElements(from:chmgr.playData.allTopics,elementsToRemove:gs.topicsinplay)
+    l_topicsinplay = gs.topicsinplay//State(initialValue: chosenTopics)
     l_facedown = gs.facedown
     l_boardsize = gs.boardsize
     l_doubleDiag = gs.doublediag
@@ -31,7 +29,7 @@ fileprivate struct SettingsView: View {
   @State private var  l_topicsinplay: [String]
   
   // @State var selectedTopics: [String]
-  @State var availableTopics: [String]
+ // @State var availableTopics: [String]
   @State var tappedIndices: Set<Int> = []
   @State var replacedTopics: [Int: String] = [:]
   @State var selectedAdditionalTopics: Set<String> = []
@@ -57,22 +55,12 @@ fileprivate struct SettingsView: View {
               }
             }
         }
-        
         Section(header: Text("Topics")) {
-          NavigationLink(destination: TopicsChooserScreen(
-            allTopics:chmgr.everyTopicName,
-            schemes: AppColors.allSchemes,
-            boardsize: gs.boardsize,
-            topicsinplay: gs.topicsinplay,
-            chmgr: chmgr,
-            currentScheme: $l_currentScheme,
-            selectedTopics: $l_topicsinplay))
-          {
-            Text("Choose Topics")
-          }
+            TopicSelectorView(allTopics: chmgr.everyTopicName,
+                              selectedTopics:  $l_topicsinplay,
+                              selectedSchemeIndex:$l_currentScheme,
+                              chmgr: chmgr, gs:gs, boardSize:l_boardsize)
         }
-        
-        
         Section(header:Text("About QANDA")) {
           VStack{
             HStack { Spacer()
@@ -83,8 +71,6 @@ fileprivate struct SettingsView: View {
               )
               Spacer()
             }
-            
-            
             Button(action: { showSettings.toggle() }) {
               Text("Freeport Settings")
             }
@@ -105,11 +91,10 @@ fileprivate struct SettingsView: View {
       .navigationBarItems(
         leading: Button("Cancel") {
           // dont touch anything
-          // print("//GameSettingsScreen Cancel Pressed topics were: \(l_topicsinplay)")
           self.presentationMode.wrappedValue.dismiss()
         },
         trailing: Button("Done") {
-          onDonePressed()
+          onDonePressed() // update global state
           self.presentationMode.wrappedValue.dismiss()
         }
       )
@@ -197,3 +182,15 @@ struct SettingsScreen :
    .frame(maxWidth: .infinity)
  
  */
+//          NavigationLink(destination: TopicsChooserScreen(
+//            allTopics:chmgr.everyTopicName,
+//            schemes: AppColors.allSchemes,
+//            boardsize: gs.boardsize,
+//            topicsinplay: gs.topicsinplay,
+//            chmgr: chmgr,
+//            currentScheme: $l_currentScheme,
+//            selectedTopics: $l_topicsinplay))
+//          {
+//            Text("Choose Topics")
+//          }
+          

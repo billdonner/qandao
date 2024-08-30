@@ -7,13 +7,9 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct SizePickerView: View {
    @Binding   var chosenSize: Int
-    
     var body: some View {
-  
         // Horizontal Picker
         Picker("Select a number", selection: $chosenSize) {
           ForEach(3...8, id: \.self) { number in
@@ -21,16 +17,16 @@ struct SizePickerView: View {
           }
         }
         .pickerStyle(SegmentedPickerStyle())
-        .padding()
+        //.padding()
         
         // Text Paragraph based on the selected number
-        Text(descriptionForNumber(chosenSize).0)
-          .padding()
-          .frame(maxWidth: .infinity, alignment: .leading)
-        
         Text(descriptionForNumber(chosenSize).1)
           .padding()
           .frame(maxWidth: .infinity, alignment: .leading)
+//        
+//        Text(descriptionForNumber(chosenSize).0)
+//          .padding()
+//          .frame(maxWidth: .infinity, alignment: .leading)
         if chosenSize >=  6 {
           Text("Corner rules require starting in a corner and moving only to adjacent cells.")
             .font(.footnote)

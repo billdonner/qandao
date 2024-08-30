@@ -14,7 +14,7 @@ struct TopicIndexView: View {
 
     var body: some View {
         GeometryReader { geometry in
-            let isIpad = geometry.size.width > 600
+            //let isIpad = geometry.size.width > 600
             
           ScrollView(.horizontal, showsIndicators: false)  {
              // Text("      ") // push this down a bit

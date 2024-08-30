@@ -25,8 +25,9 @@ struct DismissButtonView: View {
 }
 
 struct FreeportSettingsScreen: View {
-  var gs: GameState
-  var chmgr: ChaMan
+  let gs: GameState
+  let chmgr: ChaMan
+  let lrdb: LeaderboardService
   
   @AppStorage("elementWidth") var elementWidth = 100.0
   @AppStorage("shuffleUp") private var shuffleUp = true
@@ -89,7 +90,7 @@ struct FreeportSettingsScreen: View {
           OnboardingScreen(isPresented: $showOnBoarding)
         }
         .fullScreenCover(isPresented: $showLeaderboard) {
-          LeaderboardScreen()
+          LeaderboardScreen(leaderboardService:lrdb)
         }
         .fullScreenCover(isPresented: $showDebug) {
           AllocatorView(chmgr:chmgr,gs:gs)
@@ -105,7 +106,8 @@ struct FreeportSettingsScreen: View {
 #Preview ("Settings"){
   FreeportSettingsScreen(gs: 
                           GameState.mock,
-                         chmgr: ChaMan.mock)
+                         chmgr: ChaMan.mock,
+                         lrdb:LeaderboardService())
 }
 
 
