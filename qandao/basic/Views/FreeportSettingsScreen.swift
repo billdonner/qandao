@@ -34,12 +34,14 @@ struct FreeportSettingsScreen: View {
   @AppStorage("fontsize") private var fontsize = 24.0
   @AppStorage("padding") private var padding = 2.0
   @AppStorage("border") private var border = 3.0
+  
   @State var selectedLevel:Int = 1
   @State var showOnBoarding = false
-  @State var showLeaderboard = false
+  @State var clearLeaderboard = false
   @State var showReset = false
   @State var showDebug = false
   @State private var isSelectedArray = [Bool](repeating: false, count: 26)
+  
   var body: some View {
     ZStack {
       DismissButtonView()
@@ -68,8 +70,8 @@ struct FreeportSettingsScreen: View {
               Text("Replay OnBoarding")
             }.padding(.vertical)
             
-            Button(action:{ showLeaderboard.toggle() }) {
-              Text("Show Leaderboard")
+            Button(action:{ clearLeaderboard.toggle() }) {
+              Text("Clear Leaderboard")
             }.padding(.vertical)
             
             Button(action:{ showDebug.toggle() }) {
@@ -89,9 +91,7 @@ struct FreeportSettingsScreen: View {
         .fullScreenCover(isPresented: $showOnBoarding) {
           OnboardingScreen(isPresented: $showOnBoarding)
         }
-        .fullScreenCover(isPresented: $showLeaderboard) {
-          LeaderboardScreen(leaderboardService:lrdb)
-        }
+     
         .fullScreenCover(isPresented: $showDebug) {
           AllocatorView(chmgr:chmgr,gs:gs)
         }

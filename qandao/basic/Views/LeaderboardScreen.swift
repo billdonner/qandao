@@ -9,14 +9,14 @@ struct LeaderboardScreen: View {
         NavigationView {
             VStack {
                 HStack {
-                    Button(action: {
-                        leaderboardService.clearScores()
-                    }) {
-                        Text("Clear Leaderboard")
-                            .font(.headline)
-                            .foregroundColor(.red)
-                    }
-                    .padding()
+//                    Button(action: {
+//                        leaderboardService.clearScores()
+//                    }) {
+//                        Text("Clear Leaderboard")
+//                            .font(.headline)
+//                            .foregroundColor(.red)
+//                    }
+//                    .padding()
 
                     Spacer()
                 }
