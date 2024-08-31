@@ -1,4 +1,6 @@
 #  QANDAO - revised test app for Q20K
+
+- version 0.7.32.1 reenable cloudkit for sentiments
 - version 0.7.31.4 added a leaderboard, integrated topics into settings
 - version 0.7.31.3 moved color control to front
 - version 0.7.30.2 ipad cleanup, simplified settings

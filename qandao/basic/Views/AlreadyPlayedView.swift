@@ -82,5 +82,5 @@ struct AlreadyPlayedView : View {
   }
 }
 //#Preview {
-//  AlreadyPlayedView(row: 0, col: 0, gs: GameState.mock() , chmgr: ChaMan(playData: PlayData.mock))
+//  AlreadyPlayedView(row: 0, col: 0, gs: GameState.mock , chmgr: ChaMan(playData: PlayData.mock))
 //}

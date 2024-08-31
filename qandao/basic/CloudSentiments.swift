@@ -66,7 +66,7 @@ class CloudKitManager  {
             record["userIdentifier"] = recordID.recordName as CKRecordValue
             record["sentiment"] = sentiment as CKRecordValue
             record["predefinedFeeling"] = predefinedFeeling as CKRecordValue
-          record["challengeIdentifier"] = challengeIdentifier as CKRecordValue
+            record["challengeIdentifier"] = challengeIdentifier as CKRecordValue
             
             self.publicDatabase.save(record) { savedRecord, error in
                 if let error = error {
@@ -112,7 +112,7 @@ let predefinedFeelings = ["Incorrect", "Crazy", "Illogical", "Confusing", "Insig
 
 struct PositiveSentimentView: View {
   let id: String
-   // @State  private var cloudKitManager = CloudKitManager.shared
+    @State  private var cloudKitManager = CloudKitManager.shared
     @State private var message: String = ""
     @State private var selectedFeeling: String = "Insightful"
     @State private var showAlert = false
@@ -133,17 +133,17 @@ struct PositiveSentimentView: View {
             .padding()
             
             Button(action: {
-               // let timestamp = Date()
-//              cloudKitManager.saveLogRecord(message: message, sentiment: "Positive", predefinedFeeling: selectedFeeling, timestamp: timestamp, challengeIdentifier: id) { result in
-//                    switch result {
-//                    case .success(let record):
-//                        print("Successfully saved positive sentiment record: \(record)")
-//                      dismiss()
-//                    case .failure(let error):
-//                        print("Error saving positive sentiment record: \(error)")
-//                        showAlert = true
-//                    }
-//                }
+                let timestamp = Date()
+              cloudKitManager.saveLogRecord(message: message, sentiment: "Positive", predefinedFeeling: selectedFeeling, timestamp: timestamp, challengeIdentifier: id) { result in
+                    switch result {
+                    case .success(let record):
+                        print("Successfully saved positive sentiment record: \(record)")
+                      dismiss()
+                    case .failure(let error):
+                        print("Error saving positive sentiment record: \(error)")
+                        showAlert = true
+                    }
+                }
             }) {
                 Text("Submit Positive Sentiment")
                     .padding()
@@ -162,7 +162,8 @@ struct PositiveSentimentView: View {
 
 struct NegativeSentimentView: View {
   let id: String
-   // @State  private var cloudKitManager = CloudKitManager.shared
+   
+    @State  private var cloudKitManager = CloudKitManager.shared
     @State private var message: String = ""
     @State private var selectedFeeling: String = "Incorrect"
     @State private var showAlert = false
@@ -183,17 +184,17 @@ struct NegativeSentimentView: View {
             .padding()
             
             Button(action: {
-               // let timestamp = Date()
-//              cloudKitManager.saveLogRecord(message: message, sentiment: "Negative", predefinedFeeling: selectedFeeling, timestamp: timestamp, challengeIdentifier: id) { result in
-//                    switch result {
-//                    case .success(let record):
-//                        print("Successfully saved negative sentiment record: \(record)")
-//                      dismiss()
-//                    case .failure(let error):
-//                        print("Error saving negative sentiment record: \(error)")
-//                        showAlert = true
-//                    }
-//                }
+                let timestamp = Date()
+              cloudKitManager.saveLogRecord(message: message, sentiment: "Negative", predefinedFeeling: selectedFeeling, timestamp: timestamp, challengeIdentifier: id) { result in
+                    switch result {
+                    case .success(let record):
+                        print("Successfully saved negative sentiment record: \(record)")
+                      dismiss()
+                    case .failure(let error):
+                        print("Error saving negative sentiment record: \(error)")
+                        showAlert = true
+                    }
+                }
             }) {
                 Text("Submit Negative Sentiment")
                     .padding()
