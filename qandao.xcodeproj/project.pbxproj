@@ -11,6 +11,7 @@
 		8840E1022C810256005AD8BB /* LeaderboardScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8840E1012C810256005AD8BB /* LeaderboardScreen.swift */; };
 		8840E1042C8214FD005AD8BB /* LeaderboardService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8840E1032C8214FD005AD8BB /* LeaderboardService.swift */; };
 		884208D02C8241D200F25927 /* DebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884208CF2C8241D200F25927 /* DebugView.swift */; };
+		884208D22C83DA3400F25927 /* SentimentViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884208D12C83DA3400F25927 /* SentimentViews.swift */; };
 		88460E642C6F796100D5FA4A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88460E392C6F796100D5FA4A /* Preview Assets.xcassets */; };
 		88460E652C6F796100D5FA4A /* AllocatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88460E3B2C6F796100D5FA4A /* AllocatorView.swift */; };
 		88460E662C6F796100D5FA4A /* AlreadyPlayedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88460E3C2C6F796100D5FA4A /* AlreadyPlayedView.swift */; };
@@ -60,6 +61,7 @@
 		8840E1012C810256005AD8BB /* LeaderboardScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeaderboardScreen.swift; sourceTree = "<group>"; };
 		8840E1032C8214FD005AD8BB /* LeaderboardService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardService.swift; sourceTree = "<group>"; };
 		884208CF2C8241D200F25927 /* DebugView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugView.swift; sourceTree = "<group>"; };
+		884208D12C83DA3400F25927 /* SentimentViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentimentViews.swift; sourceTree = "<group>"; };
 		88460E392C6F796100D5FA4A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		88460E3B2C6F796100D5FA4A /* AllocatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllocatorView.swift; sourceTree = "<group>"; };
 		88460E3C2C6F796100D5FA4A /* AlreadyPlayedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlreadyPlayedView.swift; sourceTree = "<group>"; };
@@ -156,6 +158,7 @@
 				88460E482C6F796100D5FA4A /* QandAScreenExt.swift */,
 				88460E492C6F796100D5FA4A /* QandATopBarView.swift */,
 				88460E4A2C6F796100D5FA4A /* ScoreBarView.swift */,
+				884208D12C83DA3400F25927 /* SentimentViews.swift */,
 				88460E4B2C6F796100D5FA4A /* SettingsScreen.swift */,
 				88460E4C2C6F796100D5FA4A /* SingleCellView.swift */,
 				882D640C2C7A1D38001F21B0 /* SizePickerView.swift */,
@@ -335,6 +338,7 @@
 				88460E6C2C6F796100D5FA4A /* GameScreenExt.swift in Sources */,
 				88460E762C6F796100D5FA4A /* SingleCellView.swift in Sources */,
 				88460E772C6F796100D5FA4A /* TopicDetailsView.swift in Sources */,
+				884208D22C83DA3400F25927 /* SentimentViews.swift in Sources */,
 				88460E892C6F796100D5FA4A /* TopicInfo.swift in Sources */,
 				88460E722C6F796100D5FA4A /* QandAScreenExt.swift in Sources */,
 				88460E692C6F796100D5FA4A /* FreeportSettingsScreen.swift in Sources */,
@@ -500,7 +504,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = qandao/qandao.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 32.1;
+				CURRENT_PROJECT_VERSION = 32.2;
 				DEVELOPMENT_ASSET_PATHS = "\"qandao/Preview Content\"";
 				DEVELOPMENT_TEAM = NEAY582ME4;
 				ENABLE_PREVIEWS = YES;
@@ -533,7 +537,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = qandao/qandao.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 32.1;
+				CURRENT_PROJECT_VERSION = 32.2;
 				DEVELOPMENT_ASSET_PATHS = "\"qandao/Preview Content\"";
 				DEVELOPMENT_TEAM = NEAY582ME4;
 				ENABLE_PREVIEWS = YES;

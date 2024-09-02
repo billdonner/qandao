@@ -69,9 +69,15 @@ struct QandAScreen: View {
         }
         .sheet(item:$showThumbsDown) { ch in
           NegativeSentimentView(id: ch.id)
+            .dismissable {
+              print("exit from negative sentiment")
+            }
         }
         .sheet(item:$showThumbsUp) { ch in
           PositiveSentimentView(id: ch.id)
+            .dismissable {
+              print("exit from positive sentiment")
+            }
         }
         .gimmeeAlert(isPresented: $gimmeeAlert,
                      title: "I will replace this Question \nwith another from the same topic, \nif possible",

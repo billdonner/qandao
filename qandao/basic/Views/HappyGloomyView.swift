@@ -18,33 +18,34 @@ struct HappySmileyView : View {
 }
 
 
-
-struct GloomyView: View {
-  let color:Color
-  let fudge = 3.0
-  @Environment(\.colorScheme) var colorScheme //system light/dark
+struct BorderView: View {
+    let color: Color
+  let fudge = 4.0
+    let lineWidth: CGFloat = 5.0
+    @Environment(\.colorScheme) var colorScheme // system light/dark
+    
     var body: some View {
         GeometryReader { geometry in
             ZStack {
                 // Black background
                 colorScheme == .dark ? Color.offBlack : Color.offWhite
-                // White diagonal line
-                Path { path in
-                    let size = geometry.size
-                    path.move(to: CGPoint(x: fudge, y: fudge))
-                    path.addLine(to: CGPoint(x: size.width-fudge, y: size.height-fudge))
-                  path.move(to: CGPoint(x:  size.width-fudge, y: fudge))
-                  path.addLine(to: CGPoint(x:fudge, y: size.height-fudge))
-                }
-                .stroke(color, lineWidth: 5)
+                
+                // Diagonal lines forming an inside border
+              Path { path in
+                  let size = geometry.size
+                  let adjustedFudge = fudge + lineWidth / 2
+                  
+                  path.move(to: CGPoint(x: adjustedFudge, y: adjustedFudge)) // Top-left corner
+                  path.addLine(to: CGPoint(x: size.width - adjustedFudge, y: adjustedFudge)) // Top-right corner
+                  path.addLine(to: CGPoint(x: size.width - adjustedFudge, y: size.height - adjustedFudge)) // Bottom-right corner
+                  path.addLine(to: CGPoint(x: adjustedFudge, y: size.height - adjustedFudge)) // Bottom-left corner
+                  path.closeSubpath() // Closes the path to form the square
+              }
+                .stroke(color, lineWidth: lineWidth)
             }
         }
     }
 }
-
-
-
-
 
 #Preview ("Happy") {
   HappySmileyView(color: .blue)
@@ -53,6 +54,6 @@ struct GloomyView: View {
 
  
 #Preview ("Gloomy"){
-  GloomyView(color:.red)
+  BorderView(color:.red)
     .frame(width: 100, height: 100) // Set the size of the square
 }
