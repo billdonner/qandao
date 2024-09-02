@@ -20,7 +20,7 @@ struct HappySmileyView : View {
 
 struct BorderView: View {
     let color: Color
-  let fudge = 4.0
+    let fudge = 4.0
     let lineWidth: CGFloat = 5.0
     @Environment(\.colorScheme) var colorScheme // system light/dark
     
@@ -28,8 +28,8 @@ struct BorderView: View {
         GeometryReader { geometry in
             ZStack {
                 // Black background
-                colorScheme == .dark ? Color.offBlack : Color.offWhite
-                
+              colorScheme == .dark ? Color.offBlack : Color.offWhite
+              //Color.clear
                 // Diagonal lines forming an inside border
               Path { path in
                   let size = geometry.size

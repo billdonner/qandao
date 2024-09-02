@@ -42,7 +42,7 @@ struct SingleCellView: View {
   @State var alreadyPlayed:Sdi?
   
   func playingNowOpacity() -> Double {
-    gs.gamestate == .playingNow ? 1.0:0.7
+    gs.gamestate == .playingNow ? 1.0:1.0//0.7
   }
   
   
