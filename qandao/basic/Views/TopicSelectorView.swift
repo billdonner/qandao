@@ -102,7 +102,7 @@ import SwiftUI
                 }
             }
             .navigationTitle("Select Topics")
-            .searchable(text: $searchText, prompt: "Search Topics")
+           // .searchable(text: $searchText, prompt: "Search Topics")
         }
         .onAppear {
            // loadPersistentData()

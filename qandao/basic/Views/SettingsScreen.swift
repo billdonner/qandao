@@ -39,6 +39,9 @@ fileprivate struct SettingsView: View {
   @State var firstOnAppear = true
   @State var showLeaderboard = false
   @State private var showSettings = false
+  
+  
+  @State var colorSchemeName : ColorSchemeName = 2//.summer // hack //summer
   @Environment(\.presentationMode) var presentationMode
 
   
@@ -63,6 +66,12 @@ fileprivate struct SettingsView: View {
             }
         }
         Section(header: Text("Topics")) {
+          
+           TopicIndexView(gs: gs, chmgr: chmgr)
+            .dismissable {
+              print("dismissed TopicsIndexView")
+            }
+          
             TopicSelectorView(allTopics: chmgr.everyTopicName,
                               selectedTopics:  $l_topicsinplay,
                               selectedSchemeIndex:$l_currentScheme,
@@ -80,6 +89,21 @@ fileprivate struct SettingsView: View {
             }
             Button(action: { showSettings.toggle() }) {
               Text("Freeport Settings")
+            }
+            Picker("Color Palette", selection: $colorSchemeName) {
+              ForEach(AppColors.allSchemes.indices.sorted(),id:\.self) { idx in
+                Text("\(AppColors.pretty(for:AppColors.allSchemes[idx].name))")
+                  .tag(idx)
+              }
+            }
+            .pickerStyle(SegmentedPickerStyle())
+            .background(colorPaletteBackground(for:gs.currentscheme).clipShape(RoundedRectangle(cornerRadius: 10)))
+            .padding(.horizontal)
+            
+            .onChange(of: colorSchemeName) {
+              withAnimation {
+                gs.currentscheme = colorSchemeName
+              }
             }
           }
         }

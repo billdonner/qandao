@@ -24,6 +24,34 @@ struct DismissButtonView: View {
   }
 }
 
+struct AddScoreView: View {
+    let leaderboardService: LeaderboardService
+    @State private var playerName = ""
+    @State private var score = ""
+
+    var body: some View {
+     NavigationStack {
+            TextField("Player Name", text: $playerName)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding()
+
+            TextField("Score", text: $score)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .keyboardType(.numberPad)
+                .padding()
+
+            Button("Add Score") {
+                if let scoreInt = Int(score) {
+                    leaderboardService.addScore(playerName: playerName, score: scoreInt)
+                }
+                playerName = ""
+                score = ""
+            }
+            .padding()
+        }
+        .navigationBarTitle("Add New Score", displayMode: .inline)
+    }
+}
 struct FreeportSettingsScreen: View {
   let gs: GameState
   let chmgr: ChaMan
@@ -38,6 +66,7 @@ struct FreeportSettingsScreen: View {
   @State var selectedLevel:Int = 1
   @State var showOnBoarding = false
   @State var clearLeaderboard = false
+  @State var addToLeaderboard = false
   @State var showReset = false
   @State var showDebug = false
   @State private var isSelectedArray = [Bool](repeating: false, count: 26)
@@ -74,6 +103,10 @@ struct FreeportSettingsScreen: View {
               Text("Clear Leaderboard")
             }.padding(.vertical)
             
+            Button(action:{ addToLeaderboard.toggle() }) {
+              Text("Add To Leaderboard")
+            }.padding(.vertical)
+            
             Button(action:{ showDebug.toggle() }) {
               Text("Show Debug")
             }.padding(.vertical)
@@ -87,6 +120,10 @@ struct FreeportSettingsScreen: View {
             }.padding(.vertical)
 
           }
+        }
+        .sheet(isPresented: $addToLeaderboard) {
+         AddScoreView(leaderboardService: lrdb)
+            .preferredColorScheme(.light)
         }
         .fullScreenCover(isPresented: $showOnBoarding) {
           OnboardingScreen(isPresented: $showOnBoarding)

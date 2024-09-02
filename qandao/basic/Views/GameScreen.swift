@@ -43,6 +43,8 @@ struct GameScreen: View {
           
             ScoreBarView(gs: gs)
               .debugBorder()
+            
+     
           
           .onChange(of:gs.cellstate) {
             onChangeOfCellState()

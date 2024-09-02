@@ -48,9 +48,7 @@ struct ContentView: View {
                         isPresentingDetailView: $isPresentingDetailView, chmgr: chmgr, gs: gs)
           }
          
-         Divider()
-          TopicIndexView(gs: gs, chmgr: chmgr)
-         Divider()
+         Spacer()
          ContentViewBottomButtons(gs:gs, chmgr: chmgr, isTouching: $isTouching)
           
         }
