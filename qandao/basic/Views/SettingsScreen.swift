@@ -37,7 +37,7 @@ fileprivate struct SettingsView: View {
   @State var replacedTopics: [Int: String] = [:]
   @State var selectedAdditionalTopics: Set<String> = []
   @State var firstOnAppear = true
-  @State var showLeaderboard = false
+ // @State var showLeaderboard = false
   @State private var showSettings = false
   
   
@@ -49,9 +49,9 @@ fileprivate struct SettingsView: View {
     VStack {
       
       Form {
-        Button(action: {showLeaderboard.toggle()}){
-          Text("Visit the Leaderboard")
-        }
+//        Button(action: {showLeaderboard.toggle()}){
+//          Text("Visit the Leaderboard")
+//        }
         Section(header: Text("Complexity")) {
           SizePickerView(chosenSize: $l_boardsize)
             .onChange(of:l_boardsize) {
@@ -67,10 +67,7 @@ fileprivate struct SettingsView: View {
         }
         Section(header: Text("Topics")) {
           
-           TopicIndexView(gs: gs, chmgr: chmgr)
-            .dismissable {
-              print("dismissed TopicsIndexView")
-            }
+       
           
             TopicSelectorView(allTopics: chmgr.everyTopicName,
                               selectedTopics:  $l_topicsinplay,
@@ -112,9 +109,9 @@ fileprivate struct SettingsView: View {
       .sheet(isPresented:$showSettings){
         FreeportSettingsScreen(gs: gs, chmgr: chmgr, lrdb: lrdb)
       }
-      .sheet(isPresented: $showLeaderboard) {
-        LeaderboardScreen(leaderboardService:lrdb)
-      }
+//      .sheet(isPresented: $showLeaderboard) {
+//        LeaderboardScreen(leaderboardService:lrdb)
+//      }
       .onAppear {
         if firstOnAppear {
           firstOnAppear = false

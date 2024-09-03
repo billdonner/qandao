@@ -23,6 +23,8 @@ struct GameScreen: View {
   @State   var showCantStartAlert = false
   
   @State   var showSettings = false
+
+  @State   var showLeaderboard = false
   
   var bodyMsg: String {
     let t =  """
@@ -74,16 +76,6 @@ struct GameScreen: View {
   
   var topButtonsVeew : some View{
     HStack(alignment:.center ){
-      Button(action: {  withAnimation {showSettings = true } } ) {
-        Image(systemName:"gearshape")
-          .font(.title)
-        .frame(width: isIpad ? 70:50, height: isIpad ? 70:50)
-
-      }.disabled(gs.gamestate == .playingNow)
-        .opacity(gs.gamestate == .playingNow ? 0.5:1.0)
-      Spacer()
-      Text(" q a n d a").font(.largeTitle).bold()
-      Spacer()
       if gs.gamestate !=  StateOfPlay.playingNow {
         //Start Game
         Button(action: {
@@ -99,17 +91,10 @@ struct GameScreen: View {
           Text("Play")
             .frame(width: isIpad ? 70:50, height: isIpad ? 70 : 50)
             .padding(5)
-            //.background(.blue.opacity(0.8))
-           // .foregroundColor(.white)
+          //.background(.blue.opacity(0.8))
+          // .foregroundColor(.white)
           //  .cornerRadius(8)
             .font(isIpad ? .title:.body)
-        }
-        .alert("Can't start new Game - consider changing the topics or hit Full Reset",isPresented: $showCantStartAlert){
-          Button("OK", role: .cancel) {
-            withAnimation {
-              onCantStartNewGameAction()
-            }
-          }
         }
       } else {
         // END GAME
@@ -129,9 +114,37 @@ struct GameScreen: View {
           //  .cornerRadius(8)
             .font(isIpad ? .title:.body)
         }
-      }
+      Spacer()
+      Text(" q a n d a").font(.largeTitle).bold()
+          .onLongPressGesture{
+            showLeaderboard = true
+          }
+      Spacer()
+        
+      Button(action: {  withAnimation {showSettings = true } } ) {
+        Image(systemName:"gearshape")
+          .font(.title)
+        .frame(width: isIpad ? 70:50, height: isIpad ? 70:50)
 
-    }.font(.body)
+      }.disabled(gs.gamestate == .playingNow)
+        .opacity(gs.gamestate == .playingNow ? 0.5:1.0)
+
+        .alert("Can't start new Game - consider changing the topics or hit Full Reset",isPresented: $showCantStartAlert){
+          Button("OK", role: .cancel) {
+            withAnimation {
+              onCantStartNewGameAction()
+            }
+          }
+        }
+      } 
+    }
+    
+    
+    .font(.body)
+    .sheet(isPresented: $showLeaderboard)
+    {
+    LeaderboardScreen(leaderboardService: lrdb)
+    }
       .sheet(isPresented: $showSettings){
         SettingsScreen(chmgr: chmgr, gs: gs,lrdb:lrdb)
       }

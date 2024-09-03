@@ -32,6 +32,10 @@ import SwiftUI
       let maxTopics =  GameState.maxTopicsForBoardSize(boardSize)
      // let minTopics  =  GameState.minTopicsForBoardSize(boardSize)
         VStack {
+          TopicIndexView(gs: gs, chmgr: chmgr)
+           .dismissable {
+             print("dismissed TopicsIndexView")
+           }
           //Text("board size:\(boardSize)x\(boardSize) requires \(minTopics)-\(maxTopics) topics.")
             Text("You can select \(maxTopics - selectedTopics.count) more topics.")
                 .font(.subheadline)
@@ -106,10 +110,10 @@ import SwiftUI
         }
         .onAppear {
            // loadPersistentData()
-          print("//TopicSelectorView onAppear Topics: \(selectedTopics)")
+         // print("//TopicSelectorView onAppear Topics: \(selectedTopics)")
         }
         .onDisappear{
-          print("//TopicSelectorView onDisappear Topics: \(selectedTopics)")
+         // print("//TopicSelectorView onDisappear Topics: \(selectedTopics)")
         }
     }
 
