@@ -77,7 +77,8 @@ import SwiftUI
            }
            
            Section(header: Label("Current Topics Chosen By You",systemImage: "info.circle")) {
-             Text("for a boardsize of \(boardSize)x\(boardSize) you can select \(maxTopics - selectedTopics.count) more topics.").font(.footnote).padding()
+             //For a boardsize of \(boardSize)x\(boardSize)
+             Text("You can select \(maxTopics - selectedTopics.count) more topics.").font(.footnote).padding()
              ForEach(selectedTopics.dropFirst(GameState.preselectedTopicsForBoardSize(boardSize)), id: \.self) { topic in
                Button(action: {
                  if selectedTopics.contains(topic) {
@@ -88,8 +89,8 @@ import SwiftUI
                    Text(topic).font(.body)
                   // Text("\(chmgr.freeChallengesCount(for: topic))").font(.caption2)
                    Spacer()
-                 //  Image(systemName: "checkmark")
-                  //   .foregroundColor(.green)
+                   Text ("remove?")     .font(.footnote)
+                     .foregroundColor(.orange)
                  }
                }
              }
@@ -106,6 +107,8 @@ import SwiftUI
                    Text(topic).font(.body)
                    //Text("\(chmgr.freeChallengesCount(for: topic))").font(.caption2)
                    Spacer()
+                   Text ("add?")     .font(.footnote)
+                     .foregroundColor(.orange)
                  }
                }
              }

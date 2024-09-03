@@ -60,7 +60,13 @@ fileprivate struct SettingsView: View {
   var body: some View {
   
       Form {
-
+        Section(header: Text("Topics")) {
+          
+          Button(action:{showTopicSelector.toggle()}){
+            Text("Edit Topics")
+          }
+          
+        }
         Section(header: Text("Board")) {
           VStack(alignment: .center){
             SizePickerView(chosenSize: $l_boardsize)
@@ -75,6 +81,10 @@ fileprivate struct SettingsView: View {
                 }
               }
             
+    
+            PreviewGridView(gs: gs, chmgr: chmgr, boardsize:$l_boardsize,scheme:$l_currentScheme)
+              .frame(width: 250,height: 250)
+            
             colorPicker
               .onChange(of: colorSchemeName) {
                 withAnimation {
@@ -83,18 +93,10 @@ fileprivate struct SettingsView: View {
                 }
               }
             
-            PreviewGridView(gs: gs, chmgr: chmgr, boardsize:$l_boardsize,scheme:$l_currentScheme)
-              .frame(width: 250,height: 250)
           }
           
         }
-        Section(header: Text("Topics")) {
-          
-          Button(action:{showTopicSelector.toggle()}){
-            Text("Edit Topics")
-          }
-          
-        }
+  
         Section(header:Text("About QANDA")) {
           VStack{
             HStack { Spacer()

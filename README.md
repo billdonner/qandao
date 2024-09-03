@@ -1,5 +1,5 @@
 #  QANDAO - revised test app for Q20K
-
+- version 0.7.33.3 rearrange ui
 - version 0.7.33.2 preview board is liberated
 - version 0.7.33.1 ready for testflight, missing preview board
 - version 0.7.32.5 rearrange buttons, move topics to separate page
