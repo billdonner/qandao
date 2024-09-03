@@ -64,26 +64,28 @@ fileprivate struct SettingsView: View {
   }
   
   var body: some View {
-    VStack {
-      
+  
       Form {
-//        Button(action: {showLeaderboard.toggle()}){
-//          Text("Visit the Leaderboard")
-//        }
-        Section(header: Text("Board Size")) {
-          SizePickerView(chosenSize: $l_boardsize)
-            .onChange(of:l_boardsize) {
-              switch l_boardsize {
-              case 3:l_facedown=false;l_startInCorners=false
-              case 4:l_facedown=false;l_startInCorners=false
-              case 5:l_facedown=true;l_startInCorners=false
-              case 6:l_facedown=true;l_startInCorners=true
-              case 7:l_facedown=true;l_startInCorners=true
-              default :l_facedown=true;l_startInCorners=true
+
+        Section(header: Text("Board")) {
+          VStack(alignment: .center){
+            SizePickerView(chosenSize: $l_boardsize)
+              .onChange(of:l_boardsize) {
+                switch l_boardsize {
+                case 3:l_facedown=false;l_startInCorners=false
+                case 4:l_facedown=false;l_startInCorners=false
+                case 5:l_facedown=true;l_startInCorners=false
+                case 6:l_facedown=true;l_startInCorners=true
+                case 7:l_facedown=true;l_startInCorners=true
+                default :l_facedown=true;l_startInCorners=true
+                }
               }
-            }
-          
+            
             colorPicker
+            
+          //  PreviewGridView(gs: gs, chmgr: chmgr, boardsize:$l_boardsize)
+          }
+          
         }
         Section(header: Text("Topics")) {
           
@@ -108,7 +110,7 @@ fileprivate struct SettingsView: View {
           }
         }
       }
-      }
+      
       .sheet(isPresented:$showSettings){
         FreeportSettingsScreen(gs: gs, chmgr: chmgr, lrdb: lrdb)
       }

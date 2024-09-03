@@ -40,7 +40,7 @@ struct GameScreen: View {
         topButtonsVeew.padding()
         
           if gs.boardsize > 1 {
-            MainGridView(gs: gs, chmgr:chmgr,  firstMove: $firstMove, isTouching: $isTouching, onSingleTap: onSingleTap)
+            MainGridView(gs: gs, chmgr:chmgr, boardsize:$gs.boardsize,  firstMove: $firstMove, isTouching: $isTouching, onSingleTap: onSingleTap)
               .debugBorder()
           
             ScoreBarView(gs: gs)

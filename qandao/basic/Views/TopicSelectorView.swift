@@ -36,7 +36,7 @@ import SwiftUI
        VStack(spacing: 5){
          TopicIndexView(gs: gs, chmgr: chmgr)
            .dismissable {
-             print("dismissed TopicsIndexView")
+             //print("dismissed TopicsIndexView")
            }
 //         VStack(spacing: 0){
 //           //Text("board size:\(boardSize)x\(boardSize) requires \(minTopics)-\(maxTopics) topics.")
@@ -48,7 +48,7 @@ import SwiftUI
 //             .padding(.bottom)
 //         }.debugBorder()
          List {
-           Section(header: Label("Current Fixed Topics",systemImage: "info.topics")) {
+           Section(header: Label("Current Fixed Topics",systemImage: "info.circle")) {
              ForEach(selectedTopics.prefix(GameState.preselectedTopicsForBoardSize(boardSize)), id: \.self) { topic in
                HStack {
                  Text(topic).font(.body)
@@ -76,7 +76,7 @@ import SwiftUI
              }
            }
            
-           Section(header: Label("Current Topics Chosen By You",systemImage: "info.topics")) {
+           Section(header: Label("Current Topics Chosen By You",systemImage: "info.circle")) {
              Text("for a boardsize of \(boardSize)x\(boardSize) you can select \(maxTopics - selectedTopics.count) more topics.").font(.footnote).padding()
              ForEach(selectedTopics.dropFirst(GameState.preselectedTopicsForBoardSize(boardSize)), id: \.self) { topic in
                Button(action: {
