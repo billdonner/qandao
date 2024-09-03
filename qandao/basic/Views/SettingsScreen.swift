@@ -37,7 +37,7 @@ fileprivate struct SettingsView: View {
   @State var replacedTopics: [Int: String] = [:]
   @State var selectedAdditionalTopics: Set<String> = []
   @State var firstOnAppear = true
- // @State var showLeaderboard = false
+  @State var showTopicSelector = false
   @State private var showSettings = false
   
   
@@ -67,12 +67,10 @@ fileprivate struct SettingsView: View {
         }
         Section(header: Text("Topics")) {
           
-       
+          Button(action:{showTopicSelector.toggle()}){
+            Text("Edit Topics")
+          }
           
-            TopicSelectorView(allTopics: chmgr.everyTopicName,
-                              selectedTopics:  $l_topicsinplay,
-                              selectedSchemeIndex:$l_currentScheme,
-                              chmgr: chmgr, gs:gs, boardSize:l_boardsize)
         }
         Section(header:Text("About QANDA")) {
           VStack{
@@ -109,9 +107,14 @@ fileprivate struct SettingsView: View {
       .sheet(isPresented:$showSettings){
         FreeportSettingsScreen(gs: gs, chmgr: chmgr, lrdb: lrdb)
       }
-//      .sheet(isPresented: $showLeaderboard) {
-//        LeaderboardScreen(leaderboardService:lrdb)
-//      }
+      .sheet(isPresented: $showTopicSelector) {
+        
+          TopicSelectorView(allTopics: chmgr.everyTopicName,
+                            selectedTopics:  $l_topicsinplay,
+                            selectedSchemeIndex:$l_currentScheme,
+                            chmgr: chmgr, gs:gs, boardSize:l_boardsize)
+        
+      }
       .onAppear {
         if firstOnAppear {
           firstOnAppear = false

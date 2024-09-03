@@ -96,24 +96,27 @@ struct GameScreen: View {
           //  .cornerRadius(8)
             .font(isIpad ? .title:.body)
         }
-      } else {
+      }
+      else {
         // END GAME
         Button(action: {
           withAnimation {
             // this one has been trouble
-        // conditionalAssert(gs.checkVsChaMan(chmgr: chmgr)) //cant check after endgamepressed
+            // conditionalAssert(gs.checkVsChaMan(chmgr: chmgr)) //cant check after endgamepressed
             onEndGamePressed()  //should estore consistency
             chmgr.checkAllTopicConsistency("GameScreen EndGamePressed")
-           }
+          }
         }) {
           Text("End")
             .frame(width: isIpad ? 70:50, height: isIpad ? 70:50)
             .padding(5)
-           // .background(.red.opacity(0.8))
-           // .foregroundColor(.white)
+          // .background(.red.opacity(0.8))
+          // .foregroundColor(.white)
           //  .cornerRadius(8)
             .font(isIpad ? .title:.body)
         }
+      }
+        
       Spacer()
       Text(" q a n d a").font(.largeTitle).bold()
           .onLongPressGesture{
@@ -128,7 +131,6 @@ struct GameScreen: View {
 
       }.disabled(gs.gamestate == .playingNow)
         .opacity(gs.gamestate == .playingNow ? 0.5:1.0)
-
         .alert("Can't start new Game - consider changing the topics or hit Full Reset",isPresented: $showCantStartAlert){
           Button("OK", role: .cancel) {
             withAnimation {
@@ -136,10 +138,7 @@ struct GameScreen: View {
             }
           }
         }
-      } 
-    }
-    
-    
+      }  
     .font(.body)
     .sheet(isPresented: $showLeaderboard)
     {
@@ -149,6 +148,8 @@ struct GameScreen: View {
         SettingsScreen(chmgr: chmgr, gs: gs,lrdb:lrdb)
       }
   }
+  
+  
   var loadingVeew: some View {
     Text("Loading...")
       .onAppear {

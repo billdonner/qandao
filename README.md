@@ -1,5 +1,5 @@
 #  QANDAO - revised test app for Q20K
-- version 0.7.32.5 rearrange buttons
+- version 0.7.32.5 rearrange buttons, move topics to separate page
 - version 0.7.32.4 move leaderboard under longpress of gamescreen title
 - version 0.7.32.1 reenable cloudkit for sentiments
 - version 0.7.31.4 added a leaderboard, integrated topics into settings
