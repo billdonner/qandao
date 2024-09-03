@@ -21,6 +21,7 @@ fileprivate struct SettingsView: View {
     l_currentScheme = gs.currentscheme
     l_difficultyLevel = gs.difficultylevel
     l_startInCorners = gs.startincorners
+    colorSchemeName = gs.currentscheme
   }
   let ourTopics: [String]
   @State private var  l_boardsize: Int
@@ -41,9 +42,26 @@ fileprivate struct SettingsView: View {
   @State private var showSettings = false
   
   
-  @State var colorSchemeName : ColorSchemeName = 2//.summer // hack //summer
+  @State var colorSchemeName : ColorSchemeName // hack //summer
   @Environment(\.presentationMode) var presentationMode
 
+  var colorPicker: some View {
+    Picker("Color Palette", selection: $colorSchemeName) {
+      ForEach(AppColors.allSchemes.indices.sorted(),id:\.self) { idx in
+        Text("\(AppColors.pretty(for:AppColors.allSchemes[idx].name))")
+          .tag(idx)
+      }
+    }
+    .pickerStyle(SegmentedPickerStyle())
+    .background(colorPaletteBackground(for:gs.currentscheme).clipShape(RoundedRectangle(cornerRadius: 10)))
+    .padding(.horizontal)
+    .onChange(of: colorSchemeName) {
+      withAnimation {
+        gs.currentscheme = colorSchemeName
+        l_currentScheme = colorSchemeName
+      }
+    }
+  }
   
   var body: some View {
     VStack {
@@ -52,7 +70,7 @@ fileprivate struct SettingsView: View {
 //        Button(action: {showLeaderboard.toggle()}){
 //          Text("Visit the Leaderboard")
 //        }
-        Section(header: Text("Complexity")) {
+        Section(header: Text("Board Size")) {
           SizePickerView(chosenSize: $l_boardsize)
             .onChange(of:l_boardsize) {
               switch l_boardsize {
@@ -64,6 +82,8 @@ fileprivate struct SettingsView: View {
               default :l_facedown=true;l_startInCorners=true
               }
             }
+          
+            colorPicker
         }
         Section(header: Text("Topics")) {
           
@@ -84,21 +104,6 @@ fileprivate struct SettingsView: View {
             }
             Button(action: { showSettings.toggle() }) {
               Text("Freeport Settings")
-            }
-            Picker("Color Palette", selection: $colorSchemeName) {
-              ForEach(AppColors.allSchemes.indices.sorted(),id:\.self) { idx in
-                Text("\(AppColors.pretty(for:AppColors.allSchemes[idx].name))")
-                  .tag(idx)
-              }
-            }
-            .pickerStyle(SegmentedPickerStyle())
-            .background(colorPaletteBackground(for:gs.currentscheme).clipShape(RoundedRectangle(cornerRadius: 10)))
-            .padding(.horizontal)
-            
-            .onChange(of: colorSchemeName) {
-              withAnimation {
-                gs.currentscheme = colorSchemeName
-              }
             }
           }
         }

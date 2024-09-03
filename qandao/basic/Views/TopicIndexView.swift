@@ -13,7 +13,7 @@ struct TopicIndexView: View {
     @State var topicDetailInfo: Tdi? = nil
 
     var body: some View {
-        GeometryReader { geometry in
+       // GeometryReader { geometry in
             //let isIpad = geometry.size.width > 600
             
           ScrollView(.horizontal, showsIndicators: false)  {
@@ -50,7 +50,7 @@ struct TopicIndexView: View {
             .sheet(item: $topicDetailInfo) { tdi in
                 TopicDetailsView(topic: tdi.name, gs: gs, chmgr: chmgr)
             }
-        }
+       // }
         .debugBorder()
     }
 
