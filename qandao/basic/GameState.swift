@@ -432,6 +432,17 @@ class GameState : Codable {
       return (Color.white, Color.black, UUID())
     }
   }
+  
+  func previewColorMatrix(size:Int,scheme:ColorSchemeName) -> [[Color]] {
+    var cm     = Array(repeating: Array(repeating:Color.black, count: size), count: size)
+    for row in 0..<size {
+      for col in 0..<size {
+        cm[row][col]=AppColors.colorForSchemeAndTopic(scheme: scheme, index: (row*size+col) % 10).0
+      }
+    }
+    return cm
+  }
+  
   static  func minTopicsForBoardSize(_ size:Int) -> Int {
     switch size  {
     case 3: return 3

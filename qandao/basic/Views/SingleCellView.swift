@@ -34,8 +34,7 @@ struct SingleCellView: View {
   let col:Int
   let chidx:Int
   let status:GameCellState
-  let cellSize: CGFloat
-  let isPreviewMode:Bool
+  let cellSize: CGFloat 
   let onSingleTap: (_ row:Int, _ col:Int ) -> Bool
   @Binding var firstMove:Bool
   @Binding var isTouching:Bool
@@ -63,19 +62,13 @@ struct SingleCellView: View {
   var body: some View {
     let thisCellIsLastMove:Bool  = gs.lastmove?.row == row &&  gs.lastmove?.col == col
     let challenge = chidx < 0 ? Challenge.amock : chmgr.everyChallenge[chidx]
-    let colormix = gs.colorForTopic(challenge.topic)
+   // let colormix = gs.colorForTopic(challenge.topic)
       return  ZStack {
         // part 1:
         // if faceup show the question else blank
         VStack(alignment:.center, spacing:0) {
           if row<gs.boardsize && col<gs.boardsize {
-            if isPreviewMode {
-              Rectangle()
-              .frame(width: cellSize, height: cellSize)
-              .cornerRadius(cornerradius)
-              .background(colormix.0)
-              .foregroundColor(foregroundColorFrom( backgroundColor: colormix.0 ))
-            } else {
+ 
               switch gs.cellstate[row][col] {
                 
               case .playedCorrectly:
@@ -107,7 +100,6 @@ struct SingleCellView: View {
                 }
               }
             }
-          }
         }
         //Layer
         // part 3:
@@ -228,7 +220,7 @@ struct SingleCellView: View {
     col: 0,
     chidx: 0,
     status: .unplayed,
-    cellSize: 250, isPreviewMode: true,
+    cellSize: 250, 
     onSingleTap: { _, _ in true },
     firstMove: .constant(false),
     isTouching: .constant(false)
@@ -246,10 +238,17 @@ struct SingleCellView: View {
     col: 0,
     chidx: 0,
     status: .unplayed,
-    cellSize: 250, isPreviewMode: true,
+    cellSize: 250,
     onSingleTap: { _, _ in true },
     firstMove: .constant(true),
     isTouching: .constant(true)
   )
   .previewLayout(.sizeThatFits)
 }
+//if isPreviewMode {
+//  Rectangle()
+//  .frame(width: cellSize, height: cellSize)
+//  .cornerRadius(cornerradius)
+//  .background(colormix.0)
+//  .foregroundColor(foregroundColorFrom( backgroundColor: colormix.0 ))
+//} else

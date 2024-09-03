@@ -40,7 +40,7 @@ struct GameScreen: View {
         topButtonsVeew.padding()
         
           if gs.boardsize > 1 {
-            MainGridView(gs: gs, chmgr:chmgr, boardsize:$gs.boardsize,  firstMove: $firstMove, isTouching: $isTouching, onSingleTap: onSingleTap)
+            MainGridView(gs: gs, chmgr:chmgr,  boardsize:$gs.boardsize, firstMove: $firstMove, isTouching: $isTouching, onSingleTap: onSingleTap)
               .debugBorder()
           
             ScoreBarView(gs: gs)
@@ -51,10 +51,10 @@ struct GameScreen: View {
           .onChange(of:gs.cellstate) {
             onChangeOfCellState()
           }
-          .onChange(of:gs.boardsize) {
-            print("//GameScreen onChangeof(Size) to \(gs.boardsize)")
-            onBoardSizeChange ()
-          }
+//          .onChange(of:gs.boardsize) {
+//          //  print("//GameScreen onChangeof(Size) to \(gs.boardsize)")
+//            onBoardSizeChange ()
+//          }
      
           .onDisappear {
             print("Yikes the GameScreen is Disappearing!")

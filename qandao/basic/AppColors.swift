@@ -13,6 +13,11 @@ typealias ColorSchemeName = Int
 //}
 
 class AppColors {
+  
+  static func colorForSchemeAndTopic(scheme schmindx:ColorSchemeName,index topicIndex:Int) -> (Color, Color, UUID) {
+    let theScheme = Self.allSchemes[schmindx]
+    return theScheme.mappedColors[topicIndex]
+  }
   static func pretty(for colorIndex:Int) -> String {
     switch colorIndex {
     case 0: return "bleak"

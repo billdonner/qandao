@@ -13,7 +13,6 @@ fileprivate struct SettingsView: View {
     self.chmgr = chmgr
     self.lrdb = lrdb
     self.ourTopics =    chmgr.playData.allTopics
-   // let remainingTopics = removeElements(from:chmgr.playData.allTopics,elementsToRemove:gs.topicsinplay)
     l_topicsinplay = gs.topicsinplay//State(initialValue: chosenTopics)
     l_facedown = gs.facedown
     l_boardsize = gs.boardsize
@@ -32,14 +31,14 @@ fileprivate struct SettingsView: View {
   @State private var  l_difficultyLevel: Int
   @State private var  l_topicsinplay: [String]
   
-  // @State var selectedTopics: [String]
- // @State var availableTopics: [String]
   @State var tappedIndices: Set<Int> = []
   @State var replacedTopics: [Int: String] = [:]
   @State var selectedAdditionalTopics: Set<String> = []
   @State var firstOnAppear = true
   @State var showTopicSelector = false
   @State private var showSettings = false
+  
+  @State private var cpv : [[Color]] = []
   
   
   @State var colorSchemeName : ColorSchemeName // hack //summer
@@ -53,14 +52,9 @@ fileprivate struct SettingsView: View {
       }
     }
     .pickerStyle(SegmentedPickerStyle())
-    .background(colorPaletteBackground(for:gs.currentscheme).clipShape(RoundedRectangle(cornerRadius: 10)))
+    .background(colorPaletteBackground(for:l_currentScheme).clipShape(RoundedRectangle(cornerRadius: 10)))
     .padding(.horizontal)
-    .onChange(of: colorSchemeName) {
-      withAnimation {
-        gs.currentscheme = colorSchemeName
-        l_currentScheme = colorSchemeName
-      }
-    }
+ 
   }
   
   var body: some View {
@@ -82,8 +76,15 @@ fileprivate struct SettingsView: View {
               }
             
             colorPicker
+              .onChange(of: colorSchemeName) {
+                withAnimation {
+                 // gs.currentscheme = colorSchemeName
+                  l_currentScheme = colorSchemeName
+                }
+              }
             
-          //  PreviewGridView(gs: gs, chmgr: chmgr, boardsize:$l_boardsize)
+            PreviewGridView(gs: gs, chmgr: chmgr, boardsize:$l_boardsize,scheme:$l_currentScheme)
+              .frame(width: 250,height: 250)
           }
           
         }
@@ -123,10 +124,12 @@ fileprivate struct SettingsView: View {
         
       }
       .onAppear {
+   
         if firstOnAppear {
           firstOnAppear = false
           chmgr.checkAllTopicConsistency("GameSettings onAppear")
         }
+        cpv = gs.previewColorMatrix(size: l_boardsize,scheme: l_currentScheme)
       }
       .navigationBarTitle("Game Settings", displayMode: .inline)
       .navigationBarItems(
@@ -161,22 +164,18 @@ fileprivate struct SettingsView: View {
   }
 }
 
-struct SettingsScreen :
-  View {
+struct SettingsScreen : View {
   @Bindable var chmgr: ChaMan
   @Bindable var gs: GameState
   
   let lrdb:LeaderboardService
-
- // let onExit: ([String])->()
   
   var body: some View {
     NavigationView  {
       SettingsView(
         chmgr: chmgr,
         gs:gs,
-        lrdb:lrdb//,
-       // onExit: onExit
+        lrdb:lrdb
       )
     }
   }
