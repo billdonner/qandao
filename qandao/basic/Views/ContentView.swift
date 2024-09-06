@@ -49,7 +49,7 @@ struct ContentView: View {
           }
          
          Spacer()
-         ContentViewBottomButtons(gs:gs, chmgr: chmgr, isTouching: $isTouching)
+         ContentViewBottomButtons(gs:gs, chmgr: chmgr, isTouching: $isTouching).padding([.bottom])
           
         }
       }

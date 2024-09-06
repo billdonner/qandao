@@ -46,6 +46,7 @@ struct ChallengeGameApp: App {
     WindowGroup {
       
       ContentView(gs: gs,chmgr: chmgr,lrdb:leaderboardService)
+        .padding([.bottom])
         .statusBar(hidden: true) // Hide the status bar
         .fullScreenCover(isPresented: $showOnboarding) {
           OnboardingScreen(isPresented: $showOnboarding)

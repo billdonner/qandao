@@ -46,7 +46,7 @@ struct ContentViewBottomButtons : View {
           .frame(width: isIpad ? 70 : 50, height: isIpad ? 70 : 50)
                  .padding(.trailing, 15)
       }
-    }
+    }.padding([.bottom])
     .debugBorder()
       .fullScreenCover(isPresented: $showingHelp ){
         HowToPlayScreen (chmgr: chmgr, isPresented: $showingHelp)

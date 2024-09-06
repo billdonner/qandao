@@ -1,28 +1,14 @@
 import SwiftUI
 
-fileprivate struct SettingsView: View {
+ struct SettingsView: View {
   
   @Bindable var chmgr:ChaMan
   @Bindable var gs:GameState
-  
   let lrdb:LeaderboardService
+  @Binding var showSettings: Bool
 
-  internal init(chmgr:ChaMan,gs:GameState,lrdb:LeaderboardService)//,
-  {
-    self.gs = gs
-    self.chmgr = chmgr
-    self.lrdb = lrdb
-    self.ourTopics =    chmgr.playData.allTopics
-    l_topicsinplay = gs.topicsinplay//State(initialValue: chosenTopics)
-    l_facedown = gs.facedown
-    l_boardsize = gs.boardsize
-    l_doubleDiag = gs.doublediag
-    l_currentScheme = gs.currentscheme
-    l_difficultyLevel = gs.difficultylevel
-    l_startInCorners = gs.startincorners
-    colorSchemeName = gs.currentscheme
-  }
-  let ourTopics: [String]
+
+  @State private var ourTopics: [String]
   @State private var  l_boardsize: Int
   @State private var  l_startInCorners: Bool
   @State private var  l_facedown: Bool
@@ -30,13 +16,32 @@ fileprivate struct SettingsView: View {
   @State private var  l_currentScheme:ColorSchemeName
   @State private var  l_difficultyLevel: Int
   @State private var  l_topicsinplay: [String]
-  
+  // @State private var show:Binding<Bool>
+   
+   init(chmgr:ChaMan,gs:GameState,lrdb:LeaderboardService,showSettings:Binding<Bool>)
+   {
+     self.chmgr = chmgr
+     self.gs = gs
+     self.lrdb = lrdb
+     self._showSettings =  showSettings
+     ourTopics = chmgr.playData.allTopics
+    l_topicsinplay = gs.topicsinplay
+    l_facedown = gs.facedown
+    l_boardsize = gs.boardsize
+    l_doubleDiag = gs.doublediag
+    l_currentScheme = gs.currentscheme
+    l_difficultyLevel = gs.difficultylevel
+    l_startInCorners = gs.startincorners
+    colorSchemeName = gs.currentscheme
+   }
+   
+ 
   @State var tappedIndices: Set<Int> = []
   @State var replacedTopics: [Int: String] = [:]
   @State var selectedAdditionalTopics: Set<String> = []
   @State var firstOnAppear = true
   @State var showTopicSelector = false
-  @State private var showSettings = false
+ // @State private var showSettings = false
   
   @State private var cpv : [[Color]] = []
   
@@ -72,11 +77,7 @@ fileprivate struct SettingsView: View {
             SizePickerView(chosenSize: $l_boardsize)
               .onChange(of:l_boardsize) {
                 switch l_boardsize {
-//                case 3:l_facedown=false;l_startInCorners=false
-//                case 4:l_facedown=false;l_startInCorners=false
-//                case 5:l_facedown=true;l_startInCorners=false
-//                case 6:l_facedown=true;l_startInCorners=true
-//                case 7:l_facedown=true;l_startInCorners=true
+
                 default :l_facedown=true;l_startInCorners=true
                 }
               }
@@ -115,7 +116,7 @@ fileprivate struct SettingsView: View {
       }
       
       .sheet(isPresented:$showSettings){
-        FreeportSettingsScreen(gs: gs, chmgr: chmgr, lrdb: lrdb)
+        FreeportSettingsScreen(gs: gs, chmgr: chmgr, lrdb: lrdb,showSettings:$showSettings)
       }
       .sheet(isPresented: $showTopicSelector) {
         
@@ -166,24 +167,40 @@ fileprivate struct SettingsView: View {
   }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 struct SettingsScreen : View {
   @Bindable var chmgr: ChaMan
   @Bindable var gs: GameState
   
   let lrdb:LeaderboardService
+  @Binding var showSettings: Bool
   
   var body: some View {
     NavigationView  {
       SettingsView(
         chmgr: chmgr,
         gs:gs,
-        lrdb:lrdb
+        lrdb:lrdb,
+        showSettings:$showSettings
       )
     }
   }
 }
 #Preview {
-  SettingsScreen(chmgr: ChaMan.mock,gs:GameState.mock,lrdb:LeaderboardService())
+  SettingsScreen(chmgr: ChaMan.mock,gs:GameState.mock,lrdb:LeaderboardService(),showSettings:(.constant(true)))
 }
 /*
  Picker("Board Size", selection: $l_boardsize) {
@@ -240,3 +257,8 @@ struct SettingsScreen : View {
 //            Text("Choose Topics")
 //          }
           
+//                case 3:l_facedown=false;l_startInCorners=false
+//                case 4:l_facedown=false;l_startInCorners=false
+//                case 5:l_facedown=true;l_startInCorners=false
+//                case 6:l_facedown=true;l_startInCorners=true
+//                case 7:l_facedown=true;l_startInCorners=true

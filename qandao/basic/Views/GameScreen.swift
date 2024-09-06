@@ -37,7 +37,7 @@ struct GameScreen: View {
  
       VStack {
      
-        topButtonsVeew.padding()
+        topButtonsVeew.padding([.leading,.trailing,.bottom])
         
           if gs.boardsize > 1 {
             MainGridView(gs: gs, chmgr:chmgr,  boardsize:$gs.boardsize, firstMove: $firstMove, isTouching: $isTouching, onSingleTap: onSingleTap)
@@ -145,7 +145,7 @@ struct GameScreen: View {
     LeaderboardScreen(leaderboardService: lrdb)
     }
       .sheet(isPresented: $showSettings){
-        SettingsScreen(chmgr: chmgr, gs: gs,lrdb:lrdb)
+        SettingsScreen(chmgr: chmgr, gs: gs,lrdb:lrdb,showSettings:$showSettings)
       }
   }
   

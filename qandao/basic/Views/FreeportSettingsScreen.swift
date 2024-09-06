@@ -56,6 +56,7 @@ struct FreeportSettingsScreen: View {
   let gs: GameState
   let chmgr: ChaMan
   let lrdb: LeaderboardService
+  @Binding var showSettings:Bool
   
   @AppStorage("elementWidth") var elementWidth = 100.0
   @AppStorage("shuffleUp") private var shuffleUp = true
@@ -114,6 +115,7 @@ struct FreeportSettingsScreen: View {
             Button(action:{ //showReset.toggle()
                     let _ = gs.resetBoardReturningUnplayed()
                      chmgr.totalresetofAllChallengeStatuses(gs: gs)
+              showSettings = false //should blow us back to top
               
             }) {
               Text("Factory Reset")
@@ -144,7 +146,8 @@ struct FreeportSettingsScreen: View {
   FreeportSettingsScreen(gs: 
                           GameState.mock,
                          chmgr: ChaMan.mock,
-                         lrdb:LeaderboardService())
+                         lrdb:LeaderboardService(),
+                         showSettings:.constant(true))
 }
 
 
