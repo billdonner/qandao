@@ -13,28 +13,33 @@ private struct zz:View {
     //ScrollView(.horizontal, showsIndicators: false)  {
     VStack(alignment: .leading,spacing: 0){
       HStack {
-  
+        
         Text("time:");Text(formatTimeInterval(gs.totaltime))
           .font(isIpad ? .title:.headline)
         Text("score:");Text("\(gs.totalScore())")
           .font(isIpad ? .title:.headline)
+        Spacer()
+      }
+      HStack {
         Text("games:");Text("\(gs.gamenumber)")
           .font(isIpad ? .title:.headline)
         Text("gimmees:");Text("\(gs.gimmees)")
           .font(isIpad ? .title:.headline)
+        Spacer()
       }
       HStack {
         Text("won:");Text("\(gs.woncount)")
         Text("lost:");Text("\(gs.lostcount)")
         Text("right:");Text("\(gs.rightcount)")
         Text("wrong:");Text("\(gs.wrongcount)")
+        Spacer()
       }.opacity(0.8)
         .font(isIpad ? .title:.footnote)
       HStack {
         if showchars.count > 1 {Text("last game: ").opacity(0.8) }
         Text(showchars).font(showchars.count<=1 ? .title:.footnote)
       }
-    }
+    }.padding()
     
   }
   }

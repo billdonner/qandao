@@ -41,10 +41,10 @@ extension QandAScreen {
         Text(ch.question)
           .font(isIpad ? .largeTitle:.title3)
           .padding()//([.top,.horizontal])
-           .frame(width: max(0,contentWidth), height:max(0,  geometry.size.height * 0.25))//0.2
           .lineLimit(8)
+        .foregroundColor(foregroundColorFrom( backgroundColor: topicColor ))
+           .frame(width: max(0,contentWidth), height:max(0,  geometry.size.height * 0.25))//0.2
           .fixedSize(horizontal: false, vertical: true)
-          .foregroundColor(foregroundColorFrom( backgroundColor: topicColor ))
           .debugBorder()
         Spacer()
       }

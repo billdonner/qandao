@@ -27,7 +27,11 @@ extension PlayData {
 
 extension ChaMan {
   static var mock = {
-    ChaMan(playData: PlayData.mock)
+    var chmgr = ChaMan(playData: PlayData.mock)
+    let ch = PlayData.mock.gameDatum[0].challenges.first! // first challenge
+    chmgr.ansinfo[ch.id] = AnsweredInfo(id: ch.id, answer: ch.answers[0], outcome:.playedCorrectly , timestamp: Date(), timetoanswer: 3000, gamenumber: 423, movenumber: 1, row: 0, col: 0)
+    return chmgr
+    
   }()
   
 }

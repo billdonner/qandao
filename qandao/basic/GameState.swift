@@ -117,12 +117,12 @@ class GameState : Codable {
     self.wrongcount = 0
     self.replacedcount = 0
     self.totaltime = 0.0
-    self.facedown = size > 4
+    self.facedown = true
     self.currentscheme = 2//.summer
     self.veryfirstgame = true
     self.doublediag = false
     self.difficultylevel = 0//.easy
-    self.startincorners = false
+    self.startincorners = true
     self.gamestart = Date()
     self.swversion = AppVersionProvider.appVersion()
   }
@@ -230,14 +230,77 @@ class GameState : Codable {
     }
     // put these challenges into the board
     // set cellstate to unplayed
+    //    allocatedChallengeIndices = x.shuffled()
     for row in 0..<boardsize {
       for col in 0..<boardsize {
         let idxs = allocatedChallengeIndices[row * boardsize + col]
+       // let ch = chmgr.everyChallenge[idxs]
+        //let topic = ch.topic
+        // change this code so that if the topic at this row,col is the same as an adjacent cell , we pick a different one by altering the idxs
         board[row][col] = idxs
         cellstate[row][col] = .unplayed
-        board[row][col] = idxs
       }
     }
+    
+ /** TODO: this ensures no adjacent cells are the same color
+    // put these challenges into the board
+    // set cellstate to unplayed
+    // allocatedChallengeIndices = x.shuffled()
+    var deallocatedIndices: [Int] = []
+
+    for row in 0..<boardsize {
+        for col in 0..<boardsize {
+            var idxs = allocatedChallengeIndices[row * boardsize + col]
+            var ch = chmgr.everyChallenge[idxs]
+            var topic = ch.topic
+
+            // Check adjacent cells and ensure no duplicate topics
+            var adjacentTopics = Set<String>()
+            
+            if row > 0 { // Check cell above
+                let aboveIdxs = board[row - 1][col]
+                adjacentTopics.insert(chmgr.everyChallenge[aboveIdxs].topic)
+            }
+            
+            if col > 0 { // Check cell to the left
+                let leftIdxs = board[row][col - 1]
+                adjacentTopics.insert(chmgr.everyChallenge[leftIdxs].topic)
+            }
+            
+            // Ensure the topic is not the same as an adjacent cell
+            var foundValid = false
+            while adjacentTopics.contains(topic) {
+                // Pick another index if the topic matches adjacent ones
+                if let newIdx = allocatedChallengeIndices.shuffled().first(where: { !adjacentTopics.contains(chmgr.everyChallenge[$0].topic) }) {
+                    deallocatedIndices.append(idxs)  // Add the old index to deallocation list
+                    idxs = newIdx
+                    ch = chmgr.everyChallenge[idxs]
+                    topic = ch.topic
+                    foundValid = true
+                } else {
+                    // If no valid index can be found, break the loop
+                    foundValid = false
+                    break
+                }
+            }
+            
+            // If we found a valid challenge, assign it to the board
+            if foundValid || !adjacentTopics.contains(topic) {
+                board[row][col] = idxs
+                cellstate[row][col] = .unplayed
+            } else {
+                // If no valid challenge can be found, deallocate the challenge index
+                deallocatedIndices.append(idxs)
+            }
+        }
+    }
+
+    // Call deallocateChallengeIndices with the array of deallocated items
+    if !deallocatedIndices.isEmpty {
+     let _ =  chmgr.deallocAt(deallocatedIndices)
+    }
+    */
+    
     gamestate = .playingNow
     saveGameState() 
     return true

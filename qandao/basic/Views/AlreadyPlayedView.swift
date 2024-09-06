@@ -16,8 +16,7 @@ struct AlreadyPlayedView : View {
   var body: some View {
 
     if let ansinfo = chmgr.ansinfo[ch.id] {
-      ZStack {
-        Color.clear
+      let topicColor =   gs.colorForTopic(ch.topic).0
         VStack {
           VStack {
             Button(action:{
@@ -34,21 +33,16 @@ struct AlreadyPlayedView : View {
           }
           Spacer()
           VStack (spacing:30){
-            Text (ch.question).font(.title)
-            VStack (alignment: .leading){
-              Text ("You answered this question on \(ansinfo.timestamp)").font(.footnote)
-              HStack{Text ("The correct answer is:").font(.caption);Text(" \(ch.correct)").font(.headline).lineLimit(2);Spacer()}
-              HStack{Text ("Your answer was: ").font(.caption); Text("\(ansinfo.answer)").font(.headline).lineLimit(2);Spacer()}
-            }
-            VStack {
-              if ansinfo.answer == ch.correct {
-                Text("You got it right!").font(.title)
-              } else {
-                Text("Sorry, you got it wrong.").font(.title)
-              }
-            }
+            Text(ch.question)
+              .font(isIpad ? .largeTitle:.title3)
+              .padding()//([.top,.horizontal])
+              .lineLimit(8)
+              .foregroundColor(foregroundColorFrom( backgroundColor: topicColor))
+
             ScrollView {
             VStack (alignment: .leading){
+              HStack{Text ("The correct answer is:").font(.caption);Text(" \(ch.correct)").font(.headline).lineLimit(2);Spacer()}
+              HStack{Text ("Your answer was: ").font(.caption); Text("\(ansinfo.answer)").font(.headline).lineLimit(2);Spacer()}
                 Text("The other possible answers were: \(joinWithCommasAnd( removeStrings(from: ch.answers, stringsToRemove: [ch.correct,ansinfo.answer])) )").font(.body)
                 if ch.hint.count<=1 {
                   Text("There was no hint")
@@ -66,6 +60,10 @@ struct AlreadyPlayedView : View {
               HStack {
                 Text("id: ");
                 TextField("id", text:.constant("\(ch.id)")).font(.caption)
+                VStack (alignment: .leading){
+                  Text ("You answered this question on \(ansinfo.timestamp)").font(.footnote)
+            
+                }
                 Spacer()
               }
               Spacer()
@@ -74,13 +72,14 @@ struct AlreadyPlayedView : View {
           }.padding(.horizontal)
           Spacer()
         }
-      }
+        .border( ansinfo.answer == ch.correct ? .green:.red,width:10)
+      
       
     } else {
       Color.red
     }
   }
 }
-//#Preview {
-//  AlreadyPlayedView(row: 0, col: 0, gs: GameState.mock , chmgr: ChaMan(playData: PlayData.mock))
-//}
+#Preview {
+  AlreadyPlayedView(ch:Challenge.complexMock,  gs: GameState.mock , chmgr: ChaMan.mock)
+}

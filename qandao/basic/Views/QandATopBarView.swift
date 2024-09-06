@@ -12,6 +12,8 @@ struct QandATopBarView: View {
   @Binding var killTimer: Bool
   
   @State private var timer: Timer? = nil  // Timer to track elapsed time 
+  
+
  // @State   var gimmeeAlert = false
   func startTimer() {
     elapsedTime = 0

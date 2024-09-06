@@ -1,4 +1,5 @@
 #  QANDAO - revised test app for Q20K
+- version 0.7.34.1 misc cleanupo
 - version 0.7.33.4 hardwire to face down and corners for all sizes,topic feed taller, new icon
 - version 0.7.33.3 rearrange ui
 - version 0.7.33.2 preview board is liberated
