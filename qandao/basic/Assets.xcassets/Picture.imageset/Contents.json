@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "Simulator Screenshot - iPad Pro 13-inch (M4) - 2024-08-04 at 13.25.28.png",
+      "filename" : "qandao-icon-001-light.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
@@ -12,7 +12,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "Simulator Screenshot - iPad Pro 13-inch (M4) - 2024-08-04 at 13.48.39.png",
+      "filename" : "qandao-icon-001-dark.png",
       "idiom" : "universal",
       "scale" : "1x"
     },

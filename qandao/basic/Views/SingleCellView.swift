@@ -121,7 +121,7 @@ struct SingleCellView: View {
             Image(systemName:"target")
               .font(.largeTitle)
               .foregroundColor(
-                foregroundColorFrom( backgroundColor:gs.colorForTopic (challenge.topic ).0)).opacity(0.3)
+                foregroundColorFrom(backgroundColor:gs.colorForTopic (challenge.topic ).0)).opacity(0.1)
               .frame(width: cellSize, height: cellSize)
           }
           //Layer

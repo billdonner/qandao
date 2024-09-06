@@ -331,8 +331,8 @@ fileprivate struct  GimmeeAlert: View {
         }
       
       
-      
-        .background(FrostedBackgroundView())
+        .background(.gray)
+        //.background(FrostedBackgroundView())
         .cornerRadius(16)
         .rotationEffect(.degrees(rotationAngle))
         .transition(.asymmetric(insertion: .scale.combined(with: .opacity), removal: .rotateAndFade))
@@ -541,7 +541,7 @@ fileprivate struct GimmeeAlertModifier: ViewModifier {
   func body(content: Content) -> some View {
       ZStack {
           content
-              .blur(radius: isPresented ? 1 : 0)
+          .blur(radius: isPresented ? 0.1 : 0)
           
           if isPresented {
               GimmeeAlert(

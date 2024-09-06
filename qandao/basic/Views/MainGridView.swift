@@ -92,11 +92,15 @@ struct MainGridView : View {
               if row < boardsize  && col < boardsize
               //&&  gs.board[row][col] >= 0
               { // ensure its inbounds and allocated
-                
-                SingleCellView(gs:gs,chmgr:chmgr,row:row,col:col,
-                               chidx:gs.board[row][col],
-                               status:gs.cellstate[row][col],
-                               cellSize: cellSize,  onSingleTap:  onSingleTap,firstMove:$firstMove,isTouching:$isTouching)
+                if gs.gamestate == .playingNow {
+                  SingleCellView(gs:gs,chmgr:chmgr,row:row,col:col,
+                                 chidx:gs.board[row][col],
+                                 status:gs.cellstate[row][col],
+                                 cellSize: cellSize,  onSingleTap:  onSingleTap,firstMove:$firstMove,isTouching:$isTouching)
+                } else {
+                  Color.offWhite
+                    .frame(width: cellSize, height: cellSize)
+                }
               }
               else {
                 Color.clear

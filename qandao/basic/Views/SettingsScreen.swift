@@ -72,18 +72,18 @@ fileprivate struct SettingsView: View {
             SizePickerView(chosenSize: $l_boardsize)
               .onChange(of:l_boardsize) {
                 switch l_boardsize {
-                case 3:l_facedown=false;l_startInCorners=false
-                case 4:l_facedown=false;l_startInCorners=false
-                case 5:l_facedown=true;l_startInCorners=false
-                case 6:l_facedown=true;l_startInCorners=true
-                case 7:l_facedown=true;l_startInCorners=true
+//                case 3:l_facedown=false;l_startInCorners=false
+//                case 4:l_facedown=false;l_startInCorners=false
+//                case 5:l_facedown=true;l_startInCorners=false
+//                case 6:l_facedown=true;l_startInCorners=true
+//                case 7:l_facedown=true;l_startInCorners=true
                 default :l_facedown=true;l_startInCorners=true
                 }
               }
             
     
             PreviewGridView(gs: gs, chmgr: chmgr, boardsize:$l_boardsize,scheme:$l_currentScheme)
-              .frame(width: 250,height: 250)
+              .frame(width: 200,height: 200)
             
             colorPicker
               .onChange(of: colorSchemeName) {

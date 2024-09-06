@@ -17,21 +17,7 @@ struct SizePickerView: View {
           }
         }
         .pickerStyle(SegmentedPickerStyle())
-        //.padding()
-        
-        // Text Paragraph based on the selected number
-//        Text(descriptionForNumber(chosenSize).1)
-//        .padding(.horizontal)
-//          .frame(maxWidth: .infinity, alignment: .leading)
-//        
-//        Text(descriptionForNumber(chosenSize).0)
-//          .padding()
-//          .frame(maxWidth: .infinity, alignment: .leading)
-//        if chosenSize >=  6 {
-//          Text("Corner rules require starting in a corner and moving only to adjacent cells.")
-//            .font(.footnote)
-//            .padding(.horizontal)
-//        }
+
     }
     
     // Function to return a paragraph of text based on the selected number
@@ -60,3 +46,20 @@ struct SizePickerView_Previews: PreviewProvider {
       SizePickerView(chosenSize: .constant(8))
     }
 }
+
+
+//.padding()
+
+// Text Paragraph based on the selected number
+//        Text(descriptionForNumber(chosenSize).1)
+//        .padding(.horizontal)
+//          .frame(maxWidth: .infinity, alignment: .leading)
+//
+//        Text(descriptionForNumber(chosenSize).0)
+//          .padding()
+//          .frame(maxWidth: .infinity, alignment: .leading)
+//        if chosenSize >=  6 {
+//          Text("Corner rules require starting in a corner and moving only to adjacent cells.")
+//            .font(.footnote)
+//            .padding(.horizontal)
+//        }

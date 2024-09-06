@@ -23,11 +23,11 @@ struct TopicIndexView: View {
                     ForEach(gs.basicTopics(), id: \.name) { topic in
                         HStack {
                             RoundedRectangle(cornerSize: CGSize(width: 10.0, height: 3.0))
-                                .frame(width: isIpad ? 25 : 15, height: isIpad ? 25 : 15)
+                                .frame(width: isIpad ? 40 : 25, height: isIpad ? 40 : 25)
                                 .foregroundStyle(gs.colorForTopic(topic.name).0)
                             Text(truncatedText(topic.name, count: isIpad ? 60 : 30))
                                 .lineLimit(1)
-                                .font(isIpad ? .headline : .caption2)
+                                .font(isIpad ? .title : .body)
                                 .foregroundColor(textColor)
                         }
                        // .frame(width: geometry.size.width / 3 /// (1.0 * //1.1
