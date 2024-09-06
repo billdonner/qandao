@@ -41,7 +41,7 @@ import SwiftUI
   @State var selectedAdditionalTopics: Set<String> = []
   @State var firstOnAppear = true
   @State var showTopicSelector = false
- // @State private var showSettings = false
+  @State private var showFreeportSettings = false
   
   @State private var cpv : [[Color]] = []
   
@@ -108,14 +108,14 @@ import SwiftUI
               )
               Spacer()
             }
-            Button(action: { showSettings.toggle() }) {
+            Button(action: { showFreeportSettings.toggle() }) {
               Text("Freeport Settings")
             }
           }
         }
       }
       
-      .sheet(isPresented:$showSettings){
+      .sheet(isPresented:$showFreeportSettings){
         FreeportSettingsScreen(gs: gs, chmgr: chmgr, lrdb: lrdb,showSettings:$showSettings)
       }
       .sheet(isPresented: $showTopicSelector) {

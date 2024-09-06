@@ -70,6 +70,8 @@ struct FreeportSettingsScreen: View {
   @State var addToLeaderboard = false
   @State var showReset = false
   @State var showDebug = false
+  
+  @State var showSentimentsLog = false
   @State private var isSelectedArray = [Bool](repeating: false, count: 26)
   
   var body: some View {
@@ -107,7 +109,9 @@ struct FreeportSettingsScreen: View {
             Button(action:{ addToLeaderboard.toggle() }) {
               Text("Add To Leaderboard")
             }.padding(.vertical)
-            
+            Button(action:{ showSentimentsLog.toggle() }) {
+              Text("Show Sentiments Log")
+            }.padding(.vertical)
             Button(action:{ showDebug.toggle() }) {
               Text("Show Debug")
             }.padding(.vertical)
@@ -129,6 +133,9 @@ struct FreeportSettingsScreen: View {
         }
         .fullScreenCover(isPresented: $showOnBoarding) {
           OnboardingScreen(isPresented: $showOnBoarding)
+        }
+        .sheet(isPresented: $showSentimentsLog) {
+          FetcherView( )
         }
      
         .fullScreenCover(isPresented: $showDebug) {
