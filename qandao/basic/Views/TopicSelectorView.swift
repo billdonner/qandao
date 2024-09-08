@@ -29,9 +29,18 @@ import SwiftUI
        }
    }
    
+   fileprivate func isNotReallyAvailable() -> Bool {
+     return gs.gimmees<=0 || selectedTopics.count >= GameState.maxTopicsForBoardSize(boardSize)
+   }
+   
+   fileprivate func isNotRemoveable() -> Bool {
+     return selectedTopics.count < GameState.minTopicsForBoardSize(boardSize)
+   }
+   
    var body: some View {
      let maxTopics =  GameState.maxTopicsForBoardSize(boardSize)
-     // let minTopics  =  GameState.minTopicsForBoardSize(boardSize)
+     let minTopics  =  GameState.minTopicsForBoardSize(boardSize)
+    // let topics = selectedTopics //.dropFirst(GameState.preselectedTopicsForBoardSize(boardSize))
      NavigationView{
        VStack(spacing: 5){
          TopicIndexView(gs: gs, chmgr: chmgr)
@@ -48,38 +57,14 @@ import SwiftUI
 //             .padding(.bottom)
 //         }.debugBorder()
          List {
-           Section(header: Label("Current Fixed Topics",systemImage: "info.circle")) {
-             ForEach(selectedTopics.prefix(GameState.preselectedTopicsForBoardSize(boardSize)), id: \.self) { topic in
-               HStack {
-                 Text(topic).font(.body)
-               //  Text("\(chmgr.freeChallengesCount(for: topic))").font(.caption2)
-                 Spacer()
-                 if let previousTopic = rerolledTopics[topic] {
-                   Text(previousTopic)
-                     .font(.footnote)
-                     .foregroundColor(.gray)
-                 } else {
-                   Button(action: {
-                     if let newTopic = allTopics.filter({ !selectedTopics.contains($0) }).randomElement() {
-                       if let index = selectedTopics.firstIndex(of: topic) {
-                         selectedTopics[index] = newTopic
-                         rerolledTopics[newTopic] = topic
-                       }
-                     }
-                   }) {
-                     Text("replace?").opacity(gs.gimmees > 2 ? 1.0:0.5)
-                       .font(.footnote)
-                       .foregroundColor(.orange)
-                   }.disabled(gs.gimmees <= 1)
-                 }
-               }
-             }
-           }
-           
-           Section(header: Label("Current Topics Chosen By You",systemImage: "info.circle")) {
-             //For a boardsize of \(boardSize)x\(boardSize)
-             Text("You can select \(maxTopics - selectedTopics.count) more topics.").font(.footnote).padding()
-             ForEach(selectedTopics.dropFirst(GameState.preselectedTopicsForBoardSize(boardSize)), id: \.self) { topic in
+           VStack (alignment:.leading, spacing:0){
+             Text("You must have \(minTopics) topics.")
+             Text("You can select \(maxTopics - selectedTopics.count) more topics.")
+             Text("Adding or removing a topic costs 1 gimmee.")
+           }.font(.footnote).padding()
+           Section(header: HStack { Text("Current Topics"); Image(systemName: "info.circle"); Spacer()}) {
+    
+             ForEach(selectedTopics, id: \.self) { topic in
                Button(action: {
                  if selectedTopics.contains(topic) {
                    selectedTopics.removeAll { $0 == topic }
@@ -91,8 +76,10 @@ import SwiftUI
                    Spacer()
                    Text ("remove?")     .font(.footnote)
                      .foregroundColor(.orange)
+                   .opacity(isNotRemoveable() ? 0.0 : 1.0)
                  }
                }
+               .disabled(isNotRemoveable())
              }
            }
            
@@ -109,8 +96,10 @@ import SwiftUI
                    Spacer()
                    Text ("add?")     .font(.footnote)
                      .foregroundColor(.orange)
+                     .opacity(isNotReallyAvailable() ? 0.0:1.0)
                  }
-               }
+               }.disabled(isNotReallyAvailable())
+               
              }
            }
          }.debugBorder()

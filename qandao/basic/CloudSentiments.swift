@@ -83,27 +83,35 @@ class CloudKitManager  {
     func fetchLogRecords() {
         let predicate = NSPredicate(value: true)
         let query = CKQuery(recordType: "LogRecord", predicate: predicate)
-        
-        publicDatabase.perform(query, inZoneWith: nil) { records, error in
-            if let error = error {
-                print("Error fetching records: \(error)")
-                self.errorMessage = error.localizedDescription
-                return
-            }
-            
-            guard let records = records else { return }
-            
-            DispatchQueue.main.async {
-                self.logRecords = records.map { record in
+      publicDatabase.fetch(withQuery: query, inZoneWith: nil){result in
+
+        switch result {
+        case .success(let (matchResults, _)):
+          
+ 
+            // Handle each record
+          self.logRecords = []
+            for (recordID, result) in matchResults {
+                switch result {
+                case .success(let record):
+                  self.logRecords.append (
                     LogRecord(id: record.recordID,
-                              message: record["message"] as? String ?? "",
-                              timestamp: record["timestamp"] as? Date ?? Date(),
-                              userIdentifier: record["userIdentifier"] as? String ?? "",
-                              sentiment: record["sentiment"] as? String ?? "",
-                              predefinedFeeling: record["predefinedFeeling"] as? String ?? "",
-                              challengeIdentifier: record["challengeIdentifier"] as? String ?? "")
+                            message: record["message"] as? String ?? "",
+                            timestamp: record["timestamp"] as? Date ?? Date(),
+                            userIdentifier: record["userIdentifier"] as? String ?? "",
+                            sentiment: record["sentiment"] as? String ?? "",
+                            predefinedFeeling: record["predefinedFeeling"] as? String ?? "",
+                            challengeIdentifier: record["challengeIdentifier"] as? String ?? "")
+                  )
+                case .failure(let error):
+                    print("Failed to fetch record with ID \(recordID): \(error.localizedDescription)")
                 }
             }
+        case .failure(let error):
+            print("Query failed with error: \(error.localizedDescription)")
+          
+        }
+
         }
     }
 }
@@ -152,3 +160,18 @@ struct FetcherView: View {
 }
 
 
+/**
+ DispatchQueue.main.async {
+     self.logRecords = matchResults.map { record in
+         LogRecord(id: record.recordID,
+                   message: record["message"] as? String ?? "",
+                   timestamp: record["timestamp"] as? Date ?? Date(),
+                   userIdentifier: record["userIdentifier"] as? String ?? "",
+                   sentiment: record["sentiment"] as? String ?? "",
+                   predefinedFeeling: record["predefinedFeeling"] as? String ?? "",
+                   challengeIdentifier: record["challengeIdentifier"] as? String ?? "")
+     }
+ }
+
+ 
+ */

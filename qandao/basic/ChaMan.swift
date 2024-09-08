@@ -330,6 +330,7 @@ class ChaMan {
       setupAnsweredInfo()
     }
     customNSLog("Loaded \(self.stati.count) challenges from mainBundle PlayData in \(formatTimeInterval(Date.now.timeIntervalSince(starttime))) secs")
+    saveChallengeStatuses(stati)
   }
   
   
