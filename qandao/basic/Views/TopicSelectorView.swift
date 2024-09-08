@@ -13,9 +13,11 @@ import SwiftUI
     let allTopics: [String]
     @Binding var selectedTopics: [String]
     @Binding var selectedSchemeIndex: ColorSchemeName
-    let chmgr: ChaMan
-    let gs:GameState
-    let boardSize: Int
+  let chmgr: ChaMan
+  let gs:GameState
+   let minTopics:Int
+   let maxTopics:Int
+   // let boardSize: Int
    
    @Environment(\.presentationMode) var presentationMode
     @State private var searchText = ""
@@ -30,53 +32,51 @@ import SwiftUI
    }
    
    fileprivate func isNotReallyAvailable() -> Bool {
-     return gs.gimmees<=0 || selectedTopics.count >= GameState.maxTopicsForBoardSize(boardSize)
+     return gs.gimmees<=0 || selectedTopics.count >= maxTopics//GameState.maxTopicsForBoardSize(boardSize)
    }
    
    fileprivate func isNotRemoveable() -> Bool {
-     return selectedTopics.count < GameState.minTopicsForBoardSize(boardSize)
+     return gs.gimmees<=0 || selectedTopics.count <= minTopics//GameState.minTopicsForBoardSize(boardSize)
    }
    
    var body: some View {
-     let maxTopics =  GameState.maxTopicsForBoardSize(boardSize)
-     let minTopics  =  GameState.minTopicsForBoardSize(boardSize)
+//     let maxTopics =  GameState.maxTopicsForBoardSize(boardSize)
+//     let minTopics  =  GameState.minTopicsForBoardSize(boardSize)
     // let topics = selectedTopics //.dropFirst(GameState.preselectedTopicsForBoardSize(boardSize))
      NavigationView{
+       
        VStack(spacing: 5){
-         TopicIndexView(gs: gs, chmgr: chmgr)
+         VStack (alignment:.leading, spacing:0){
+           Text("You must have between \(minTopics) and \(maxTopics) topics.")
+           Text("You can select \(maxTopics - selectedTopics.count) more topics.")
+           Text("Adding or removing a topic costs 1 gimmee.")
+         }.font(.caption)//.padding()
+         
+         TopicIndexView(gs: gs,chmgr:chmgr)
            .dismissable {
              //print("dismissed TopicsIndexView")
            }
-//         VStack(spacing: 0){
-//           //Text("board size:\(boardSize)x\(boardSize) requires \(minTopics)-\(maxTopics) topics.")
-//           Text("You can select \(maxTopics - selectedTopics.count) more topics.")
-
-//             .font(.subheadline)
-//           Text("You can change a pre-selected topic for one gimmee.")
-//             .font(.caption)
-//             .padding(.bottom)
-//         }.debugBorder()
-         List {
-           VStack (alignment:.leading, spacing:0){
-             Text("You must have \(minTopics) topics.")
-             Text("You can select \(maxTopics - selectedTopics.count) more topics.")
-             Text("Adding or removing a topic costs 1 gimmee.")
-           }.font(.footnote).padding()
+         
+         
+         Form {
            Section(header: HStack { Text("Current Topics"); Image(systemName: "info.circle"); Spacer()}) {
-    
+             
              ForEach(selectedTopics, id: \.self) { topic in
+               HStack {
+                 Text(topic).font(.body)
+                 // Text("\(chmgr.freeChallengesCount(for: topic))").font(.caption2)
+                 Spacer()
                Button(action: {
-                 if selectedTopics.contains(topic) {
-                   selectedTopics.removeAll { $0 == topic }
+                 withAnimation {
+                   if selectedTopics.contains(topic) {
+                     selectedTopics.removeAll { $0 == topic }
+                   }
                  }
                }) {
-                 HStack {
-                   Text(topic).font(.body)
-                  // Text("\(chmgr.freeChallengesCount(for: topic))").font(.caption2)
-                   Spacer()
+          
                    Text ("remove?")     .font(.footnote)
                      .foregroundColor(.orange)
-                   .opacity(isNotRemoveable() ? 0.0 : 1.0)
+                     .opacity(isNotRemoveable() ? 0.0 : 1.0)
                  }
                }
                .disabled(isNotRemoveable())
@@ -85,24 +85,25 @@ import SwiftUI
            
            Section(header: Text("Available Topics")) {
              ForEach(filteredTopics, id: \.self) { topic in
-               Button(action: {
+               HStack {
+                 Text(topic).font(.body)
+                 //Text("\(chmgr.freeChallengesCount(for: topic))").font(.caption2)
+                 Spacer()
+               Button(action: { withAnimation {
                  if !selectedTopics.contains(topic) && selectedTopics.count < maxTopics {
                    selectedTopics.append(topic)
                  }
+               }
                }) {
-                 HStack {
-                   Text(topic).font(.body)
-                   //Text("\(chmgr.freeChallengesCount(for: topic))").font(.caption2)
-                   Spacer()
-                   Text ("add?")     .font(.footnote)
+                   Text ("add?").font(.footnote)
                      .foregroundColor(.orange)
                      .opacity(isNotReallyAvailable() ? 0.0:1.0)
                  }
                }.disabled(isNotReallyAvailable())
                
              }
-           }
-         }.debugBorder()
+           }.debugBorder()
+         }
        }
        .onAppear {
          // loadPersistentData()

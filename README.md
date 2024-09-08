@@ -1,4 +1,5 @@
 #  QANDAO - revised test app for Q20K
+- version 0.7.34.4 topics selector improved
 - version 0.7.34.3 topics selector revised
 - version 0.7.34.2 testflight for cloudkit
 - version 0.7.34.1 misc cleanupo

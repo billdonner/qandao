@@ -16,7 +16,6 @@ import SwiftUI
   @State private var  l_currentScheme:ColorSchemeName
   @State private var  l_difficultyLevel: Int
   @State private var  l_topicsinplay: [String]
-  // @State private var show:Binding<Bool>
    
    init(chmgr:ChaMan,gs:GameState,lrdb:LeaderboardService,showSettings:Binding<Bool>)
    {
@@ -42,10 +41,7 @@ import SwiftUI
   @State var firstOnAppear = true
   @State var showTopicSelector = false
   @State private var showFreeportSettings = false
-  
   @State private var cpv : [[Color]] = []
-  
-  
   @State var colorSchemeName : ColorSchemeName // hack //summer
   @Environment(\.presentationMode) var presentationMode
 
@@ -119,15 +115,15 @@ import SwiftUI
         FreeportSettingsScreen(gs: gs, chmgr: chmgr, lrdb: lrdb,showSettings:$showSettings)
       }
       .sheet(isPresented: $showTopicSelector) {
-        
           TopicSelectorView(allTopics: chmgr.everyTopicName,
                             selectedTopics:  $l_topicsinplay,
                             selectedSchemeIndex:$l_currentScheme,
-                            chmgr: chmgr, gs:gs, boardSize:l_boardsize)
-        
+                            chmgr: chmgr,
+                            gs:gs,minTopics:GameState.minTopicsForBoardSize(l_boardsize),
+                            maxTopics:
+                              GameState.maxTopicsForBoardSize(l_boardsize)) 
       }
       .onAppear {
-   
         if firstOnAppear {
           firstOnAppear = false
           chmgr.checkAllTopicConsistency("GameSettings onAppear")

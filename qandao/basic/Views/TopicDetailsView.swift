@@ -22,12 +22,13 @@ struct TopicDetailsView: View {
   let topic:String
   let gs:GameState
   let chmgr:ChaMan
+  let tinfo: TopicInfo? // chmgr.tinfo[topic]
   @State private var showApview:Challenge?  = nil
   @State var  showGamesLog =  false
   var body: some View {
 //      let unplayedCount = "\(chmgr.freeChallengesCount(for: topic))"
       let colors = gs.colorForTopic(topic)
-      let tinfo = chmgr.tinfo[topic]
+      ///let tinfo = chmgr.tinfo[topic]
       
       if let tinfo = tinfo {
           let (chas, stas) = tinfo.getChallengesAndStatuses(chmgr: chmgr)
@@ -89,5 +90,6 @@ struct TopicDetailsView: View {
 
 #Preview {
   TopicDetailsView(topic:"Fun",gs:GameState.mock,
-    chmgr: ChaMan.mock )
+                   chmgr: ChaMan.mock,tinfo:nil//todo
+  )
 }

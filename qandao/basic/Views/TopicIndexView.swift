@@ -8,6 +8,7 @@ struct Tdi: Identifiable {
 struct TopicIndexView: View {
     let gs: GameState
     let chmgr: ChaMan
+  
     @Environment(\.colorScheme) var colorScheme // System light/dark
     @State var succ = false
     @State var topicDetailInfo: Tdi? = nil
@@ -48,7 +49,8 @@ struct TopicIndexView: View {
             }
          // .frame(height:50)
             .sheet(item: $topicDetailInfo) { tdi in
-                TopicDetailsView(topic: tdi.name, gs: gs, chmgr: chmgr)
+              TopicDetailsView(topic: tdi.name, gs: gs, chmgr: chmgr, tinfo:
+                                TopicInfo(name:tdi.name,alloccount: 1,freecount: 0,replacedcount: 0,rightcount: 1,wrongcount: 1, challengeIndices: [0,1,2]))
             }
        // }
         .debugBorder()

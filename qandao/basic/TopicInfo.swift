@@ -16,6 +16,9 @@ struct TopicInfo : Codable {
       var rightcount: Int
       var wrongcount: Int
       var challengeIndices: [Int] // indexes into stati
+  static var mock : Self = {
+    TopicInfo(name:"mock",alloccount: 1,freecount:1,replacedcount: 0,rightcount: 1,wrongcount: 0,challengeIndices: [1,2,3])
+  }()
 
   func checkConsistency() {
     assert (alloccount + freecount + replacedcount + rightcount + wrongcount == challengeIndices.count)
