@@ -8,6 +8,7 @@ struct Tdi: Identifiable {
 struct TopicIndexView: View {
     let gs: GameState
     let chmgr: ChaMan
+    @Binding var inPlayTopics:[String]
   
     @Environment(\.colorScheme) var colorScheme // System light/dark
     @State var succ = false
@@ -18,10 +19,8 @@ struct TopicIndexView: View {
             //let isIpad = geometry.size.width > 600
             
           ScrollView(.horizontal, showsIndicators: false)  {
-             // Text("      ") // push this down a bit
-              //  LazyVGrid(columns: columns, spacing: 8) {
              HStack  {
-                    ForEach(gs.basicTopics(), id: \.name) { topic in
+               ForEach(inPlayTopics.map {BasicTopic(name: $0)}, id: \.name) { topic in
                         HStack {
                             RoundedRectangle(cornerSize: CGSize(width: 10.0, height: 3.0))
                                 .frame(width: isIpad ? 40 : 25, height: isIpad ? 40 : 25)
@@ -47,12 +46,9 @@ struct TopicIndexView: View {
                 .background(Color.black.opacity(0.1))
                 .cornerRadius(10)
             }
-         // .frame(height:50)
-            .sheet(item: $topicDetailInfo) { tdi in
-              TopicDetailsView(topic: tdi.name, gs: gs, chmgr: chmgr, tinfo:
-                                TopicInfo(name:tdi.name,alloccount: 1,freecount: 0,replacedcount: 0,rightcount: 1,wrongcount: 1, challengeIndices: [0,1,2]))
-            }
-       // }
+                .sheet(item: $topicDetailInfo) { tdi in
+                  TopicDetailsView(topic: tdi.name, gs: gs, chmgr: chmgr)
+                } 
         .debugBorder()
     }
 
@@ -73,7 +69,8 @@ struct TopicIndexView_Previews: PreviewProvider {
     static var previews: some View {
         TopicIndexView(
           gs: GameState.mock,
-            chmgr: ChaMan.mock
+            chmgr: ChaMan.mock,
+          inPlayTopics:.constant( ["a","b"])
         )
     }
 }

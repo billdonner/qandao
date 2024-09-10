@@ -13,11 +13,11 @@ import SwiftUI
     let allTopics: [String]
     @Binding var selectedTopics: [String]
     @Binding var selectedSchemeIndex: ColorSchemeName
-  let chmgr: ChaMan
-  let gs:GameState
+   let chmgr: ChaMan
+   let gs:GameState
    let minTopics:Int
    let maxTopics:Int
-   // let boardSize: Int
+   @Binding var gimms: Int
    
    @Environment(\.presentationMode) var presentationMode
     @State private var searchText = ""
@@ -32,17 +32,15 @@ import SwiftUI
    }
    
    fileprivate func isNotReallyAvailable() -> Bool {
-     return gs.gimmees<=0 || selectedTopics.count >= maxTopics//GameState.maxTopicsForBoardSize(boardSize)
+     return gimms<=0 || selectedTopics.count >= maxTopics//GameState.maxTopicsForBoardSize(boardSize)
    }
    
    fileprivate func isNotRemoveable() -> Bool {
-     return gs.gimmees<=0 || selectedTopics.count <= minTopics//GameState.minTopicsForBoardSize(boardSize)
+     return gimms<=0 || selectedTopics.count <= minTopics//GameState.minTopicsForBoardSize(boardSize)
    }
    
    var body: some View {
-//     let maxTopics =  GameState.maxTopicsForBoardSize(boardSize)
-//     let minTopics  =  GameState.minTopicsForBoardSize(boardSize)
-    // let topics = selectedTopics //.dropFirst(GameState.preselectedTopicsForBoardSize(boardSize))
+     
      NavigationView{
        
        VStack(spacing: 5){
@@ -52,14 +50,14 @@ import SwiftUI
            Text("Adding or removing a topic costs 1 gimmee.")
          }.font(.caption)//.padding()
          
-         TopicIndexView(gs: gs,chmgr:chmgr)
+         TopicIndexView(gs: gs,chmgr:chmgr,inPlayTopics: $selectedTopics)
            .dismissable {
              //print("dismissed TopicsIndexView")
            }
          
          
          Form {
-           Section(header: HStack { Text("Current Topics"); Image(systemName: "info.circle"); Spacer()}) {
+           Section(header: HStack { Text("Active Topics"); Image(systemName: "info.circle"); Spacer()}) {
              
              ForEach(selectedTopics, id: \.self) { topic in
                HStack {
@@ -70,6 +68,7 @@ import SwiftUI
                  withAnimation {
                    if selectedTopics.contains(topic) {
                      selectedTopics.removeAll { $0 == topic }
+                     gimms -= 1
                    }
                  }
                }) {
@@ -92,6 +91,7 @@ import SwiftUI
                Button(action: { withAnimation {
                  if !selectedTopics.contains(topic) && selectedTopics.count < maxTopics {
                    selectedTopics.append(topic)
+                   gimms -= 1
                  }
                }
                }) {

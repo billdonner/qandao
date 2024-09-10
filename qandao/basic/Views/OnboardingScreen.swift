@@ -17,8 +17,6 @@ import SwiftUI
    @Binding var isPresented:Bool
    var body: some View {
      VStack {
-      // WrappedDismissButton(isPresented: $isPresented)
-  
          
      MatrixView(
              rows: 6, cols: 6,
@@ -189,25 +187,25 @@ struct OB06: View {
 - **Content:** Briefly describe the difficulty settings and game variants.
   - "Choose your difficulty level: easy, normal, or hard. Experiment with different game variants like 'All Questions Face Up' or 'All Questions Face Down' for extra challenges. Good luck!"
 */
-struct OB07: View {
-    @Binding var isPresented:Bool
-    var body: some View {
-      ZStack {
-        WrappedDismissButton(isPresented: $isPresented)
-        VStack {
-          Image("Onboarding7")
-            .resizable()
-            .scaledToFit()
-            .padding()
-          Text("Difficulty & Variants")
-            .font(.title)
-            .padding()
-          Text("Choose your difficulty level: easy, normal, or hard. Experiment with different game variants like 'All Questions Face Up' or 'All Questions Face Down' for extra challenges. Good luck!")
-            .padding()
-        }
-      }
-    }
-  }
+//struct OB07: View {
+//    @Binding var isPresented:Bool
+//    var body: some View {
+//      ZStack {
+//        WrappedDismissButton(isPresented: $isPresented)
+//        VStack {
+//          Image("Onboarding7")
+//            .resizable()
+//            .scaledToFit()
+//            .padding()
+//          Text("Difficulty & Variants")
+//            .font(.title)
+//            .padding()
+//          Text("Choose your difficulty level: easy, normal, or hard. Experiment with different game variants like 'All Questions Face Up' or 'All Questions Face Down' for extra challenges. Good luck!")
+//            .padding()
+//        }
+//      }
+//    }
+//  }
 
 struct OnboardingScreen: View {
   @Binding var  isPresented: Bool
@@ -225,11 +223,11 @@ struct OnboardingScreen: View {
         .tag(mkID())
       OB06(isPresented: $isPresented)
         .tag(mkID())
-      OB07(isPresented: $isPresented)
-        .tag(mkID())
+     // OB07(isPresented: $isPresented)
+      //  .tag(mkID())
     }
     .background(Color.white.opacity(0.1))
-    .tabViewStyle(PageTabViewStyle())
+    .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
   }
 }
 #Preview {

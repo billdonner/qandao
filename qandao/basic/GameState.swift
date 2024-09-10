@@ -337,6 +337,9 @@ class GameState : Codable {
   
   
   func totalScore() -> Int {
+    
+    if gamenumber == 0 { return 0 }
+    
     let part1 =   woncount * 10
     - lostcount * 2
      + rightcount * 3
@@ -359,6 +362,7 @@ class GameState : Codable {
     let total = part1 + part2 + part3
     
     if total < 0 { return 0}
+    
     
     return total
       

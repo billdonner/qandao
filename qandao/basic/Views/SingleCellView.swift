@@ -38,6 +38,7 @@ struct SingleCellView: View {
   let onSingleTap: (_ row:Int, _ col:Int ) -> Bool
   @Binding var firstMove:Bool
   @Binding var isTouching:Bool
+  @Binding var marqueeMessage:String
   @Environment(\.colorScheme) var colorScheme //system light/dark
   @State var alreadyPlayed:Sdi?
   
@@ -205,6 +206,9 @@ struct SingleCellView: View {
           gs.lastmove =    GameMove(row:row,col:col,movenumber: gs.movenumber)
           firstMove =    onSingleTap(row,col)
         }
+        else {
+          marqueeMessage = "You need to tap in a corner"
+        }
       }
   }// make one cell
 }
@@ -223,7 +227,8 @@ struct SingleCellView: View {
     cellSize: 250, 
     onSingleTap: { _, _ in true },
     firstMove: .constant(false),
-    isTouching: .constant(false)
+    isTouching: .constant(false),
+    marqueeMessage: .constant("marquee message")
   )
   .previewLayout(.sizeThatFits)
 }
@@ -241,14 +246,8 @@ struct SingleCellView: View {
     cellSize: 250,
     onSingleTap: { _, _ in true },
     firstMove: .constant(true),
-    isTouching: .constant(true)
+    isTouching: .constant(true),
+    marqueeMessage: .constant("marquee message")
   )
   .previewLayout(.sizeThatFits)
 }
-//if isPreviewMode {
-//  Rectangle()
-//  .frame(width: cellSize, height: cellSize)
-//  .cornerRadius(cornerradius)
-//  .background(colormix.0)
-//  .foregroundColor(foregroundColorFrom( backgroundColor: colormix.0 ))
-//} else

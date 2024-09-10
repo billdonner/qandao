@@ -5,7 +5,7 @@
 //  Created by bill donner on 8/4/24.
 //
 
-import Foundation
+import SwiftUI
 
 extension GameScreen /* actions */ { 
   func onAppearAction () {
@@ -22,10 +22,16 @@ extension GameScreen /* actions */ {
     showCantStartAlert = false
   }
   func onYouWin () {
-    endGame(status: .justWon)
+    withAnimation{
+      endGame(status: .justWon)
+      marqueeMessage = "Congratulations but there's more to do: Press Play to keep going."
+    }
   }
   func onYouLose () {
-    endGame(status: .justLost)
+    withAnimation {
+      endGame(status: .justLost)
+      marqueeMessage = "Sorry about that. Press Play to keep going."
+    }
   }
   func onEndGamePressed () {
    // print("//GameScreen EndGamePressed")

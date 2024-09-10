@@ -45,6 +45,7 @@ private struct zz:View {
   }
 struct ScoreBarView: View {
   let gs: GameState
+  @Binding var marqueeMessage : String
   @State var showWinAlert = false
   @State var showLoseAlert = false
   var body:some View {
@@ -79,5 +80,6 @@ struct ScoreBarView: View {
   }
 
 #Preview {
-  ScoreBarView(gs: GameState(size: 3, topics: ["a","b","c"], challenges: []))
+  @State var marqueeMessage = "blah blah"
+  return ScoreBarView(gs: GameState(size: 3, topics: ["a","b","c"], challenges: []), marqueeMessage: $marqueeMessage)
 }

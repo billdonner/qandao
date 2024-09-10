@@ -1,4 +1,5 @@
 #  QANDAO - revised test app for Q20K
+- version 0.7.34.5 fix total score initial value; put topic selector on game screen; require gimmees to change topics; remove garbage on bottom of onboarding screens; improved topic details; shows screen after endgame; shows error message on top; put topic index in two places - colors slightly broken in settings but changes properly in real game
 - version 0.7.34.4 topics selector improved
 - version 0.7.34.3 topics selector revised
 - version 0.7.34.2 testflight for cloudkit

@@ -7,8 +7,7 @@ import SwiftUI
   let lrdb:LeaderboardService
   @Binding var showSettings: Bool
 
-
-  @State private var ourTopics: [String]
+  @State private var  l_gimms: Int
   @State private var  l_boardsize: Int
   @State private var  l_startInCorners: Bool
   @State private var  l_facedown: Bool
@@ -16,6 +15,7 @@ import SwiftUI
   @State private var  l_currentScheme:ColorSchemeName
   @State private var  l_difficultyLevel: Int
   @State private var  l_topicsinplay: [String]
+  @State private var  l_scheme : ColorSchemeName // hack //summer
    
    init(chmgr:ChaMan,gs:GameState,lrdb:LeaderboardService,showSettings:Binding<Bool>)
    {
@@ -23,7 +23,6 @@ import SwiftUI
      self.gs = gs
      self.lrdb = lrdb
      self._showSettings =  showSettings
-     ourTopics = chmgr.playData.allTopics
     l_topicsinplay = gs.topicsinplay
     l_facedown = gs.facedown
     l_boardsize = gs.boardsize
@@ -31,7 +30,8 @@ import SwiftUI
     l_currentScheme = gs.currentscheme
     l_difficultyLevel = gs.difficultylevel
     l_startInCorners = gs.startincorners
-    colorSchemeName = gs.currentscheme
+    l_scheme = gs.currentscheme
+    l_gimms = gs.gimmees
    }
    
  
@@ -42,11 +42,11 @@ import SwiftUI
   @State var showTopicSelector = false
   @State private var showFreeportSettings = false
   @State private var cpv : [[Color]] = []
-  @State var colorSchemeName : ColorSchemeName // hack //summer
+
   @Environment(\.presentationMode) var presentationMode
 
   var colorPicker: some View {
-    Picker("Color Palette", selection: $colorSchemeName) {
+    Picker("Color Palette", selection: $l_scheme) {
       ForEach(AppColors.allSchemes.indices.sorted(),id:\.self) { idx in
         Text("\(AppColors.pretty(for:AppColors.allSchemes[idx].name))")
           .tag(idx)
@@ -83,10 +83,10 @@ import SwiftUI
               .frame(width: 200,height: 200)
             
             colorPicker
-              .onChange(of: colorSchemeName) {
+              .onChange(of: l_scheme) {
                 withAnimation {
                  // gs.currentscheme = colorSchemeName
-                  l_currentScheme = colorSchemeName
+                  l_currentScheme = l_scheme
                 }
               }
             
@@ -121,7 +121,7 @@ import SwiftUI
                             chmgr: chmgr,
                             gs:gs,minTopics:GameState.minTopicsForBoardSize(l_boardsize),
                             maxTopics:
-                              GameState.maxTopicsForBoardSize(l_boardsize)) 
+                              GameState.maxTopicsForBoardSize(l_boardsize),gimms: $l_gimms)
       }
       .onAppear {
         if firstOnAppear {
@@ -146,6 +146,7 @@ import SwiftUI
  
   private func onDonePressed() {
     // copy every change into gameState
+    gs.gimmees = l_gimms // copy in adjustment from topic selector
     gs.doublediag = l_doubleDiag
     gs.difficultylevel = l_difficultyLevel
     gs.startincorners = l_startInCorners

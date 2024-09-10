@@ -75,6 +75,7 @@ struct MainGridView : View {
   @Binding var boardsize: Int
   @Binding var firstMove: Bool
   @Binding var isTouching : Bool
+  @Binding var marqueeMessage: String
   let onSingleTap: (Int,Int)->Bool
   
   var body: some View {
@@ -92,15 +93,15 @@ struct MainGridView : View {
               if row < boardsize  && col < boardsize
               //&&  gs.board[row][col] >= 0
               { // ensure its inbounds and allocated
-                if gs.gamestate == .playingNow {
+              // if gs.gamestate == .playingNow {
                   SingleCellView(gs:gs,chmgr:chmgr,row:row,col:col,
                                  chidx:gs.board[row][col],
                                  status:gs.cellstate[row][col],
-                                 cellSize: cellSize,  onSingleTap:  onSingleTap,firstMove:$firstMove,isTouching:$isTouching)
-                } else {
-                  Color.offWhite
-                    .frame(width: cellSize, height: cellSize)
-                }
+                                 cellSize: cellSize,  onSingleTap:  onSingleTap,firstMove:$firstMove,isTouching:$isTouching,marqueeMessage: $marqueeMessage)
+//                } else {
+//                  Color.offWhite
+//                    .frame(width: cellSize, height: cellSize)
+//                }
               }
               else {
                 Color.clear
@@ -120,7 +121,7 @@ struct MainGridView : View {
                chmgr: ChaMan(playData: PlayData.mock),
                boardsize: .constant(GameState.mock.boardsize),
                firstMove: .constant(false),
-               isTouching: .constant(false) ,
+               isTouching: .constant(false), marqueeMessage: .constant("marquee") ,
                onSingleTap: { row,col in
     print("Tapped cell with challenge \(row) \(col)")
     return false

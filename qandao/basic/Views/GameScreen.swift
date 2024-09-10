@@ -26,6 +26,8 @@ struct GameScreen: View {
 
   @State   var showLeaderboard = false
   
+  @State var marqueeMessage =  "Hit Play to Start a New Game."
+
   var bodyMsg: String {
     let t =  """
     That was game \(gs.gamenumber) of which:\nyou've won \(gs.woncount) and \nlost \(gs.lostcount) games
@@ -35,26 +37,28 @@ struct GameScreen: View {
   
   var body: some View {
  
-      VStack {
-     
-        topButtonsVeew.padding([.leading,.trailing,.bottom])
-        
+      VStack { 
+        topButtonsVeew.padding(.horizontal)      .debugBorder()
+        if !marqueeMessage.isEmpty {
+          MarqueeMessageView(
+            message: $marqueeMessage,
+            fadeInDuration: 1.0,
+            fadeOutDuration: 3.0,
+            displayDuration: 5.0 // Message stays visible for 5 seconds before fading out
+          ).opacity(marqueeMessage.isEmpty ? 0:1).debugBorder()
+        }
           if gs.boardsize > 1 {
-            MainGridView(gs: gs, chmgr:chmgr,  boardsize:$gs.boardsize, firstMove: $firstMove, isTouching: $isTouching, onSingleTap: onSingleTap)
+            MainGridView(gs: gs, chmgr:chmgr,  boardsize:$gs.boardsize, firstMove: $firstMove, isTouching: $isTouching, marqueeMessage: $marqueeMessage, onSingleTap: onSingleTap)
               .debugBorder()
           
-            ScoreBarView(gs: gs)
+            ScoreBarView(gs: gs,marqueeMessage:$marqueeMessage)
               .debugBorder()
             
-     
+            TopicIndexView(gs:gs,chmgr:chmgr,inPlayTopics:$gs.topicsinplay)
           
           .onChange(of:gs.cellstate) {
             onChangeOfCellState()
           }
-//          .onChange(of:gs.boardsize) {
-//          //  print("//GameScreen onChangeof(Size) to \(gs.boardsize)")
-//            onBoardSizeChange ()
-//          }
      
           .onDisappear {
             print("Yikes the GameScreen is Disappearing!")

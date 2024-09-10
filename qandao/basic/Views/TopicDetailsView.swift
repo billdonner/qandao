@@ -22,13 +22,11 @@ struct TopicDetailsView: View {
   let topic:String
   let gs:GameState
   let chmgr:ChaMan
-  let tinfo: TopicInfo? // chmgr.tinfo[topic]
   @State private var showApview:Challenge?  = nil
   @State var  showGamesLog =  false
   var body: some View {
-//      let unplayedCount = "\(chmgr.freeChallengesCount(for: topic))"
-      let colors = gs.colorForTopic(topic)
-      ///let tinfo = chmgr.tinfo[topic]
+    let colors = gs.colorForTopic(topic)
+    let tinfo = chmgr.tinfo[topic]
       
       if let tinfo = tinfo {
           let (chas, stas) = tinfo.getChallengesAndStatuses(chmgr: chmgr)
@@ -42,11 +40,11 @@ struct TopicDetailsView: View {
                       Text(topic)
                           .font(.largeTitle)
                           .fontWeight(.bold)
-                          .shadow(color: .black, radius: 1, x: 0, y: 1)
+                         // .shadow(color: .black, radius: 1, x: 0, y: 1)
                           .padding(.top, 50)
                       Text("\(chas.count) challenges in this topic")
                           .font(.footnote)
-                          .shadow(color: .black, radius: 1, x: 0, y: 1)
+                        //  .shadow(color: .black, radius: 1, x: 0, y: 1)
                   }
                   .foregroundColor(colors.1)
                   .padding()
@@ -57,8 +55,13 @@ struct TopicDetailsView: View {
                           HStack {
                               VStack(alignment: .leading) {
                                   Text(truncatedText(chas[idx].question, count: 200))
-                                  Text(" \(stas[idx]) ")
-                                      .font(.footnote)
+                               let tt =  switch stas[idx] {
+                                case .playedCorrectly: "✅"
+                                case .playedIncorrectly:"❌"
+                                case .abandoned:"💤"
+                                default:"⁉️"
+                                }
+                            Text(tt).font(.headline)
                               }
                               Spacer()
                               Image(systemName: "chevron.right")
@@ -90,6 +93,6 @@ struct TopicDetailsView: View {
 
 #Preview {
   TopicDetailsView(topic:"Fun",gs:GameState.mock,
-                   chmgr: ChaMan.mock,tinfo:nil//todo
+                   chmgr: ChaMan.mock
   )
 }
