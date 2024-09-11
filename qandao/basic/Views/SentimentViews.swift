@@ -8,10 +8,81 @@
 import SwiftUI
 
 
-let positiveFeelings = ["Vague", "Unclear", "Illogical", "Stimulating", "Insightful", "Brilliant"]
-let negativeFeelings = ["Incorrect", "Crazy", "Illogical", "Confusing", "Boring", "I Hate It"]
+let positiveFeelings = ["Vague", "Unclear", "Illogical", "Stimulating", "Insightful", "Brilliant","Other"]
+let negativeFeelings = ["Incorrect", "Crazy", "Illogical", "Confusing", "Boring", "I Hate It","Other"]
+let appFeelings = ["★★★★★","★★★★","★★★","★★","★"," "]
 
+struct CommentsView: View {
  
+    @State private var cloudKitManager = CloudKitManager.shared
+    @State private var message: String = ""
+    @State private var selectedFeeling: String = "★★★"
+    @State private var showAlert = false
+    
+    @Environment(\.dismiss) var dismiss  // Environment value for dismissing the view
+    
+  var body: some View {
+    NavigationView {
+      VStack {
+        TextField("Enter your comment", text: $message)
+          .textFieldStyle(RoundedBorderTextFieldStyle())
+          .padding()
+        
+        Picker("Select a feeling", selection: $selectedFeeling) {
+          ForEach(appFeelings, id: \.self) { feeling in
+            Text(feeling)
+          }
+        }
+        .pickerStyle(MenuPickerStyle())
+        .padding()
+        
+        Button(action: {
+          let timestamp = Date()
+          cloudKitManager.saveLogRecord(
+            message: message,
+            sentiment: "Comment",
+            predefinedFeeling: selectedFeeling,
+            timestamp: timestamp,
+            challengeIdentifier: UUID().uuidString
+          ) { result in
+            switch result {
+            case .success(let record):
+              print("Successfully saved comment record: \(record)")
+              dismiss()
+            case .failure(let error):
+              print("Error saving positive comment record: \(error)")
+              showAlert = true
+            }
+          }
+        }) {
+          Text("Submit Comment")
+            .padding()
+            .background(Color.blue)
+            .foregroundColor(.white)
+            .cornerRadius(8)
+        }
+        .alert(isPresented: $showAlert) {
+          Alert(title: Text("Error"), message: Text(cloudKitManager.errorMessage ?? "Unknown error"), dismissButton: .default(Text("OK")))
+        }
+      }
+      .padding()
+      .navigationTitle("Send Comment")
+      .toolbar {
+        ToolbarItem(placement: .navigationBarTrailing) {
+          Button(action: {
+            dismiss()
+          }) {
+            Image(systemName: "xmark")
+              .foregroundColor(.primary)  // Adjust color as needed
+          }
+        }
+      }
+    }
+  }
+}
+#Preview("Comment") {
+  CommentsView()
+}
 
 struct PositiveSentimentView: View {
     let id: String

@@ -7,12 +7,35 @@
 import SwiftUI
 
 struct AlreadyPlayedView : View {
-//  let row:Int
-//  let col:Int
+ 
   let ch:Challenge
   let gs:GameState
   let chmgr: ChaMan
   @Environment(\.dismiss) var dismiss  // Environment value for dismissing the view
+  @State var showThumbsUp : Challenge? = nil
+  @State var showThumbsDown : Challenge? = nil
+  
+  var thumbsUpButton: some View {
+      Button(action: {
+        showThumbsUp =  ch
+      }){
+        Image(systemName: "hand.thumbsup")
+          .font(buttFont)
+              .cornerRadius(buttRadius)
+              //.symbolEffect(.wiggle,isActive: true)
+      }
+  }
+  var thumbsDownButton: some View {
+      Button(action: {
+        showThumbsDown = ch
+      }){
+        Image(systemName: "hand.thumbsdown")
+          .font(buttFont)
+              .cornerRadius(buttRadius)
+      }
+  }
+  
+  
   var body: some View {
 
     if let ansinfo = chmgr.ansinfo[ch.id] {
@@ -62,18 +85,33 @@ struct AlreadyPlayedView : View {
                 TextField("id", text:.constant("\(ch.id)")).font(.caption)
                 VStack (alignment: .leading){
                   Text ("You answered this question on \(ansinfo.timestamp)").font(.footnote)
-            
                 }
                 Spacer()
               }
               Spacer()
-            }.background(Color.gray.opacity(0.2))
             }
+            }.background(Color.gray.opacity(0.2))
+              HStack {
+                thumbsUpButton
+                Spacer()
+                thumbsDownButton
+              }
           }.padding(.horizontal)
+            .sheet(item:$showThumbsDown) { ch in
+              NegativeSentimentView(id: ch.id)
+                .dismissable {
+                  print("exit from negative sentiment")
+                }
+            }
+            .sheet(item:$showThumbsUp) { ch in
+              PositiveSentimentView(id: ch.id)
+                .dismissable {
+                  print("exit from positive sentiment")
+                }
+            }
           Spacer()
         }
         .border( ansinfo.answer == ch.correct ? .green:.red,width:10)
-      
       
     } else {
       Color.red

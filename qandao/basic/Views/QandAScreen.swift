@@ -11,7 +11,7 @@ struct QandAScreen: View {
   
   @State  var showInfo = false
   @State   var gimmeeAlert = false
-  @State   var showThumbsUp:Challenge? = nil
+  @State   var showThumbsUp: Challenge? = nil
   @State   var showThumbsDown: Challenge? = nil
   @State   var selectedAnswer: String? = nil  // State to track selected answer
   @State   var answerCorrect: Bool = false   // State to track if the selected answer is correct
@@ -41,6 +41,8 @@ struct QandAScreen: View {
             killTimer: $killTimer)
           .disabled(questionedWasAnswered)
           .debugBorder()
+          
+          
           // pass in the answers explicitly to eliminate flip flopsy behavior
           questionAndAnswersSectionVue(answers:ch.answers, geometry: geometry)
             .disabled(questionedWasAnswered)
