@@ -6,6 +6,9 @@
 //
 
 import SwiftUI
+
+typealias ColorTriple =  (Color, Color, UUID)
+
 struct GameMove : Codable,Hashable {
   let row:Int
   let col:Int
@@ -483,17 +486,17 @@ class GameState : Codable {
     return topicsinplay.map {BasicTopic(name: $0)}
   }
 
-  
-  func indexOfTopic(_ topic:String ) -> Int? {
-    for (index,t) in self.topicsinplay.enumerated()  {
-      if t == topic { return index}
-    }
-    return nil
+  static func indexOfTopic(_ topic: String,within:[String]) -> Int? {
+      return  within.firstIndex(where: { $0 == topic })
   }
-  func colorForTopic(_ topic:String) ->   (Color, Color, UUID) {
-    if let index = indexOfTopic(topic ) {
-      //use as into into the selected appcolors sheme
-      //let scheme = AppColors.allSchemes[gs.currentscheme.rawValue]
+  func indexOfTopic(_ topic: String) -> Int? {
+    Self.indexOfTopic(topic,within: self.topicsinplay)
+  }
+  func colorForTopic(_ topic:String) ->   ColorTriple{
+    colorForTopic(topic,within:self.topicsinplay)
+  }
+  func colorForTopic(_ topic:String,within:[String]) ->   ColorTriple {
+    if let index = Self.indexOfTopic(topic,within:within ) {
       return AppColors.colorForTopicIndex(index:index,gs:self)
     } else {
       return (Color.white, Color.black, UUID())

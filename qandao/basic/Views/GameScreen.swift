@@ -26,7 +26,7 @@ struct GameScreen: View {
 
   @State   var showLeaderboard = false
   
-  @State var marqueeMessage =  "Hit Play to Start a New Game."
+  @State var marqueeMessage =  "Tap on a corner to start the game"
 
   var bodyMsg: String {
     let t =  """
@@ -54,7 +54,7 @@ struct GameScreen: View {
             ScoreBarView(gs: gs,marqueeMessage:$marqueeMessage)
               .debugBorder()
             
-            TopicIndexView(gs:gs,chmgr:chmgr,inPlayTopics:$gs.topicsinplay)
+            TopicIndexView(gs:gs,chmgr:chmgr,inPlayTopics:$gs.topicsinplay,scheme: $gs.currentscheme)
           
           .onChange(of:gs.cellstate) {
             onChangeOfCellState()

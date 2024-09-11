@@ -22,10 +22,12 @@ struct TopicDetailsView: View {
   let topic:String
   let gs:GameState
   let chmgr:ChaMan
+  let colortrip: ColorTriple
+  
   @State private var showApview:Challenge?  = nil
   @State var  showGamesLog =  false
   var body: some View {
-    let colors = gs.colorForTopic(topic)
+   // let colors = gs.colorForTopic(topic)
     let tinfo = chmgr.tinfo[topic]
       
       if let tinfo = tinfo {
@@ -33,7 +35,7 @@ struct TopicDetailsView: View {
           
           VStack {
               ZStack {
-                colors.0
+                colortrip.0
                       .ignoresSafeArea(edges: .top)
        
                   VStack {
@@ -46,7 +48,7 @@ struct TopicDetailsView: View {
                           .font(.footnote)
                         //  .shadow(color: .black, radius: 1, x: 0, y: 1)
                   }
-                  .foregroundColor(colors.1)
+                  .foregroundColor(colortrip.1)
                   .padding()
               }
               List {
@@ -93,6 +95,5 @@ struct TopicDetailsView: View {
 
 #Preview {
   TopicDetailsView(topic:"Fun",gs:GameState.mock,
-                   chmgr: ChaMan.mock
-  )
+                   chmgr: ChaMan.mock, colortrip: GameState.mock.colorForTopic("Fun"))
 }

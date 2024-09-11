@@ -14,7 +14,7 @@ typealias ColorSchemeName = Int
 
 class AppColors {
   
-  static func colorForSchemeAndTopic(scheme schmindx:ColorSchemeName,index topicIndex:Int) -> (Color, Color, UUID) {
+  static func colorForSchemeAndTopic(scheme schmindx:ColorSchemeName,index topicIndex:Int) -> ColorTriple {
     let theScheme = Self.allSchemes[schmindx]
     return theScheme.mappedColors[topicIndex]
   }
@@ -27,8 +27,8 @@ class AppColors {
     default: return "autumn"
     }
   }
-    static func colorForTopicIndex(index: Int, gs: GameState) -> (Color, Color, UUID) {
-        return allSchemes[gs.currentscheme].mappedColors[index]
+    static func colorForTopicIndex(index: Int, gs: GameState) -> ColorTriple {
+      colorForSchemeAndTopic(scheme: gs.currentscheme, index:index)
     }
     
     // Define the color schemes
@@ -141,10 +141,10 @@ class ColorScheme {
     
     let name: ColorSchemeName
     let colors: [ColorSpec]
-    var _mappedColors: [(Color, Color, UUID)]? = nil
+    var _mappedColors: [ColorTriple]? = nil
     
     /// Maps the colors to SwiftUI Color objects and calculates contrasting text colors.
-    var mappedColors: [(Color, Color, UUID)] {
+    var mappedColors: [ColorTriple] {
         if _mappedColors == nil {
             _mappedColors = colors.map {
                 let bgColor = Color(red: $0.backrgb.0 / 255, green: $0.backrgb.1 / 255, blue: $0.backrgb.2 / 255)

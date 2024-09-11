@@ -117,7 +117,7 @@ import SwiftUI
       .sheet(isPresented: $showTopicSelector) {
           TopicSelectorView(allTopics: chmgr.everyTopicName,
                             selectedTopics:  $l_topicsinplay,
-                            selectedSchemeIndex:$l_currentScheme,
+                            selectedScheme:$l_currentScheme,
                             chmgr: chmgr,
                             gs:gs,minTopics:GameState.minTopicsForBoardSize(l_boardsize),
                             maxTopics:
