@@ -65,9 +65,11 @@ struct SettingsScreen: View {
     NavigationView {
       Form {
         Section(header: Text("Topics")) {
+          Text("You need gimmees to edit topics...").font(.footnote)
           Button(action:{showTopicSelector.toggle()}){
             Text("Edit Topics")
-          }      .sheet(isPresented: $showTopicSelector) {
+          } .disabled(gs.gimmees <= 0)
+          .sheet(isPresented: $showTopicSelector) {
             TopicSelectorView(allTopics: chmgr.everyTopicName,
                               selectedTopics:  $l_topicsinplay,
                               selectedScheme:$l_currentScheme,

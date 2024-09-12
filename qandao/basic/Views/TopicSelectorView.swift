@@ -48,9 +48,9 @@ struct TopicSelectorView: View {
     
     var body: some View {
         NavigationView {
-            VStack(spacing: 5) {
+            VStack(spacing: 10) {
 
-                
+              Text("you currently have \(gimms) gimmees").font(.footnote)
                 TopicIndexView(gs: gs, chmgr: chmgr, inPlayTopics: $selectedTopics, scheme: $selectedScheme)
                 
                 Form {
