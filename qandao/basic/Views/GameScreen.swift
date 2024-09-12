@@ -48,7 +48,9 @@ struct GameScreen: View {
           ).opacity(marqueeMessage.isEmpty ? 0:1).debugBorder()
         }
           if gs.boardsize > 1 {
-            MainGridView(gs: gs, chmgr:chmgr,  boardsize:$gs.boardsize, firstMove: $firstMove, isTouching: $isTouching, marqueeMessage: $marqueeMessage, onSingleTap: onSingleTap)
+            MainGridView(gs: gs, chmgr:chmgr, 
+                        // boardsize:$gs.boardsize,
+                         firstMove: $firstMove, isTouching: $isTouching, marqueeMessage: $marqueeMessage, onSingleTap: onSingleTap)
               .debugBorder()
           
             ScoreBarView(gs: gs,marqueeMessage:$marqueeMessage)

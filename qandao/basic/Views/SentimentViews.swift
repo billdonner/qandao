@@ -8,85 +8,85 @@
 import SwiftUI
 
 struct CommentsView: View {
-    let appFeelings = ["★★★★★", "★★★★", "★★★", "★★", "★", " "]
-    @State private var cloudKitManager = CloudKitManager.shared
-    @State private var message: String = ""
-    @State private var selectedFeeling: String = "★★★"
-    @State private var showAlert = false
-    
-    @Environment(\.dismiss) var dismiss  // Environment value for dismissing the view
-    
-    var body: some View {
-        NavigationView {
-            GeometryReader { geometry in
-                VStack {
-                    // TextEditor for multi-line input that occupies the top third of the screen
-                  Text("Leave a comment")
-                    TextEditor(text: $message)
-                        .frame(height: geometry.size.height / 3) // Occupy the top third of the screen
-                        .border(Color.gray, width: 1)
-                        .padding()
-
-                    // Picker for feelings
-                  Text("Rate us")
-                    Picker("Select a feeling", selection: $selectedFeeling) {
-                        ForEach(appFeelings, id: \.self) { feeling in
-                            Text(feeling)
-                        }
-                    }
-                    .pickerStyle(MenuPickerStyle())
-                    .padding()
-                    
-                    // Submit Button
-                    Button(action: {
-                        let timestamp = Date()
-                        cloudKitManager.saveLogRecord(
-                            message: message,
-                            sentiment: "Comment",
-                            predefinedFeeling: selectedFeeling,
-                            timestamp: timestamp,
-                            challengeIdentifier: UUID().uuidString
-                        ) { result in
-                            switch result {
-                            case .success(let record):
-                                print("Successfully saved comment record: \(record)")
-                                dismiss()
-                            case .failure(let error):
-                                print("Error saving comment record: \(error)")
-                                showAlert = true
-                            }
-                        }
-                    }) {
-                        Text("Submit Comment")
-                            .padding()
-                            .background(message.isEmpty ? Color.gray : Color.blue)  // Gray if disabled
-                            .foregroundColor(.white)
-                            .cornerRadius(8)
-                    }
-                    .disabled(message.isEmpty)  // Disable button if no message
-                    .alert(isPresented: $showAlert) {
-                        Alert(title: Text("Error"), message: Text(cloudKitManager.errorMessage ?? "Unknown error"), dismissButton: .default(Text("OK")))
-                    }
-                }
-                .padding()
-                .navigationTitle("Send Comment")
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button(action: {
-                            dismiss()
-                        }) {
-                            Image(systemName: "xmark")
-                                .foregroundColor(.primary)  // Adjust color as needed
-                        }
-                    }
-                }
+  let appFeelings = ["★★★★★", "★★★★", "★★★", "★★", "★", " "]
+  @State private var cloudKitManager = CloudKitManager.shared
+  @State private var message: String = ""
+  @State private var selectedFeeling: String = "★★★"
+  @State private var showAlert = false
+  
+  @Environment(\.dismiss) var dismiss  // Environment value for dismissing the view
+  
+  var body: some View {
+    NavigationView {
+      GeometryReader { geometry in
+        VStack {
+          // TextEditor for multi-line input that occupies the top third of the screen
+          Text("Leave a comment")
+          TextEditor(text: $message)
+            .frame(height: geometry.size.height / 3) // Occupy the top third of the screen
+            .border(Color.gray, width: 1)
+            .padding()
+          
+          // Picker for feelings
+          Text("Rate us")
+          Picker("Select a feeling", selection: $selectedFeeling) {
+            ForEach(appFeelings, id: \.self) { feeling in
+              Text(feeling)
             }
+          }
+          .pickerStyle(MenuPickerStyle())
+          .padding()
+          
+          // Submit Button
+          Button(action: {
+            let timestamp = Date()
+            cloudKitManager.saveLogRecord(
+              message: message,
+              sentiment: "Comment",
+              predefinedFeeling: selectedFeeling,
+              timestamp: timestamp,
+              challengeIdentifier: UUID().uuidString
+            ) { result in
+              switch result {
+              case .success(let record):
+                print("Successfully saved comment record: \(record)")
+                dismiss()
+              case .failure(let error):
+                print("Error saving comment record: \(error)")
+                showAlert = true
+              }
+            }
+          }) {
+            Text("Submit Comment")
+              .padding()
+              .background(message.isEmpty ? Color.gray : Color.blue)  // Gray if disabled
+              .foregroundColor(.white)
+              .cornerRadius(8)
+          }
+          .disabled(message.isEmpty)  // Disable button if no message
+          .alert(isPresented: $showAlert) {
+            Alert(title: Text("Error"), message: Text(cloudKitManager.errorMessage ?? "Unknown error"), dismissButton: .default(Text("OK")))
+          }
         }
+        .padding()
+        .navigationTitle("Send Comment")
+        .toolbar {
+          ToolbarItem(placement: .navigationBarTrailing) {
+            Button(action: {
+              dismiss()
+            }) {
+              Image(systemName: "xmark")
+                .foregroundColor(.primary)  // Adjust color as needed
+            }
+          }
+        }
+      }
     }
+  }
 }
 
 #Preview("Comment") {
-    CommentsView()
+  CommentsView()
 }
 
 

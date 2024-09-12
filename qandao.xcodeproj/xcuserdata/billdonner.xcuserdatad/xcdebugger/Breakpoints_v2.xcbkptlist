@@ -174,8 +174,8 @@
             filePath = "qandao/basic/Views/GameScreen.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "152"
-            endingLineNumber = "152"
+            startingLineNumber = "154"
+            endingLineNumber = "154"
             landmarkName = "topButtonsVeew"
             landmarkType = "24">
          </BreakpointContent>
@@ -210,6 +210,114 @@
             endingLineNumber = "65"
             landmarkName = "body"
             landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8605A5D1-84EC-40C5-B7AC-A63EB33670B1"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "qandao/basic/CloudSentiments.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "56"
+            endingLineNumber = "56"
+            landmarkName = "saveLogRecord(message:sentiment:predefinedFeeling:timestamp:challengeIdentifier:completion:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "8605A5D1-84EC-40C5-B7AC-A63EB33670B1 - da4e4f6c722956fe"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "qandao.CloudKitManager.saveLogRecord(message: Swift.String, sentiment: Swift.String, predefinedFeeling: Swift.String, timestamp: Foundation.Date, challengeIdentifier: Swift.String, completion: (Swift.Result&lt;__C.CKRecord, Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "qandao"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/billdonner/Desktop/qandao/qandao/basic/CloudSentiments.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "56"
+                  endingLineNumber = "56">
+               </Location>
+               <Location
+                  uuid = "8605A5D1-84EC-40C5-B7AC-A63EB33670B1 - f25a0aef1269cf2f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Sendable (Swift.Optional&lt;__C.CKRecordID&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in qandao.CloudKitManager.saveLogRecord(message: Swift.String, sentiment: Swift.String, predefinedFeeling: Swift.String, timestamp: Foundation.Date, challengeIdentifier: Swift.String, completion: (Swift.Result&lt;__C.CKRecord, Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "qandao"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/billdonner/Desktop/qandao/qandao/basic/CloudSentiments.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "56"
+                  endingLineNumber = "56">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3D70C771-527B-4A69-A2F0-D909992B5831"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "qandao/basic/CloudSentiments.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "71"
+            endingLineNumber = "71"
+            landmarkName = "saveLogRecord(message:sentiment:predefinedFeeling:timestamp:challengeIdentifier:completion:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "3D70C771-527B-4A69-A2F0-D909992B5831 - f25a0aef1269cd3c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Sendable (Swift.Optional&lt;__C.CKRecordID&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in qandao.CloudKitManager.saveLogRecord(message: Swift.String, sentiment: Swift.String, predefinedFeeling: Swift.String, timestamp: Foundation.Date, challengeIdentifier: Swift.String, completion: (Swift.Result&lt;__C.CKRecord, Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "qandao"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/billdonner/Desktop/qandao/qandao/basic/CloudSentiments.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "71"
+                  endingLineNumber = "71">
+               </Location>
+               <Location
+                  uuid = "3D70C771-527B-4A69-A2F0-D909992B5831 - 9781cb39dcdc898d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Sendable (Swift.Optional&lt;__C.CKRecord&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in closure #1 @Sendable (Swift.Optional&lt;__C.CKRecordID&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in qandao.CloudKitManager.saveLogRecord(message: Swift.String, sentiment: Swift.String, predefinedFeeling: Swift.String, timestamp: Foundation.Date, challengeIdentifier: Swift.String, completion: (Swift.Result&lt;__C.CKRecord, Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "qandao"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/billdonner/Desktop/qandao/qandao/basic/CloudSentiments.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "72"
+                  endingLineNumber = "72">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "21BE9C47-D7CD-40DF-B826-4A6FC333332F"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "qandao/basic/CloudSentiments.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "73"
+            endingLineNumber = "73"
+            landmarkName = "saveLogRecord(message:sentiment:predefinedFeeling:timestamp:challengeIdentifier:completion:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
