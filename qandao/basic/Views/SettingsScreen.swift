@@ -16,6 +16,20 @@ struct SettingsScreen: View {
   @State private var  l_difficultyLevel: Int
   @State private var  l_topicsinplay: [String]
   @State private var  l_scheme : ColorSchemeName // hack //summer
+
+  
+  @State var tappedIndices: Set<Int> = []
+  @State var replacedTopics: [Int: String] = [:]
+  @State var selectedAdditionalTopics: Set<String> = []
+  @State var firstOnAppear = true
+  @State var showTopicSelector = false
+  @State private var showFreeportSettings = false
+  @State private var showCommentsMaker = false
+  @State private var cpv : [[Color]] = []
+  
+  @Environment(\.presentationMode) var presentationMode
+  
+  
   
   init(chmgr:ChaMan,gs:GameState,lrdb:LeaderboardService,showSettings:Binding<Bool>)
   {
@@ -34,17 +48,6 @@ struct SettingsScreen: View {
     l_gimms = gs.gimmees
   }
   
-  @State var tappedIndices: Set<Int> = []
-  @State var replacedTopics: [Int: String] = [:]
-  @State var selectedAdditionalTopics: Set<String> = []
-  @State var firstOnAppear = true
-  @State var showTopicSelector = false
-  @State private var showFreeportSettings = false
-  @State private var showCommentsMaker = false
-  @State private var cpv : [[Color]] = []
-  
-  @Environment(\.presentationMode) var presentationMode
-  
   var colorPicker: some View {
     Picker("Color Palette", selection: $l_scheme) {
       ForEach(AppColors.allSchemes.indices.sorted(),id:\.self) { idx in
@@ -59,84 +62,82 @@ struct SettingsScreen: View {
   }
   
   var body: some View {
-    
-    Form {
-      Section(header: Text("Topics")) {
-        Button(action:{showTopicSelector.toggle()}){
-          Text("Edit Topics")
-        }         }
-      Section(header: Text("Board")) {
-        VStack(alignment: .center){
-          SizePickerView(chosenSize: $l_boardsize)
-            .onChange(of:l_boardsize) {
-              switch l_boardsize {
-              default :l_facedown=true;l_startInCorners=true
+    NavigationView {
+      Form {
+        Section(header: Text("Topics")) {
+          Button(action:{showTopicSelector.toggle()}){
+            Text("Edit Topics")
+          }      .sheet(isPresented: $showTopicSelector) {
+            TopicSelectorView(allTopics: chmgr.everyTopicName,
+                              selectedTopics:  $l_topicsinplay,
+                              selectedScheme:$l_currentScheme,
+                              chmgr: chmgr,
+                              gs:gs,
+                              minTopics:GameState.minTopicsForBoardSize(l_boardsize),
+                              maxTopics:GameState.maxTopicsForBoardSize(l_boardsize),gimms: $l_gimms)
+          }
+        }
+        Section(header: Text("Board")) {
+          VStack(alignment: .center){
+            SizePickerView(chosenSize: $l_boardsize)
+              .onChange(of:l_boardsize) {
+                switch l_boardsize {
+                default :l_facedown=true;l_startInCorners=true
+                }
               }
-            }
-          PreviewGridView(gs: gs, chmgr: chmgr, boardsize:$l_boardsize,scheme:$l_currentScheme)
-            .frame(width: 200,height: 200)
-          colorPicker
-            .onChange(of: l_scheme) {
-              withAnimation {
-                // gs.currentscheme = colorSchemeName
-                l_currentScheme = l_scheme
+            PreviewGridView(gs: gs, chmgr: chmgr, boardsize:$l_boardsize,scheme:$l_currentScheme)
+              .frame(width: 200,height: 200)
+            colorPicker
+              .onChange(of: l_scheme) {
+                withAnimation {
+                  // gs.currentscheme = colorSchemeName
+                  l_currentScheme = l_scheme
+                }
               }
+          }
+        }
+        
+        Section(header:Text("About QANDA")) {
+          VStack{
+
+            HStack { Spacer()
+              AppVersionInformationView(
+                name:AppNameProvider.appName(),
+                versionString: AppVersionProvider.appVersion(),
+                appIcon: AppIconProvider.appIcon()
+              )
+              Spacer()
             }
-        }
-      }
-      
-      Section(header:Text("About QANDA")) {
-        VStack{
-          Button(action: { showCommentsMaker.toggle() }) {
-            Text("Send Comments to Carol")
-          }
-          HStack { Spacer()
-            AppVersionInformationView(
-              name:AppNameProvider.appName(),
-              versionString: AppVersionProvider.appVersion(),
-              appIcon: AppIconProvider.appIcon()
-            )
-            Spacer()
-          }
-          Button(action: { showFreeportSettings.toggle() }) {
-            Text("Freeport Settings")
+            Button(action: { showFreeportSettings.toggle() }) {
+              Text("Freeport Settings")
+            }.sheet(isPresented:$showFreeportSettings){
+              FreeportSettingsScreen(gs: gs, chmgr: chmgr, lrdb: lrdb,showSettings:$showSettings)
+            }
           }
         }
-        .sheet(isPresented:$showFreeportSettings){
-          FreeportSettingsScreen(gs: gs, chmgr: chmgr, lrdb: lrdb,showSettings:$showSettings)
+      }
+   
+  
+
+      .onAppear {
+        if firstOnAppear {
+          firstOnAppear = false
+          chmgr.checkAllTopicConsistency("GameSettings onAppear")
         }
-        .sheet(isPresented:$showCommentsMaker){
-          CommentsView()
+        cpv = gs.previewColorMatrix(size: l_boardsize,scheme: l_currentScheme)
+      }
+      .navigationBarTitle("Game Settings", displayMode: .inline)
+      .navigationBarItems(
+        leading: Button("Cancel") {
+          // dont touch anything
+          self.presentationMode.wrappedValue.dismiss()
+        },
+        trailing: Button("Done") {
+          onDonePressed() // update global state
+          self.presentationMode.wrappedValue.dismiss()
         }
-      }
+      )
     }
-    .sheet(isPresented: $showTopicSelector) {
-      TopicSelectorView(allTopics: chmgr.everyTopicName,
-                        selectedTopics:  $l_topicsinplay,
-                        selectedScheme:$l_currentScheme,
-                        chmgr: chmgr,
-                        gs:gs,
-                        minTopics:GameState.minTopicsForBoardSize(l_boardsize),
-                        maxTopics:GameState.maxTopicsForBoardSize(l_boardsize),gimms: $l_gimms)
-    }
-    .onAppear {
-      if firstOnAppear {
-        firstOnAppear = false
-        chmgr.checkAllTopicConsistency("GameSettings onAppear")
-      }
-      cpv = gs.previewColorMatrix(size: l_boardsize,scheme: l_currentScheme)
-    }
-    .navigationBarTitle("Game Settings", displayMode: .inline)
-    .navigationBarItems(
-      leading: Button("Cancel") {
-        // dont touch anything
-        self.presentationMode.wrappedValue.dismiss()
-      },
-      trailing: Button("Done") {
-        onDonePressed() // update global state
-        self.presentationMode.wrappedValue.dismiss()
-      }
-    )
   }
   
   private func onDonePressed() {

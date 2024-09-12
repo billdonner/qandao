@@ -13,6 +13,7 @@ struct ContentViewBottomButtons : View {
   
   @Binding   var isTouching:Bool
   @State   var showingHelp = false
+  @State   var showCommentsMaker = false
   var body: some View {
 
     
@@ -31,11 +32,17 @@ struct ContentViewBottomButtons : View {
                                }  )
       Spacer()
       
-      Text("QandA \(AppVersionProvider.appVersion()) by Freeport Software")
-        .font(isIpad ? .headline: .caption2)
+      Button (action:{  showCommentsMaker.toggle() }) {
+        Text("QandA \(AppVersionProvider.appVersion())")
+          .font(isIpad ? .headline: .caption2)
+        }.sheet(isPresented:$showCommentsMaker){
+          CommentsView()
+        }
       
-
+      
       Spacer()
+     
+   
       
       //Help
       Button(action: { 
